@@ -228,18 +228,12 @@ body::after {
   text-decoration: none;
 }
 .brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, var(--primary), #5d4dff);
-  color: #fff;
-  font-weight: 700;
-  font-size: 13px;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 4px 12px var(--primary-glow);
-  font-family: var(--f-display);
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(139, 124, 255, 0.28));
+  flex: 0 0 auto;
 }
 .brand-meta {
   font-size: 10.5px;
