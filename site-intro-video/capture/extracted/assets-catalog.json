@@ -1,0 +1,74 @@
+[
+  {
+    "url": "http://localhost:3100/assets/proj-contentflow.png",
+    "type": "Image",
+    "contexts": [
+      "img[src]"
+    ],
+    "notes": "ContentFlow",
+    "description": "ContentFlow",
+    "nearestHeading": "一些 在跑的东西。",
+    "sectionClasses": "section",
+    "aboveFold": false
+  },
+  {
+    "url": "http://localhost:3100/assets/proj-sticker.png",
+    "type": "Image",
+    "contexts": [
+      "img[src]"
+    ],
+    "notes": "AI 表情包批量工场",
+    "description": "AI 表情包批量工场",
+    "nearestHeading": "一些 在跑的东西。",
+    "sectionClasses": "section",
+    "aboveFold": false
+  },
+  {
+    "url": "http://localhost:3100/assets/proj-magic-words.png",
+    "type": "Image",
+    "contexts": [
+      "img[src]"
+    ],
+    "notes": "魔法识字课",
+    "description": "魔法识字课",
+    "nearestHeading": "一些 在跑的东西。",
+    "sectionClasses": "section",
+    "aboveFold": false
+  },
+  {
+    "url": "http://localhost:3100/assets/proj-drama-clip.png",
+    "type": "Image",
+    "contexts": [
+      "img[src]"
+    ],
+    "notes": "drama-clip",
+    "description": "drama-clip",
+    "nearestHeading": "一些 在跑的东西。",
+    "sectionClasses": "section",
+    "aboveFold": false
+  },
+  {
+    "url": "http://localhost:3100/assets/proj-pic-learn.png",
+    "type": "Image",
+    "contexts": [
+      "img[src]"
+    ],
+    "notes": "看图识字",
+    "description": "看图识字",
+    "nearestHeading": "一些 在跑的东西。",
+    "sectionClasses": "section",
+    "aboveFold": false
+  },
+  {
+    "url": "http://localhost:3100/assets/proj-e-book.png",
+    "type": "Image",
+    "contexts": [
+      "img[src]"
+    ],
+    "notes": "电子绘本",
+    "description": "电子绘本",
+    "nearestHeading": "一些 在跑的东西。",
+    "sectionClasses": "section",
+    "aboveFold": false
+  }
+]

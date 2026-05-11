@@ -1,0 +1,172 @@
+<template id="beat-3-products-template">
+  <div id="beat-3-products" data-composition-id="beat-3-products" data-width="1920" data-height="1080">
+    <div class="scene scene-products">
+      <div class="bg-grid"></div>
+      <div class="bg-shot"></div>
+      <div class="scene-content">
+        <div class="eyebrow t-mono">PRODUCTS / LIVE</div>
+        <h2 class="headline">已经上线的东西，<br />就在眼前。</h2>
+      </div>
+      <div class="cards">
+        <div class="card card-a">
+          <div class="card-badge">LIVE</div>
+          <div class="thumb thumb-a"></div>
+          <div class="meta">
+            <div class="name">ContentFlow</div>
+            <div class="stack t-mono">Next.js / Claude</div>
+          </div>
+        </div>
+        <div class="card card-b">
+          <div class="card-badge">LIVE</div>
+          <div class="thumb thumb-b"></div>
+          <div class="meta">
+            <div class="name">AI 表情包批量工场</div>
+            <div class="stack t-mono">React / Tailwind</div>
+          </div>
+        </div>
+        <div class="card card-c">
+          <div class="card-badge">LIVE</div>
+          <div class="thumb thumb-c"></div>
+          <div class="meta">
+            <div class="name">魔法识字课</div>
+            <div class="stack t-mono">Mini Program / AI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      #beat-3-products {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        color: #ededee;
+        background: #08090c;
+        font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+      }
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 15%, rgba(139,124,255,0.16), transparent 25%),
+          #08090c;
+      }
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 64px 64px;
+        opacity: 0.22;
+      }
+      .bg-shot {
+        position: absolute;
+        inset: 0;
+        opacity: 0.16;
+      }
+      .bg-shot {
+        background-image: url("../capture/screenshots/scroll-026.png");
+        background-size: cover;
+        background-position: center 24%;
+      }
+      .scene-content {
+        position: absolute;
+        left: 140px;
+        top: 90px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .t-mono {
+        font-family: "JetBrains Mono", "SF Mono", monospace;
+        letter-spacing: 0.14em;
+      }
+      .eyebrow {
+        font-size: 16px;
+        color: #c8bfff;
+      }
+      .headline {
+        margin: 0;
+        font-size: 84px;
+        line-height: 1;
+        font-weight: 700;
+      }
+      .cards {
+        position: absolute;
+        left: 120px;
+        right: 120px;
+        bottom: 90px;
+        display: flex;
+        gap: 26px;
+      }
+      .card {
+        position: relative;
+        flex: 1;
+        height: 640px;
+        padding: 18px;
+        border-radius: 28px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(15,17,22,0.92);
+        box-shadow: 0 24px 60px rgba(0,0,0,0.32);
+      }
+      .card-badge {
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        color: #5dd49a;
+        background: rgba(93,212,154,0.08);
+        border: 1px solid rgba(93,212,154,0.2);
+      }
+      .thumb {
+        height: 440px;
+        overflow: hidden;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: #11141a;
+      }
+      .thumb {
+        background-image: url("../capture/screenshots/scroll-026.png");
+        background-size: cover;
+      }
+      .thumb-a { background-position: left 18% top; }
+      .thumb-b { background-position: center top; }
+      .thumb-c { background-position: right 18% top; }
+      .meta {
+        padding: 18px 6px 0;
+      }
+      .name {
+        font-size: 34px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .stack {
+        font-size: 15px;
+        color: #b8babf;
+      }
+      .card-b {
+        margin-top: -24px;
+        border-color: rgba(139,124,255,0.34);
+        box-shadow: 0 0 0 1px rgba(139,124,255,0.12), 0 30px 80px rgba(139,124,255,0.16);
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from(".eyebrow", { y: 20, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.05);
+      tl.from(".headline", { y: 46, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.1);
+      tl.from(".card-a", { y: 80, x: -30, rotate: -2, opacity: 0, duration: 0.75, ease: "power3.out" }, 0.35);
+      tl.from(".card-b", { y: 90, scale: 0.94, opacity: 0, duration: 0.8, ease: "power3.out" }, 0.48);
+      tl.from(".card-c", { y: 80, x: 30, rotate: 2, opacity: 0, duration: 0.75, ease: "power3.out" }, 0.62);
+      tl.to(".card-a", { y: -8, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 0 }, 1.5);
+      tl.to(".card-b", { y: -10, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 0 }, 1.56);
+      tl.to(".card-c", { y: -8, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 0 }, 1.62);
+      window.__timelines["beat-3-products"] = tl;
+    </script>
+  </div>
+</template>

@@ -1,0 +1,225 @@
+[span] WORKSHOP
+[span] 杭州 vibecoding 工作坊 · 5/17（周日）13:30
+[span] 还剩 6 天
+[span] · ¥149 · 仅 10 席
+[a] 立即报名
+[span] liudayan.com
+[span] 2026 / Q2
+[span] freelance · vibecoding · 杭州
+[span] vibecoding
+[h1] 把想法
+[h1] 变成产品
+[p] 从想法到可付费的链接，24 小时。15 年大厂运营和 PM 沉淀，今天用 AI 编排把它压缩进一周一个产品。
+[span] 10y 阿里运营
+[span] 5y 小电 PM
+[span] freelance · vibecoding
+[a] 报名 5/17 工作坊
+[a] 微信 / 邮箱
+[span] wechat:
+[span] DaYan__Liu
+[span] hi@liudayan.com
+[div] 正在做
+[div] ContentFlow 2.0 · 选题标签 UI
+[span] 开发中
+[div] 本周产出
+[div] 整理中…
+[div] 最近在读
+[div] 《Working in Public》— Nadia Eghbal
+[span] p.142
+[div] 近期活动
+[div] 5/17 杭州 vibecoding 工作坊
+[span] 还剩 6 天
+[div] 自媒体数据
+[span] 小红书
+[span] 视频号
+[span] 每 30 秒自动同步
+[div] 02 / About
+[span] 15 年
+[h2] 别人想做的事，
+[h2] 现在做自己想做的。
+[p] 履历不是简历。是关于路径依赖与跳出路径依赖。
+[div] // born 1989
+[div] // based in Hangzhou
+[span] 2026 · 杭州
+[span] daily
+[span] workshop
+[span] archive
+[span] 2025 — now
+[span] freelance
+[span] now
+[h3] 独立产品人 / vibecoder
+[div] 自由职业 · 杭州
+[p] 把 15 年大厂沉淀带进 AI 时代，以一人公司模式持续实践：搭 AI 自媒体内容矩阵（小红书 + 公众号日更），独立开发 AI 识字小程序与表情包生成工具并完成上线。Vibe Coding 实践者，用 Claude Code / Codex 走完从需求到部署的完整闭环。
+[span] vibecoding
+[span] AI 产品
+[span] 独立开发
+[span] 内容创作
+[span] 2021 — 2025
+[span] 约5年
+[h3] 资深产品经理
+[div] 小电科技
+[p] 主导公司首套智能客服多 Agent 体系从 0 到 1，覆盖「意图识别 → 路由 → 自动执行 → 人工兜底」全链路，上线后外包客服成本降低 50%，意图识别转人工准确率达 95%。同期搭建两轮充电桩与共享寄存柜 IOT 平台，横跨平台 / B 端 / C 端共 4 个模态产品。
+[span] AI 产品
+[span] 智能客服
+[span] IOT 系统
+[span] 2010 — 2020
+[span] 10 年
+[h3] 产品 / 运营
+[div] 阿里巴巴
+[p] 历经天猫国际、菜鸟、支付宝三条业务线。天猫国际做过流量搜索的产品与运营；菜鸟期间针对非标品建立结构化 SKU 数据标准，优化人货场匹配效率；支付宝期间搭建传媒服务团队 SOP 与舆情监控体系。十年沉淀了从 C 端运营到 B 端产品的完整认知迁移路径。
+[span] 电商运营
+[span] B 端产品
+[span] 数据产品
+[div] 03 / Projects
+[span] 在跑的东西
+[p] 凡是公开能看到的，都已经付费验证过。剩下的还在炉子里。
+[button] 已上线
+[button] 开发中
+[h3] 已上线
+[span] 已上线
+[h4] ContentFlow
+[p] 自媒体创作者 AI 一体化工具。一次输入生成图文/口播，5 层去 AI 痕迹处理，支持爆款拆解仿写，覆盖小红书 / 公众号全流程。
+[span] Next.js
+[span] Claude
+[a] contentflow.one
+[span] 已上线
+[h4] AI 表情包批量工场
+[p] AI 表情包生成工具。上传图片 + 输入文案，多模态模型秒出个性化贴纸，内置多种艺术风格，支持自定义文案，从创意到下载一步完成。
+[span] React
+[span] Tailwind
+[span] 多模态模型
+[a] cines.top
+[span] 已上线
+[h4] 魔法识字课
+[p] 专为幼儿设计的 AI 识字小程序。基于真实家庭教育场景，游戏化互动帮助孩子认字，独立完成从设计到上线全流程。
+[span] 微信小程序
+[button] 扫码 ↗
+[h3] 开发中
+[span] 开发中
+[h4] drama-clip
+[p] 短剧二创自动化流水线桌面工具。扫描本地剧集目录，AI 自动生成分镜脚本 + TTS 配音 + 字幕对齐，批量渲染导出，本地运行无需云端。
+[span] Electron
+[span] Python
+[span] TTS
+[span] 开发中
+[h4] 看图识字
+[p] AI 个性化识字绘本小程序。基于孩子当前识字量智能生成专属绘本，每本新增 3-5 个生字，大字配拼音支持跟读，故事角色可按孩子喜好定制，科学分级自动进阶。
+[span] 微信小程序
+[span] 多模态模型
+[span] TTS
+[span] 开发中
+[h4] 电子绘本
+[p] AI 辅助实体绘本生成工具。输入主题与角色，AI 完成构思→分镜→生图→排版→封面全流程，最终输出可印刷的高清 PDF，生成一本真正属于孩子的实体绘本。
+[span] AI 生图
+[span] TTS
+[span] 微信小程序
+[div] 04 / Live demo
+[h2] 不要 iframe，
+[span] 直接在站内跑
+[p] 工具就在这里。点一下，立刻见结果。
+[span] 📝 简历改写工具 · 试一下
+[span] LIVE
+[button] ✦ AI 改写
+[span] 🔥 小红书爆款分析 · 试一下
+[span] LIVE
+[button] 🔥 分析爆款潜力
+[div] 05 / Blog
+[h2] 写下来才算
+[span] 真的想清楚
+[p] 每周更，复盘 + 教程为主。不写情绪文。
+[div] entries
+[div] // latest first
+[span] 产品复盘
+[span] 2026.05.09
+[h3] OPC 周记：比预期晚了半年，我的第一个产品终于上线了
+[p] 从去年 11 月开始，原计划 3 月上线，5 月才验收通过。跑通了整条商业链路——有支付，有生成，能跑的那种。
+[div] 读全文
+[span] vibecoding 教程
+[span] 2026.04.22
+[h3] OPC 周记：当 AI 开始互相沟通，我这个「老板」在做什么？
+[p] Claude 在发邮件，Codex 在跑流水线，我发现自己的角色变了——不再是执行者，是指挥者。一人公司的下一阶段。
+[div] 读全文
+[span] 自媒体运营
+[span] 2026.04.17
+[h3] OPC 上班第 2 周：5 个平台、3 条路、1 个答案
+[p] 百家号和 B 站同时过审，我却慌了。5 个平台同时跑，一个人扛得住吗？想清楚了哪条认真打，哪条搬运就行。
+[div] 读全文
+[span] 一人公司
+[span] 2026.04.14
+[h3] OPC 日记：今天和几个「土老板」聊完，我想明白一件事
+[p] 卖汽车的、做保温杯的、跑外贸的，他们聊 AI 不聊模型——聊「我卖什么」。格子间出来的人该听的一课。
+[div] 读全文
+[a] 查看全部
+[a] 篇文章 →
+[div] 06 / vibecoding 实战数据
+[span] 真实数据
+[h2] 是最好的简历。
+[p] 全平台同名：
+[span] 刘大雁AI版
+[p] 数据截至
+[span] 2026.05.11
+[div] // 手动更新
+[div] // stats.json
+[span] 抖音粉丝
+[div] 4.5万+
+[span] 小红书粉丝
+[div] 2,646
+[span] 视频号粉丝
+[div] 2,019
+[span] B站粉丝
+[div] 477
+[div] 07 / 杭州工作坊
+[h2] 5 月 17 日，
+[span] 3.5 小时做出你的第一个网站
+[div] Vibecoding 杭州 · 工作坊
+[h3] 现场跟做，
+[h3] 当天上线。
+[p] 13:30 你带一个想法到现场。17:00 你的网站已经上线、能发朋友圈。 零代码基础也能上手——我们用 CodeBuddy + EdgeOne，让 AI 替你写得对。
+[div] Date
+[div] 5 月 17 日
+[small] · 周日
+[div] Time
+[div] 13:30
+[small] — 17:00
+[div] Location
+[small] · 具体地址私聊
+[div] Seats
+[small] · 粉丝预留
+[div] Price
+[div] ¥149
+[small] · 市场费用
+[div] After
+[small] 天答疑
+[h4] 锁定席位
+[label] 微信号
+[label] 赛道选择
+[option] 个人主页
+[option] 小工具
+[option] 小游戏
+[option] 还没想好
+[label] 你想做什么？（选填）
+[button] 提交报名
+[div] 或微信私信备注「杭州5/17」直接锁定
+[h5] // 三赛道任选 · 离场带走一个能发朋友圈的网站链接
+[div] Track A
+[div] 个人主页
+[div] 像本站这种——简历 / 作品集 / 联系入口。最适合 PM、运营、求职者。
+[div] Track B
+[div] 小工具
+[div] 解决一个具体小痛点的网页工具。最适合想做 SaaS 的创业者。
+[div] Track C
+[div] 小游戏
+[div] 轻量休闲、能发圈的小玩意。最适合想做内容引流的人。
+[h5] // 适合谁来
+[div] 想把小想法做成网站的
+[strong] 产品经理 / 运营 / 创业者
+[div] 看过录播课但
+[strong] 一直没动手
+[span] liudayan.com
+[p] 一个用 AI 把想法变成产品的杭州独立产品人。本站本身就是 vibecoding 的实验场。
+[div] built in 6h · self-hosted · open-source
+[a] vibecoding 日报
+[a] 5/17 杭州工作坊
+[span] . all systems nominal.
+[span] 2026-05-11
+[button] 聊聊大雁的项目
