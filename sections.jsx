@@ -508,6 +508,20 @@ function DemoResume() {
   const [copied, setCopied] = React.useState(false);
   const [error, setError] = React.useState("");
 
+  function buildResumeFallback(text) {
+    const compact = (text || PLACEHOLDER).replace(/\s+/g, "");
+    if (compact.includes("运营")) {
+      return "负责运营策略制定与执行，优化增长链路，推动核心转化效率持续提升";
+    }
+    if (compact.includes("产品")) {
+      return "主导产品方案设计与迭代，协同研发落地，推动关键指标稳步提升";
+    }
+    if (compact.includes("销售")) {
+      return "负责重点客户拓展与成交转化，优化销售流程，推动业绩持续增长";
+    }
+    return "推动重点项目落地并持续优化执行链路，提升协作效率与业务结果";
+  }
+
   async function handlePolish() {
     const text = input.trim() || PLACEHOLDER;
     setLoading(true);
@@ -519,14 +533,16 @@ function DemoResume() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: text, mode: "resume" }),
       });
-      const data = await res.json();
-      if (data.reply) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.reply) {
         setResult(data.reply);
       } else {
-        setError("接口暂时不可用，稍后再试。");
+        setResult(buildResumeFallback(text));
+        setError("当前展示的是离线演示结果。");
       }
     } catch {
-      setError("网络错误，请检查连接后重试。");
+      setResult(buildResumeFallback(text));
+      setError("当前展示的是离线演示结果。");
     } finally {
       setLoading(false);
     }
@@ -656,6 +672,38 @@ function DemoContentFlow() {
     return "#f87171";
   }
 
+  function buildViralFallback(text) {
+    const q = (text || PLACEHOLDER).trim();
+    let score = 45;
+    if (/\d/.test(q)) score += 15;
+    if (/[万千百亿%]/.test(q)) score += 10;
+    if (/[我你她他]/.test(q)) score += 8;
+    if (/[？?]/.test(q)) score += 8;
+    if (/(真实|副业|月薪|逆袭|普通人|避坑|干货|崩溃|翻盘)/.test(q)) score += 14;
+    score = Math.max(35, Math.min(92, score));
+
+    const highlights = [];
+    if (/\d/.test(q)) highlights.push("数字结果抓眼");
+    if (/(真实|亲测|经历)/.test(q)) highlights.push("真实感比较强");
+    if (/(副业|赚钱|涨薪|变现)/.test(q)) highlights.push("利益点很明确");
+    if (/(普通人|新手|小白)/.test(q)) highlights.push("受众定位清晰");
+    while (highlights.length < 3) {
+      highlights.push(["情绪张力够用", "有讨论空间", "选题有传播面"][highlights.length]);
+    }
+
+    let suggestion = "补一个更具体的结果数字";
+    if (!/[？?]/.test(q)) suggestion = "结尾补悬念或反差提问";
+    if (!/\d/.test(q)) suggestion = "标题里补数字或时间成本";
+
+    return [
+      `爆款指数 ${score} 分`,
+      `• 亮点：${highlights[0]}`,
+      `• 亮点：${highlights[1]}`,
+      `• 亮点：${highlights[2]}`,
+      `改进：${suggestion}`,
+    ].join("\n");
+  }
+
   async function handleAnalyze() {
     const text = input.trim() || PLACEHOLDER;
     setLoading(true);
@@ -667,14 +715,16 @@ function DemoContentFlow() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: text, mode: "viral" }),
       });
-      const data = await res.json();
-      if (data.reply) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.reply) {
         setResult(parseResult(data.reply));
       } else {
-        setError("接口暂时不可用，稍后再试。");
+        setResult(parseResult(buildViralFallback(text)));
+        setError("当前展示的是离线演示结果。");
       }
     } catch {
-      setError("网络错误，请检查连接后重试。");
+      setResult(parseResult(buildViralFallback(text)));
+      setError("当前展示的是离线演示结果。");
     } finally {
       setLoading(false);
     }
@@ -890,17 +940,38 @@ function Dashboard() {
 function Course() {
   const [form, setForm] = React.useState({ name: "", wechat: "", track: "个人主页", note: "" });
   const [submitted, setSubmitted] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
+  const [error, setError] = React.useState("");
   const SEATS_TOTAL = 10;
-  const SEATS_LEFT = 10;                       // TODO:replace 已有人锁定就改成剩余数
+  const SEATS_LEFT = 10;
   const filled = SEATS_TOTAL - SEATS_LEFT;
   const pct = (filled / SEATS_TOTAL) * 100;
 
   function update(k, v) {
     setForm((f) => ({ ...f, [k]: v }));
   }
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
-    if (form.name && form.wechat) setSubmitted(true);
+    if (!form.name || !form.wechat) return;
+    setSubmitting(true);
+    setError("");
+    try {
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const d = await res.json();
+        setError(d.error || "提交失败，请稍后重试");
+      }
+    } catch {
+      setError("网络错误，请稍后重试");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -1027,10 +1098,12 @@ function Course() {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{ width: "100%", justifyContent: "center", marginTop: 4 }}
+                    disabled={submitting}
+                    style={{ width: "100%", justifyContent: "center", marginTop: 4, opacity: submitting ? 0.6 : 1 }}
                   >
-                    提交报名 <span className="arrow">→</span>
+                    {submitting ? "提交中…" : <><span>提交报名</span><span className="arrow">→</span></>}
                   </button>
+                  {error && <div style={{ fontSize: 12, color: "#f87171", marginTop: 6 }}>{error}</div>}
                   <div
                     style={{
                       marginTop: 10,
