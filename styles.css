@@ -220,7 +220,7 @@ body::after {
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-family: var(--f-mono);
   font-weight: 500;
   font-size: 14px;
@@ -229,8 +229,8 @@ body::after {
 }
 .brand-mark {
   display: block;
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
   filter: drop-shadow(0 0 16px rgba(139, 124, 255, 0.24));
   flex: 0 0 auto;

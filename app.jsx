@@ -198,7 +198,7 @@ function Nav({ name, domain, ver }) {
     <nav className="nav">
       <div className="nav-inner">
         <a className="brand" href="#top">
-          <img className="brand-mark" src="assets/logo-dayan-vibecoder-256.png?v=20260511b" alt="大雁 logo" />
+          <img className="brand-mark" src="assets/logo-dayan-vibecoder-256.png?v=20260511c" alt="大雁 logo" />
           <span>{domain}</span>
           <span className="brand-meta">v{ver}</span>
         </a>
@@ -508,7 +508,7 @@ function Footer({ name, domain, email, wechat }) {
         <div className="footer-grid">
           <div>
             <a className="brand" href="#top" style={{ marginBottom: 12 }}>
-              <img className="brand-mark" src="assets/logo-dayan-vibecoder-256.png?v=20260511b" alt="大雁 logo" />
+              <img className="brand-mark" src="assets/logo-dayan-vibecoder-256.png?v=20260511c" alt="大雁 logo" />
               <span>{domain}</span>
             </a>
             <p style={{ marginTop: 12, color: "var(--fg-muted)", maxWidth: "32ch", lineHeight: 1.6 }}>
