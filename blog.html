@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>文章 · 大雁</title>
+  <meta name="description" content="大雁的文章——vibecoding 教程、产品复盘、自媒体运营、一人公司实录。" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="sections.css" />
+
+  <style>
+    body { background: var(--bg, #0a0a0f); color: var(--fg, #e8e8f0); }
+    .blog-page { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+    .blog-page-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .back-link {
+      font-family: var(--f-mono);
+      font-size: 13px;
+      color: var(--fg-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color var(--t-fast);
+    }
+    .back-link:hover { color: var(--primary); }
+    .blog-page-head { margin-bottom: 36px; }
+    .blog-page-head .t-eyebrow { margin-bottom: 8px; }
+    .blog-page-head h1 {
+      font-family: var(--f-display);
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    .blog-page-head p {
+      color: var(--fg-muted);
+      font-size: 14px;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" data-presets="react" src="sections.jsx"></script>
+
+  <script type="text/babel" data-presets="react">
+    function BlogPage() {
+      const [cat, setCat] = React.useState("all");
+      const filtered = cat === "all" ? POSTS : POSTS.filter((p) => p.cat === cat);
+      const counts = BLOG_CATS.reduce((acc, c) => {
+        acc[c.id] = c.id === "all" ? POSTS.length : POSTS.filter((p) => p.cat === c.id).length;
+        return acc;
+      }, {});
+
+      return (
+        <div className="blog-page">
+          <nav className="blog-page-nav">
+            <a href="/" className="back-link">← 返回首页</a>
+          </nav>
+
+          <div className="blog-page-head">
+            <div className="t-eyebrow">
+              <span className="dot"></span>Blog
+            </div>
+            <h1>写下来才算<span className="accent"> 真的想清楚</span>。</h1>
+            <p>每周更，复盘 + 教程为主。不写情绪文。// {POSTS.length} entries</p>
+          </div>
+
+          <div className="blog-tabs">
+            {BLOG_CATS.map((c) => (
+              <button
+                key={c.id}
+                className={`blog-tab${cat === c.id ? " active" : ""}`}
+                onClick={() => setCat(c.id)}
+              >
+                {c.label}
+                <span className="count">{counts[c.id]}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="blog-list">
+            {filtered.map((p, i) => (
+              <a
+                key={i}
+                className="blog-item"
+                href={p.link || "#"}
+                target={p.link ? "_blank" : undefined}
+                rel={p.link ? "noopener noreferrer" : undefined}
+                style={!p.link ? { cursor: "default" } : undefined}
+              >
+                <span className="blog-date">{p.date}</span>
+                <div>
+                  <h3 className="blog-title">{p.title}</h3>
+                  <p className="blog-excerpt">{p.excerpt}</p>
+                </div>
+                <span className="blog-cat" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  {BLOG_CATS.find((c) => c.id === p.cat)?.label}
+                  {p.link && <span style={{ opacity: 0.4, fontSize: 11 }}>↗</span>}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<BlogPage />);
+  </script>
+</body>
+</html>

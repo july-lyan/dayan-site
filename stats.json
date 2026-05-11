@@ -1,0 +1,7 @@
+{
+  "douyin":      { "label": "抖音粉丝",  "value": "4.5万+", "url": "https://v.douyin.com/afNYl3mBqPY/" },
+  "xiaohongshu": { "label": "小红书粉丝", "value": "2,646",  "url": "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5" },
+  "shipin":      { "label": "视频号粉丝", "value": "2,019",  "url": "" },
+  "bilibili":    { "label": "B站粉丝",   "value": "477",    "url": "https://space.bilibili.com/613257828" },
+  "updatedAt": "2026.05.11"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "dayan-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "大雁的个人站：vibecoder portfolio + blog + course signup",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0"
+  }
+}
