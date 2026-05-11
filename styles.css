@@ -229,11 +229,14 @@ body::after {
 }
 .brand-mark {
   display: block;
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
   filter: drop-shadow(0 0 16px rgba(139, 124, 255, 0.24));
   flex: 0 0 auto;
+}
+.brand-domain {
+  margin-left: 8px;
 }
 .brand-meta {
   font-size: 10.5px;

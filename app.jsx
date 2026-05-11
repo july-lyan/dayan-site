@@ -199,7 +199,7 @@ function Nav({ name, domain, ver }) {
       <div className="nav-inner">
         <a className="brand" href="#top">
           <img className="brand-mark" src="assets/logo-dayan-vibecoder-256.png?v=20260511d" alt="大雁 logo" />
-          <span>{domain}</span>
+          <span className="brand-domain">{domain}</span>
           <span className="brand-meta">v{ver}</span>
         </a>
         <div className="nav-links">
@@ -509,7 +509,7 @@ function Footer({ name, domain, email, wechat }) {
           <div>
             <a className="brand" href="#top" style={{ marginBottom: 12 }}>
               <img className="brand-mark" src="assets/logo-dayan-vibecoder-256.png?v=20260511d" alt="大雁 logo" />
-              <span>{domain}</span>
+              <span className="brand-domain">{domain}</span>
             </a>
             <p style={{ marginTop: 12, color: "var(--fg-muted)", maxWidth: "32ch", lineHeight: 1.6 }}>
               一个用 AI 把想法变成产品的杭州独立产品人。本站本身就是 vibecoding 的实验场。
