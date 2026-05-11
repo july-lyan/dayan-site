@@ -220,7 +220,7 @@ body::after {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   font-family: var(--f-mono);
   font-weight: 500;
   font-size: 14px;
@@ -229,16 +229,16 @@ body::after {
 }
 .brand-mark {
   display: block;
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
-  filter: drop-shadow(0 0 14px rgba(139, 124, 255, 0.28));
+  filter: drop-shadow(0 0 16px rgba(139, 124, 255, 0.24));
   flex: 0 0 auto;
 }
 .brand-meta {
   font-size: 10.5px;
   color: var(--fg-faint);
-  margin-left: 4px;
+  margin-left: 2px;
   letter-spacing: 0.05em;
 }
 .brand-meta::before { content: "/ "; color: var(--fg-faint); }
