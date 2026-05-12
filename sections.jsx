@@ -662,7 +662,7 @@ function DemoResume() {
 }
 
 function DemoContentFlow() {
-  const PLACEHOLDER = "月薪3000，我靠副业一个月多赚2万的真实经历";
+  const PLACEHOLDER = "月薪3000怎么逆袭买了2套房";
   const [input, setInput] = React.useState("");
   const [result, setResult] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -677,7 +677,10 @@ function DemoContentFlow() {
     hlLines.forEach((l) => highlights.push(l.replace(/^•\s*/, "").replace(/^亮点：/, "").trim()));
     const suggMatch = text.match(/改进[：:]\s*(.+)/);
     const suggestion = suggMatch ? suggMatch[1].trim() : "";
-    return { score, highlights, suggestion, raw: text };
+    const imitations = [];
+    const imitLines = text.match(/仿写\d[：:]\s*(.+)/g) || [];
+    imitLines.forEach((l) => imitations.push(l.replace(/^仿写\d[：:]\s*/, "").trim()));
+    return { score, highlights, suggestion, imitations, raw: text };
   }
 
   function scoreColor(s) {
@@ -715,6 +718,9 @@ function DemoContentFlow() {
       `• 亮点：${highlights[1]}`,
       `• 亮点：${highlights[2]}`,
       `改进：${suggestion}`,
+      `仿写1：逆袭买房真实经历，普通人也能复制`,
+      `仿写2：3000存款怎么翻盘买了2套房`,
+      `仿写3：我用这个方法，5年从月薪3000到双套房`,
     ].join("\n");
   }
 
@@ -757,7 +763,7 @@ function DemoContentFlow() {
   return (
     <div className="demo">
       <div className="demo-head">
-        <span className="lhs">🔥 小红书爆款分析 · 试一下</span>
+        <span className="lhs">🔥 爆款标题分析 · 试一下</span>
         <span className="live"><span className="dot" /> LIVE</span>
       </div>
       <div className="demo-body">
@@ -822,6 +828,25 @@ function DemoContentFlow() {
                   💡 {result.suggestion}
                 </div>
               )}
+              {result.imitations && result.imitations.length > 0 && (
+                <div style={{
+                  marginTop: 10,
+                  paddingTop: 8,
+                  borderTop: "1px solid var(--hairline)",
+                }}>
+                  <div style={{ color: "var(--fg-dim)", fontSize: 11.5, marginBottom: 6 }}>✦ 仿写标题</div>
+                  {result.imitations.map((t, i) => (
+                    <div key={i} style={{
+                      fontSize: 12.5,
+                      color: "var(--fg)",
+                      padding: "4px 0",
+                      borderBottom: i < result.imitations.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                    }}>
+                      {i + 1}. {t}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
           {error && (
@@ -834,7 +859,7 @@ function DemoContentFlow() {
               disabled={loading}
               style={{ flex: 1 }}
             >
-              {loading ? "分析中…" : "🔥 分析爆款潜力"}
+              {loading ? "分析中…" : "🔥 分析标题"}
             </button>
             {(result || input) && (
               <button className="btn btn-ghost" onClick={handleReset}>重置</button>
