@@ -123,28 +123,30 @@ export default async function handler(req, res) {
     if (mode === "resume") {
       const resp = await client.chat.completions.create({
         model: MODEL_PRO,
-        max_tokens: 200,
+        max_tokens: 300,
         messages: [
           { role: "system", content: RESUME_SYSTEM },
           { role: "user", content: String(question) },
         ],
       });
-      const reply = resp.choices?.[0]?.message?.content?.trim() || "";
+      const choice = resp.choices?.[0]?.message;
+      const reply = (choice?.content || choice?.reasoning_content || "").trim();
       res.status(200).json({ reply, source: "model", provider: "deepseek", model: MODEL_PRO });
       return;
     }
 
     if (mode === "viral") {
       const resp = await client.chat.completions.create({
-        model: MODEL_PRO,
-        max_tokens: 250,
+        model: MODEL_FLASH,
+        max_tokens: 600,
         messages: [
           { role: "system", content: VIRAL_SYSTEM },
           { role: "user", content: String(question) },
         ],
       });
-      const reply = resp.choices?.[0]?.message?.content?.trim() || "";
-      res.status(200).json({ reply, source: "model", provider: "deepseek", model: MODEL_PRO });
+      const choice = resp.choices?.[0]?.message;
+      const reply = (choice?.content || choice?.reasoning_content || "").trim();
+      res.status(200).json({ reply, source: "model", provider: "deepseek", model: MODEL_FLASH });
       return;
     }
 
