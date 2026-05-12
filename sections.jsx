@@ -1,6 +1,16 @@
 // sections.jsx — About, Projects, Demo, Blog, Dashboard, Course, Newsletter
 // All sections share window-scope so app.jsx can compose them.
 
+/* ─────────────────────── RATE LIMIT (localStorage) ─────────────────────── */
+// 每天重置，key 格式：rl_{name}_{yyyy-mm-dd}
+function rlCheck(name, max) {
+  const key = `rl_${name}_${new Date().toISOString().slice(0, 10)}`;
+  const count = parseInt(localStorage.getItem(key) || "0", 10);
+  if (count >= max) return false;
+  localStorage.setItem(key, String(count + 1));
+  return true;
+}
+
 /* ────────────────────────────── DATA ────────────────────────────── */
 
 const TIMELINE = [
@@ -523,6 +533,10 @@ function DemoResume() {
   }
 
   async function handlePolish() {
+    if (!rlCheck("resume", 5)) {
+      setError("今日体验次数已达上限（5次），明天再来～");
+      return;
+    }
     const text = input.trim() || PLACEHOLDER;
     setLoading(true);
     setResult("");
@@ -705,6 +719,10 @@ function DemoContentFlow() {
   }
 
   async function handleAnalyze() {
+    if (!rlCheck("viral", 5)) {
+      setError("今日体验次数已达上限（5次），明天再来～");
+      return;
+    }
     const text = input.trim() || PLACEHOLDER;
     setLoading(true);
     setResult(null);

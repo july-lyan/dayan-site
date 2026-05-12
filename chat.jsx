@@ -17,6 +17,9 @@ const INITIAL_MSGS = [
   },
 ];
 
+const MODEL_LABEL = "deepseek · rag";
+const FALLBACK_LABEL = "站内兜底 · 离线";
+
 // 兜底回复——/api/chat 不可用时使用
 const FALLBACK_ANSWERS = {
   vibe: "vibecoding = 自然语言 + AI 编排开发，把想法到上线压到天级。不是无脑 prompt，而是产品 sense × AI 编排 × 快速迭代。",
@@ -37,41 +40,83 @@ function pickFallback(q) {
   return FALLBACK_ANSWERS.default;
 }
 
+async function postChat(payload) {
+  const resp = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) {
+    const err = new Error(data.error || `api_${resp.status}`);
+    err.code = data.error || `api_${resp.status}`;
+    err.detail = data.detail || "";
+    throw err;
+  }
+  return data;
+}
+
+async function probeChatRuntime() {
+  const resp = await fetch("/api/chat");
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) throw new Error(data.error || `api_${resp.status}`);
+  return data;
+}
+
 function Chat() {
   const [msgs, setMsgs] = React.useState(INITIAL_MSGS);
   const [input, setInput] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [runtimeLabel, setRuntimeLabel] = React.useState(MODEL_LABEL);
   const bodyRef = React.useRef(null);
 
   React.useEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
   }, [msgs, loading]);
 
+  React.useEffect(() => {
+    let alive = true;
+    probeChatRuntime()
+      .then((data) => {
+        if (!alive) return;
+        setRuntimeLabel(data && data.configured ? MODEL_LABEL : FALLBACK_LABEL);
+      })
+      .catch(() => {
+        if (!alive) return;
+        setRuntimeLabel(FALLBACK_LABEL);
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const USER_MSG_LIMIT = 8;
+  const userMsgCount = msgs.filter((m) => m.role === "user").length;
+
   async function send(text) {
     const q = (text ?? input).trim();
     if (!q || loading) return;
+    if (userMsgCount >= USER_MSG_LIMIT) {
+      setMsgs((m) => [...m, { role: "bot", text: "本次会话问题数已达上限，刷新页面可继续聊～" }]);
+      return;
+    }
     setInput("");
     setMsgs((m) => [...m, { role: "user", text: q }]);
     setLoading(true);
 
     try {
-      const resp = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          history: msgs.map((m) => ({
-            role: m.role === "user" ? "user" : "assistant",
-            content: m.text,
-          })),
-          question: q,
-        }),
+      const data = await postChat({
+        history: msgs.map((m) => ({
+          role: m.role === "user" ? "user" : "assistant",
+          content: m.text,
+        })),
+        question: q,
       });
-      if (!resp.ok) throw new Error(`api ${resp.status}`);
-      const data = await resp.json();
-      const reply = (data && data.reply) ? data.reply : pickFallback(q);
+      const reply = data && data.reply ? data.reply : pickFallback(q);
+      setRuntimeLabel(data && data.source === "model" ? MODEL_LABEL : FALLBACK_LABEL);
       setMsgs((m) => [...m, { role: "bot", text: reply.trim() }]);
     } catch (err) {
-      // canned fallback — 保证 demo 体验完整
+      setRuntimeLabel(FALLBACK_LABEL);
       setMsgs((m) => [...m, { role: "bot", text: pickFallback(q) }]);
     } finally {
       setLoading(false);
@@ -85,7 +130,7 @@ function Chat() {
           <span className="dot"></span>
           ASSISTANT · 雁飞
         </span>
-        <span>haiku-4.5 · rag</span>
+        <span>{runtimeLabel}</span>
       </div>
       <div className="chat-body" ref={bodyRef}>
         {msgs.map((m, i) => (
