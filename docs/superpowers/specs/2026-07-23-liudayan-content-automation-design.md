@@ -46,7 +46,7 @@
 2. 使用 GitHub Secrets 注入 `WECHAT_MP_APPID` 和 `WECHAT_MP_APPSECRET`。
 3. 微信公众平台 API 返回有效文章后，更新 `data/site-content.json`。
 4. B站公开 API 返回有效粉丝数后，更新 `stats.json`。
-5. 仅在业务数据实际变化时更新 `updatedAt` 并提交 JSON。
+5. 抓取成功后更新来源的 `verifiedAt`；仅在业务数据实际变化时更新 `updatedAt`。
 6. GitHub 提交触发 Vercel 自动部署。
 7. 任一来源失败时保留该来源上一版数据，其他来源继续同步。
 
@@ -62,7 +62,7 @@
 
 顶层增加：
 
-- `checkedAt`：自动任务最后执行日期
+- `checkedAt`：自动任务最后成功执行日期
 - `updatedAt`：任一业务数据最后变化日期
 
 `data/site-content.json` 增加：
@@ -77,6 +77,5 @@
 - 三条失效小红书直达链接从数据中删除。
 - 最新公众号文章可进入原文。
 - 同步脚本在微信 API 成功、微信 API 失败、无数据变化三种场景下均保持 JSON 有效。
-- 自动任务仅在数据变化时产生提交。
+- 自动任务成功核验后提交核验日期；业务更新时间仅在内容或粉丝数变化时更新。
 - 本地冒烟验证和生产站验证通过。
-
