@@ -1,34 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>大雁 · vibecoder</title>
-  <meta name="description" content="用 vibecoding 把想法变成产品。15 年大厂沉淀，今天用 AI 编排，每周一个上线产品。" />
-  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png?v=20260511d" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="sections.css" />
+  <title>刘大雁 · 一个正在用 AI 重新建立工作和生活的人</title>
+  <meta name="description" content="刘大雁，15 年产品与运营实战经验（阿里巴巴、小电），雁洄文化科技主理人。提供企业 AI 前期咨询、AI 工具赋能实战培训与 1 对 1 项目陪跑。" />
+  <link rel="stylesheet" href="/assets/app.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="app" id="app">
+    <header class="top">
+      <div class="top-l">
+        <button class="menu-btn" onclick="window.__agent.openDrawer()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+          <span>目录</span>
+        </button>
+        <button class="logo-btn" onclick="window.__agent.backHome()" title="回到首页">
+          <img class="mini-av" src="/assets/photos/avatar.jpg" alt="刘大雁" />
+          <b>刘大雁</b>
+        </button>
+      </div>
+      <div class="top-r">
+        <button class="ghost-btn" id="bvBtn" onclick="window.__agent.toggleBrowse()">全部内容</button>
+        <button class="wx-pill" onclick="window.__agent.openPage('contact')">联系我</button>
+      </div>
+    </header>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+    <!-- 第一幕：三拍开屏 -->
+    <main class="intro" id="intro">
+      <div class="intro-inner" id="introInner">
+        <div class="beat b1">
+          <div class="portrait-wrap">
+            <img src="/assets/photos/avatar.jpg" alt="刘大雁" />
+          </div>
+          <div class="hi">你好，我是刘大雁</div>
+        </div>
+        <h1 class="beat b2">一个正在用 <em>AI</em><br />重新建立工作和生活的人</h1>
+        <p class="bio beat b3">15 年产品与运营（阿里巴巴 · 小电）· 现做企业 AI 落地咨询、实战培训与 1 对 1 项目陪跑。<br />你想了解哪方面，可以直接聊聊。</p>
 
-  <script type="text/babel" data-presets="react" src="tweaks-panel.jsx"></script>
-  <script type="text/babel" data-presets="react" src="chat.jsx"></script>
-  <script type="text/babel" data-presets="react" src="sections.jsx"></script>
-  <script type="text/babel" data-presets="react" src="app.jsx"></script>
+        <div class="ask-wrap beat b4">
+          <div class="ask-box">
+            <input id="q0" placeholder="想了解什么，直接问我…" autocomplete="off" />
+            <button onclick="window.__agent.askFrom('q0')" aria-label="发送">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+          </div>
+          <div class="prompts" id="introPrompts"></div>
+          <div class="sub-tip">常见话题秒回预设 · 自由提问基于个人知识库作答</div>
+        </div>
+      </div>
+    </main>
 
-  <script type="text/babel" data-presets="react">
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
+    <!-- 第二幕：对话流 -->
+    <section class="chat-view">
+      <div class="thread-wrap" id="stage">
+        <div class="thread" id="thread"></div>
+      </div>
+      <div class="chat-composer">
+        <div class="inner">
+          <div class="quick-row" id="quickRow"></div>
+          <div class="ask-box">
+            <input id="q1" placeholder="继续问我，比如「怎么收费」「适合传统行业吗」「和普通培训有什么区别」…" autocomplete="off" />
+            <button onclick="window.__agent.askFrom('q1')" aria-label="发送">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 左侧抽屉目录 -->
+    <div class="backdrop" id="backdrop" onclick="window.__agent.closeAllOverlays()"></div>
+    <aside class="drawer" id="drawer">
+      <div class="dr-head">
+        <b>内容目录</b>
+        <button class="dr-close" onclick="window.__agent.closeDrawer()">收起</button>
+      </div>
+      <div class="nav" id="nav"></div>
+    </aside>
+
+    <!-- 全部内容总览 -->
+    <section class="browseview" id="browseview"></section>
+
+    <!-- 右侧独立详情画布 -->
+    <section class="canvas" id="canvas">
+      <div class="cv-bar">
+        <div class="url" id="url"></div>
+        <button class="cv-btn" onclick="window.__agent.copyLink()">复制链接</button>
+        <a class="cv-btn" id="openFullLink" href="/">独立页</a>
+        <button class="cv-btn" onclick="window.__agent.closeCanvas()">关闭</button>
+      </div>
+      <div class="cv-body" id="cvbody"></div>
+    </section>
+
+    <div class="toast" id="toast">已复制</div>
+  </div>
+  <script type="module" src="/assets/agent.js"></script>
 </body>
 </html>

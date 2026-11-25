@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>聊聊你的业务场景 · 刘大雁</title>
+  <meta name="description" content="加微信沟通效率最高，请备注「公司 / 机构 + 想解决的问题」。如果不方便马上加微信，也可以直接填写下方预约表单，提交后会直达我的飞书多维表格。" />
+  <link rel="stylesheet" href="/assets/app.css" />
+</head>
+<body class="standalone-body">
+  <header class="sa-top">
+    <a class="sa-brand" href="/">
+      <img class="mini-av" src="/assets/photos/avatar.jpg" alt="刘大雁" />
+      <span>刘大雁</span>
+    </a>
+    <div class="top-r">
+      <a class="ghost-btn" href="/">和大雁聊聊</a>
+      <a class="wx-pill" href="/contact">联系我</a>
+    </div>
+  </header>
+  <main class="sa-main">
+    <div class="cv-kicker">联系与预约</div>
+    <h1 class="doc-title">聊聊你的业务场景</h1>
+    <p class="doc-lead">加微信沟通效率最高，请备注「公司 / 机构 + 想解决的问题」。如果不方便马上加微信，也可以直接填写下方预约表单，提交后会直达我的飞书多维表格。</p>
+    
+      <div class="wx-box">
+        <div class="wx-qr">
+          <img src="/assets/photos/wechat-qr.jpg" alt="微信二维码" onerror="this.remove();this.parentNode.textContent='微信二维码\n待放入'" />
+        </div>
+        <div>
+          <b style="font-size:15.5px">微信：DaYan__Liu</b>
+          <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.65">
+            请备注「公司 / 机构 + 想解决的问题」<br/>
+            邮箱：hi@liudayan.com
+          </p>
+        </div>
+      </div>
+      <h3 class="doc-h3">或填写预约表单（提交直达飞书）</h3>
+      <form class="lead-form" id="leadForm">
+        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+        <div class="form-row">
+          <div class="field"><label>你的称呼 *</label><input name="name" required placeholder="怎么称呼你" /></div>
+          <div class="field"><label>公司 / 机构</label><input name="org" placeholder="选填" /></div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>想聊的方向 *</label>
+            <select name="topic">
+              <option value="企业 AI 前期咨询">企业 AI 前期咨询</option>
+              <option value="AI 工具赋能（培训 / 内训）">AI 工具赋能（培训 / 内训）</option>
+              <option value="1 对 1 项目陪跑">1 对 1 项目陪跑</option>
+              <option value="亲子探索 / 其他">亲子探索 / 其他</option>
+            </select>
+          </div>
+          <div class="field"><label>微信或手机号 *</label><input name="contact" required placeholder="方便回联" /></div>
+        </div>
+        <div class="field">
+          <label>一句话说明你目前想解决的问题 *</label>
+          <textarea name="message" required placeholder="例如：我们是 20 人电商团队，想看商品图和客服流程能不能先跑一个 AI 试点…"></textarea>
+        </div>
+        <button class="submit-btn" type="submit">提交预约</button>
+        <div class="form-msg" id="leadMsg"></div>
+      </form>
+    
+  </main>
+  <script>
+const f = document.getElementById("leadForm");
+if (f) {
+  const m = document.getElementById("leadMsg");
+  const b = f.querySelector("button[type=submit]");
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = Object.fromEntries(new FormData(f).entries());
+    payload.sourcePath = location.pathname;
+    b.disabled = true; b.textContent = "提交中…"; m.className = "form-msg";
+    try {
+      const r = await fetch("/api/lead", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.ok) { m.className = "form-msg ok"; m.textContent = "已收到你的预约信息，大雁看到后会尽快联系你。"; f.reset(); }
+      else { m.className = "form-msg err"; m.textContent = d.message || "提交未成功，请直接加微信 DaYan__Liu。"; }
+    } catch {
+      m.className = "form-msg err"; m.textContent = "提交遇到网络波动，请直接加微信 DaYan__Liu。";
+    } finally { b.disabled = false; b.textContent = "提交预约"; }
+  });
+}
+</script>
+</body>
+</html>

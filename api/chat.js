@@ -1,100 +1,91 @@
 // Vercel Serverless Function — POST /api/chat
-// 知识库从 /knowledge/*.md 动态读取，更新文件即更新雁飞的知识。
-// 部署时只需在 Vercel 环境变量里设置 DEEPSEEK_API_KEY。
+// 架构：知识库片段检索（RAG）+ DeepSeek 严格忠实回答 + 来源页面引用（零外部依赖，原生 fetch）
+// 环境变量：DEEPSEEK_API_KEY（与旧版保持一致）
 
-import OpenAI from "openai";
-import { readFileSync, readdirSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 
-const MODEL_FLASH = "deepseek-v4-flash";
-const MODEL_PRO = "deepseek-v4-pro";
+const MODEL = process.env.DEEPSEEK_MODEL || "deepseek-v4-flash";
 
-const KB_PROMPT_PREFIX = `你是大雁个人网站上的 AI 助手「雁飞」。根据以下知识库回答访客的问题。
-
-回答规范：
-- 语气友好、专业，不卖弄
-- 使用第三人称指代大雁（"她" / "大雁"）
-- 2-4 句话简短回复，不啰嗦
-- 如问题超出知识库范围，诚实说"这部分大雁还没公开过，可以微信直接问她（DaYan__Liu）"
-- 不编造数据、价格、链接或承诺
-
---- 知识库开始 ---
-
-`;
-
-const KB_PROMPT_SUFFIX = `
---- 知识库结束 ---`;
-
-function loadKnowledge() {
-  const dir = join(process.cwd(), "knowledge");
-  if (!existsSync(dir)) return KB_PROMPT_PREFIX + "（知识库暂未配置）" + KB_PROMPT_SUFFIX;
+let cachedChunks = null;
+function loadChunks() {
+  if (cachedChunks) return cachedChunks;
+  const p = join(process.cwd(), "data", "kb-chunks.json");
+  if (!existsSync(p)) return [];
   try {
-    const files = readdirSync(dir)
-      .filter((f) => f.endsWith(".md"))
-      .sort();
-    const content = files
-      .map((f) => readFileSync(join(dir, f), "utf-8"))
-      .join("\n\n");
-    return KB_PROMPT_PREFIX + content + KB_PROMPT_SUFFIX;
+    cachedChunks = JSON.parse(readFileSync(p, "utf-8"));
+    return cachedChunks;
   } catch {
-    return KB_PROMPT_PREFIX + "（知识库读取失败）" + KB_PROMPT_SUFFIX;
+    return [];
   }
 }
 
-const SYSTEM_KB = loadKnowledge();
+const STOP_WORDS = new Set(["怎么", "什么", "可以", "你们", "请问", "如何", "一下", "有没有", "是否", "这个", "那个", "了解", "关于", "老师", "大雁"]);
 
-const RESUME_SYSTEM = `你是一名资深 HR 顾问，专精中文简历优化，服务过阿里、腾讯、字节等大厂候选人。
+// 轻量中英文分词 + 双字切分，过滤高频虚词
+function tokenize(text) {
+  const clean = String(text || "")
+    .toLowerCase()
+    .replace(/[^\u4e00-\u9fa5a-z0-9]+/g, " ")
+    .trim();
+  const tokens = new Set();
+  for (const part of clean.split(/\s+/)) {
+    if (!part) continue;
+    if (/^[a-z0-9]+$/.test(part)) {
+      if (part.length >= 2) tokens.add(part);
+    } else {
+      if (part.length <= 4 && !STOP_WORDS.has(part)) tokens.add(part);
+      for (let i = 0; i < part.length - 1; i++) {
+        const bg = part.slice(i, i + 2);
+        if (!STOP_WORDS.has(bg)) tokens.add(bg);
+      }
+    }
+  }
+  return Array.from(tokens);
+}
 
-## 任务
-将用户提供的一段普通工作经历描述，改写成一句高质量的中文简历 bullet point。
+function retrieve(query, topK = 4) {
+  const chunks = loadChunks();
+  const qTokens = tokenize(query);
+  if (!qTokens.length || !chunks.length) return [];
 
-## 改写框架
-结构：【强动词】+【核心动作/方法】+【量化结果】
-- 强动词：主导 / 推动 / 搭建 / 操盘 / 设计 / 落地 / 牵头 / 优化 / 孵化 / 负责
-- 核心动作：提炼用户描述中最有价值的行为，删除模糊表达
-- 量化结果：用户给出数字则保留；未给出则用方向性表达（提升 X% / 扩大 X 倍 / 降低成本 X%）
-  - 禁止编造具体数字（如 50%、100万），只做方向性表达
+  const scored = chunks
+    .map((c) => {
+      const hay = `${c.title} ${c.heading} ${c.text}`.toLowerCase();
+      let score = 0;
+      for (const t of qTokens) {
+        if (hay.includes(t)) {
+          score += c.title.toLowerCase().includes(t) || c.heading.toLowerCase().includes(t) ? 3 : 1;
+        }
+      }
+      return { chunk: c, score };
+    })
+    .filter((x) => x.score >= 2)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, topK);
 
-## 格式要求
-- 只输出改写后的一句话，≤60 字
-- 不加引号、序号、换行或任何解释
-- 语言简洁有力，体现候选人对业务的实质贡献`;
+  return scored.map((x) => x.chunk);
+}
 
-const VIRAL_SYSTEM = `你是一名小红书爆款内容顾问，深度研究过 10 万条爆款标题的传播规律。
-
-## 任务
-分析用户提供的小红书标题，给出结构化评估，并仿写 3 条更优标题。
-
-## 评分维度（每项 0-20 分，满分 100）
-1. 情绪共鸣：是否触发好奇、焦虑、羡慕、共鸣等强情绪
-2. 数字冲击：是否包含具体数字，增强可信度和对比感
-3. 悬念反差：是否制造意外感、反转或信息差
-4. 痛点精准：是否直击目标读者的真实困境或欲望
-5. 传播潜力：是否让人有转发冲动，受众是否足够宽泛
-
-## 小红书标题规范
-- 字数：≤20 字（中文字符计数，含标点）
-- 要素：情绪 / 数字 / 悬念 / 反差，至少含一项
-- 风格：口语化、有画面感、让人忍不住点进去
-- 仿写标题必须严格控制在 20 字以内，不得超标
-
-## 输出格式（严格按此格式，不输出任何额外内容）
-爆款指数 XX 分
-• 亮点：[15字内]
-• 亮点：[15字内]
-• 亮点：[15字内]
-改进：[不超过25字的具体建议]
-仿写1：[≤20字标题]
-仿写2：[≤20字标题]
-仿写3：[≤20字标题]`;
+function buildCitations(chunks) {
+  const seen = new Set();
+  const list = [];
+  for (const c of chunks) {
+    if (!c.pageId || seen.has(c.pageId)) continue;
+    seen.add(c.pageId);
+    list.push({ id: c.pageId, title: c.pageNav || c.title, slug: c.slug });
+  }
+  return list.slice(0, 3);
+}
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
+    const chunks = loadChunks();
     res.status(200).json({
       ok: true,
       configured: Boolean(process.env.DEEPSEEK_API_KEY),
-      provider: "deepseek",
-      model: MODEL_FLASH,
+      model: MODEL,
+      chunks: chunks.length,
     });
     return;
   }
@@ -103,74 +94,99 @@ export default async function handler(req, res) {
     res.status(405).json({ error: "method_not_allowed" });
     return;
   }
-  if (!process.env.DEEPSEEK_API_KEY) {
-    res.status(503).json({ error: "api_key_not_configured" });
-    return;
-  }
 
-  const { history = [], question = "", mode = "" } = req.body || {};
-  if (!question.trim()) {
+  const { question = "", history = [] } = req.body || {};
+  const q = String(question || "").trim();
+  if (!q) {
     res.status(400).json({ error: "empty_question" });
     return;
   }
 
-  try {
-    const client = new OpenAI({
-      apiKey: process.env.DEEPSEEK_API_KEY,
-      baseURL: "https://api.deepseek.com",
+  const hits = retrieve(q, 4);
+  const citations = buildCitations(hits);
+
+  // 未命中任何知识库片段：直接诚实兜底，避免幻觉
+  if (hits.length === 0) {
+    res.status(200).json({
+      reply: "这个问题我的公开知识库里还没有覆盖到（为了保证准确，我不做猜测回答）。建议直接加微信 **DaYan__Liu** 或填写预约表单，把你的具体场景发给大雁本人回复。",
+      citations: [{ id: "contact", title: "联系与约谈", slug: "/contact" }],
+      source: "miss",
     });
+    return;
+  }
 
-    if (mode === "resume") {
-      const resp = await client.chat.completions.create({
-        model: MODEL_PRO,
-        max_tokens: 300,
-        messages: [
-          { role: "system", content: RESUME_SYSTEM },
-          { role: "user", content: String(question) },
-        ],
-      });
-      const choice = resp.choices?.[0]?.message;
-      const reply = (choice?.content || choice?.reasoning_content || "").trim();
-      res.status(200).json({ reply, source: "model", provider: "deepseek", model: MODEL_PRO });
-      return;
-    }
+  // 若未配置 DEEPSEEK_API_KEY（例如本地静态开发时），优雅降级返回最相关知识库片段
+  if (!process.env.DEEPSEEK_API_KEY) {
+    const top = hits[0];
+    res.status(200).json({
+      reply: `${top.text.slice(0, 220)}${top.text.length > 220 ? "…" : ""}`,
+      citations,
+      source: "kb-local",
+    });
+    return;
+  }
 
-    if (mode === "viral") {
-      const resp = await client.chat.completions.create({
-        model: MODEL_FLASH,
-        max_tokens: 600,
-        messages: [
-          { role: "system", content: VIRAL_SYSTEM },
-          { role: "user", content: String(question) },
-        ],
-      });
-      const choice = resp.choices?.[0]?.message;
-      const reply = (choice?.content || choice?.reasoning_content || "").trim();
-      res.status(200).json({ reply, source: "model", provider: "deepseek", model: MODEL_FLASH });
-      return;
-    }
+  const contextBlock = hits
+    .map((h, i) => `[片段${i + 1} | 来源：${h.title} (${h.slug})]\n${h.text}`)
+    .join("\n\n");
 
+  const systemPrompt = `你是刘大雁个人网站（liudayan.com）的个人 Agent。请严格依据下面检索到的知识库片段回答访客问题。
+
+规则：
+1. 语气专业、克制、真诚、自然，像本人直接交流，不喊口号，不堆形容词。
+2. 回答控制在 2-4 句话，重点清晰；可使用 **加粗** 突出关键信息。
+3. 严禁编造报价数字、客户真实名称、未上线的承诺或知识库里没有的数据。
+4. 涉及报价时明确说明「按具体场景评估，不公开标价」。
+5. 如果检索片段不足以回答访客的具体问题，坦诚说明未覆盖，并引导对方加微信 DaYan__Liu 或填写站内预约表单。
+
+--- 检索到的知识库片段 ---
+${contextBlock}
+--- 片段结束 ---`;
+
+  try {
     const messages = [
-      { role: "system", content: SYSTEM_KB },
+      { role: "system", content: systemPrompt },
       ...history
         .filter((m) => m && m.role && m.content)
-        .slice(-8)
-        .map((m) => ({ role: m.role === "bot" ? "assistant" : m.role, content: String(m.content) })),
-      { role: "user", content: String(question) },
+        .slice(-6)
+        .map((m) => ({
+          role: m.role === "assistant" || m.role === "bot" ? "assistant" : "user",
+          content: String(m.content),
+        })),
+      { role: "user", content: q },
     ];
 
-    const resp = await client.chat.completions.create({
-      model: MODEL_FLASH,
-      max_tokens: 500,
-      messages,
+    const apiResp = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 450,
+        temperature: 0.3,
+        messages,
+      }),
     });
 
-    const reply = resp.choices?.[0]?.message?.content?.trim()
-      || "（暂时没想清楚怎么回答，可以微信直接问大雁。）";
+    if (!apiResp.ok) {
+      throw new Error(`deepseek_http_${apiResp.status}`);
+    }
+    const resp = await apiResp.json();
+    const choice = resp.choices?.[0]?.message;
+    const reply = (choice?.content || choice?.reasoning_content || "").trim()
+      || "这个问题建议直接加微信 **DaYan__Liu** 和大雁本人沟通。";
 
-    res.status(200).json({ reply, source: "model", provider: "deepseek", model: MODEL_FLASH });
+    res.status(200).json({ reply, citations, source: "rag", model: MODEL });
   } catch (err) {
-    console.error("[chat] deepseek error", err);
-    res.status(500).json({ error: "upstream_error", detail: String(err?.message || err) });
+    console.error("[api/chat] deepseek error:", err);
+    // 上游异常时降级到命中片段，不让页面报错崩溃
+    const top = hits[0];
+    res.status(200).json({
+      reply: `${top.text.slice(0, 220)}${top.text.length > 220 ? "…" : ""}`,
+      citations,
+      source: "kb-fallback",
+    });
   }
 }
