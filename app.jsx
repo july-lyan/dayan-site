@@ -7,15 +7,13 @@
 // 🔧 PLACEHOLDER DATA TO REPLACE BEFORE DEPLOY (search "TODO:replace"):
 //   - 名字 / 微信号 / 邮箱 / 域名 (SITE 对象)
 //   - 履历 (sections.jsx → TIMELINE)
-//   - 项目数据 (sections.jsx → PROJECTS)
-//   - Blog 文章 (sections.jsx → POSTS)
-//   - Dashboard 数据 (sections.jsx → Dashboard cells)
-//   - 课程信息 (sections.jsx → Course)
+//   - 项目数据 / Blog 文章 (data/site-content.json)
+//   - Dashboard 数据 (stats.json)
 
 const SITE = {
   domain: "liudayan.com",
   wechat: "DaYan__Liu",
-  email: "hi@liudayan.com",            // 等域名邮箱配好；或换成你的常用邮箱
+  email: "hello@yanhui.group",
   buildVer: "0.1.3",
 };
 
@@ -62,25 +60,46 @@ const FONT_STACKS = {
 
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [theme, setTheme] = React.useState(
+    () => document.documentElement.dataset.theme || "paper",
+  );
 
   // 把 tweaks 应用到 CSS 变量
   React.useEffect(() => {
     const root = document.documentElement;
     const p = PRIMARIES[t.primary] || PRIMARIES["#8b7cff"];
-    root.style.setProperty("--primary", t.primary);
-    root.style.setProperty("--primary-glow", p.glow);
-    root.style.setProperty("--primary-soft", p.soft);
+    if (theme === "dark") {
+      root.style.setProperty("--primary", t.primary);
+      root.style.setProperty("--primary-glow", p.glow);
+      root.style.setProperty("--primary-soft", p.soft);
+    } else {
+      root.style.removeProperty("--primary");
+      root.style.removeProperty("--primary-glow");
+      root.style.removeProperty("--primary-soft");
+    }
     root.style.setProperty("--scanlines", t.scanlines ? "1" : "0");
     root.style.setProperty("--grid", t.grid ? "0.7" : "0");
     root.style.setProperty("--f-display", FONT_STACKS[t.displayFont] || FONT_STACKS.space);
-  }, [t.primary, t.scanlines, t.grid, t.displayFont]);
+  }, [theme, t.primary, t.scanlines, t.grid, t.displayFont]);
 
-  const days = useDaysUntil("2026-05-17");
+  function toggleTheme() {
+    const nextTheme = theme === "paper" ? "dark" : "paper";
+    document.documentElement.dataset.theme = nextTheme;
+    try {
+      localStorage.setItem("dayan-theme", nextTheme);
+    } catch {}
+    setTheme(nextTheme);
+  }
 
   return (
     <>
-      <AnnounceBar days={days} />
-      <Nav name={t.name} domain={SITE.domain} ver={SITE.buildVer} />
+      <Nav
+        name={t.name}
+        domain={SITE.domain}
+        ver={SITE.buildVer}
+        theme={theme}
+        onThemeToggle={toggleTheme}
+      />
       <main>
         <Hero
           name={t.name}
@@ -112,7 +131,7 @@ function App() {
         <DemoStrip />
         <Blog />
         <Dashboard />
-        <Course />
+        <GuestBook />
       </main>
       <Footer name={t.name} domain={SITE.domain} email={SITE.email} wechat={SITE.wechat} />
 
@@ -162,38 +181,63 @@ function App() {
   );
 }
 
-/* ────────────────────────────── ANNOUNCE BAR ────────────────────────────── */
+/* ────────────────────────────── NAV ────────────────────────────── */
 
-function useDaysUntil(dateStr) {
-  return React.useMemo(() => {
-    const target = new Date(dateStr + "T09:00:00");
-    const now = new Date();
-    const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
-    return Math.max(0, diff);
-  }, [dateStr]);
-}
+function NavLike() {
+  const [count, setCount] = React.useState(null);
+  const [liked, setLiked] = React.useState(() => localStorage.getItem("gb_liked") === "1");
 
-function AnnounceBar({ days }) {
+  React.useEffect(() => {
+    fetch("/api/guestbook")
+      .then(r => r.json())
+      .then(d => setCount(d.likes ?? 0))
+      .catch(() => {});
+  }, []);
+
+  async function handleLike() {
+    if (liked) return;
+    setLiked(true);
+    localStorage.setItem("gb_liked", "1");
+    try {
+      const r = await fetch("/api/guestbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "like" }),
+      });
+      const { likes } = await r.json();
+      setCount(likes);
+    } catch {}
+  }
+
   return (
-    <div className="announce">
-      <div className="announce-inner">
-        <span className="announce-tag">WORKSHOP</span>
-        <span className="announce-text">
-          杭州 vibecoding 工作坊 · 5/17（周日）13:30{" "}
-          <span style={{ color: "var(--fg-faint)" }}>
-            ({days > 0 ? `还剩 ${days} 天` : days === 0 ? "今日开营" : "已结束"})
-          </span>{" "}
-          · ¥149 · 仅 10 席
-        </span>
-        <a className="announce-cta" href="#course">立即报名</a>
-      </div>
-    </div>
+    <button
+      className={`nav-like${liked ? " nav-liked" : ""}`}
+      onClick={handleLike}
+      disabled={liked}
+      title={liked ? "已赞过" : "点个赞"}
+    >
+      <span className="nav-like-heart">♥</span>
+      {count !== null && <span className="nav-like-count">{count}</span>}
+    </button>
   );
 }
 
-/* ────────────────────────────── NAV ────────────────────────────── */
+function ThemeToggle({ theme, onToggle }) {
+  const nextLabel = theme === "paper" ? "切换到深色主题" : "切换到明亮主题";
 
-function Nav({ name, domain, ver }) {
+  return (
+    <button
+      className="theme-toggle"
+      onClick={onToggle}
+      aria-label={nextLabel}
+      title={nextLabel}
+    >
+      <span aria-hidden="true">{theme === "paper" ? "夜" : "昼"}</span>
+    </button>
+  );
+}
+
+function Nav({ name, domain, ver, theme, onThemeToggle }) {
   return (
     <nav className="nav">
       <div className="nav-inner">
@@ -207,8 +251,10 @@ function Nav({ name, domain, ver }) {
           <a href="#projects">作品</a>
           <a href="#blog">Blog</a>
           <a href="#dash">数据</a>
-          <a href="#course">线下营</a>
+          <a href="#guestbook">留言</a>
+          <NavLike />
         </div>
+        <ThemeToggle theme={theme} onToggle={onThemeToggle} />
         <div className="nav-status">
           <span className="dot" />
           ONLINE
@@ -220,6 +266,30 @@ function Nav({ name, domain, ver }) {
 
 /* ────────────────────────────── HERO ────────────────────────────── */
 
+function GuestStats() {
+  const [stats, setStats] = React.useState(null);
+  React.useEffect(() => {
+    fetch("/api/guestbook")
+      .then(r => r.json())
+      .then(d => setStats({ likes: d.likes, msgs: d.messages?.length ?? 0 }))
+      .catch(() => {});
+  }, []);
+  if (!stats) return null;
+  return (
+    <a href="#guestbook" className="hero-guest-stats">
+      <span>♥ {stats.likes}</span>
+      <span className="hero-guest-sep">·</span>
+      <span>💬 {stats.msgs} 条留言</span>
+      <span className="arrow">↓</span>
+    </a>
+  );
+}
+
+function currentQuarter() {
+  const now = new Date();
+  return `${now.getFullYear()} / Q${Math.floor(now.getMonth() / 3) + 1}`;
+}
+
 function Hero({ name, domain, wechat, email, chatInline }) {
   return (
     <section className="hero" id="top" data-screen-label="01 Hero">
@@ -227,7 +297,7 @@ function Hero({ name, domain, wechat, email, chatInline }) {
         <div className="hero-grid">
           <div>
             <span className="hero-eyebrow">
-              <span className="badge">2026 / Q2</span>
+              <span className="badge">{currentQuarter()}</span>
               freelance · vibecoding · 杭州
             </span>
             <h1 className="hero-title">
@@ -246,8 +316,8 @@ function Hero({ name, domain, wechat, email, chatInline }) {
               <span className="now">freelance · vibecoding</span>
             </div>
             <div className="hero-cta">
-              <a className="btn btn-primary" href="#course">
-                报名 5/17 工作坊 <span className="arrow">→</span>
+              <a className="btn btn-primary" href="#projects">
+                看正在跑的产品 <span className="arrow">→</span>
               </a>
               <a className="btn btn-ghost" href="#contact">
                 微信 / 邮箱
@@ -257,6 +327,7 @@ function Hero({ name, domain, wechat, email, chatInline }) {
               </span>
             </div>
             {chatInline && <Chat />}
+            <GuestStats />
           </div>
           <NowCard />
         </div>
@@ -266,21 +337,28 @@ function Hero({ name, domain, wechat, email, chatInline }) {
 }
 
 function NowCard() {
-  const daysToEvent = useDaysUntil("2026-05-17");
-  const weekNum = React.useMemo(() => {
-    const d = new Date();
-    return Math.ceil((d - new Date(d.getFullYear(), 0, 1)) / (7 * 24 * 60 * 60 * 1000));
+  const [stats, setStats] = React.useState(null);
+  const [latestPost, setLatestPost] = React.useState(null);
+
+  React.useEffect(() => {
+    Promise.all([
+      fetch("/stats.json", { cache: "no-store" }).then((r) => r.json()),
+      fetch("/data/site-content.json", { cache: "no-store" }).then((r) => r.json()),
+    ])
+      .then(([nextStats, content]) => {
+        setStats(nextStats);
+        setLatestPost(
+          (content.posts || []).find((post) => post.source === "wechat") || null,
+        );
+      })
+      .catch(() => {});
   }, []);
 
-  const eventLabel = daysToEvent > 0
-    ? `还剩 ${daysToEvent} 天`
-    : daysToEvent === 0 ? "今日开营" : "已结束";
-
   const socials = [
-    { platform: "小红书", value: "—" },
-    { platform: "抖音",   value: "—" },
-    { platform: "视频号", value: "—" },
-    { platform: "B站",   value: "—" },
+    { platform: "小红书", value: stats?.xiaohongshu?.value ?? "—" },
+    { platform: "抖音",   value: stats?.douyin?.value ?? "—" },
+    { platform: "视频号", value: stats?.shipin?.value ?? "—" },
+    { platform: "B站",   value: stats?.bilibili?.value ?? "—" },
   ];
 
   return (
@@ -292,7 +370,7 @@ function NowCard() {
         </span>
         <span className="now-card-live">
           <span className="now-card-live-dot" />
-          实时
+          最近核验
         </span>
       </div>
 
@@ -300,37 +378,30 @@ function NowCard() {
         <div className="now-card-row">
           <div className="now-card-icon">▶</div>
           <div className="now-card-body">
-            <div className="now-card-label">正在做</div>
-            <div className="now-card-value">ContentFlow 2.0 · 选题标签 UI</div>
+            <div className="now-card-label">最新公众号</div>
+            {latestPost ? (
+              <a
+                className="now-card-value now-card-post-link"
+                href={latestPost.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {latestPost.title}
+              </a>
+            ) : (
+              <div className="now-card-value">内容同步中</div>
+            )}
           </div>
-          <span className="now-card-badge now-card-badge-primary">开发中</span>
-        </div>
-
-        <div className="now-card-row">
-          <div className="now-card-icon">✦</div>
-          <div className="now-card-body">
-            <div className="now-card-label">本周产出</div>
-            <div className="now-card-value">整理中…</div>
-          </div>
-          <span className="now-card-meta">第 {weekNum} 周</span>
-        </div>
-
-        <div className="now-card-row">
-          <div className="now-card-icon">♪</div>
-          <div className="now-card-body">
-            <div className="now-card-label">最近在读</div>
-            <div className="now-card-value">《Working in Public》— Nadia Eghbal</div>
-          </div>
-          <span className="now-card-meta">p.142</span>
+          <span className="now-card-meta">{latestPost?.date || "—"}</span>
         </div>
 
         <div className="now-card-row">
           <div className="now-card-icon">◎</div>
           <div className="now-card-body">
-            <div className="now-card-label">近期活动</div>
-            <div className="now-card-value">5/17 杭州 vibecoding 工作坊</div>
+            <div className="now-card-label">公开入口</div>
+            <div className="now-card-value">作品集 · Blog · 自媒体矩阵</div>
           </div>
-          <span className="now-card-badge now-card-badge-warn">{eventLabel}</span>
+          <span className="now-card-badge now-card-badge-primary">更新中</span>
         </div>
 
         <div className="now-card-row">
@@ -350,7 +421,7 @@ function NowCard() {
       </div>
 
       <div className="now-card-footer">
-        <span>每 30 秒自动同步</span>
+        <span>最近核验 {stats?.checkedAt ?? stats?.updatedAt ?? "—"}</span>
         <span className="now-card-online">
           <span className="now-card-online-dot" />
           在线
@@ -524,7 +595,7 @@ function Footer({ name, domain, email, wechat }) {
               <li><a href="#about">关于</a></li>
               <li><a href="#projects">作品</a></li>
               <li><a href="#blog">Blog</a></li>
-              <li><a href="#course">工作坊</a></li>
+              <li><a href="#guestbook">留言</a></li>
             </ul>
           </div>
           <div>
@@ -555,10 +626,9 @@ function Footer({ name, domain, email, wechat }) {
             </ul>
           </div>
           <div>
-            <h5>订阅 / 报名</h5>
+            <h5>订阅 / 合作</h5>
             <ul>
               <li><a href="#blog">vibecoding 日报</a></li>
-              <li><a href="#course">5/17 杭州工作坊</a></li>
               <li>
                 <CopyLink
                   value={wechat}

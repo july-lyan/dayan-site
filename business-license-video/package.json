@@ -1,0 +1,10 @@
+{
+  "name": "business-license-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.5.7 preview --port 3017",
+    "check": "npx --yes hyperframes@0.5.7 lint && npx --yes hyperframes@0.5.7 inspect --samples 18",
+    "render": "npx --yes hyperframes@0.5.7 render --output renders/business-license-animation.mp4 --quality standard"
+  }
+}

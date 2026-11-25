@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+  <defs>
+    <linearGradient id="stone" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4eee2"/>
+      <stop offset="0.55" stop-color="#e8dcc8"/>
+      <stop offset="1" stop-color="#d9c7aa"/>
+    </linearGradient>
+    <linearGradient id="deep" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071514"/>
+      <stop offset="1" stop-color="#12342e"/>
+    </linearGradient>
+    <linearGradient id="brass" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#d8bc78"/>
+      <stop offset="1" stop-color="#b7904e"/>
+    </linearGradient>
+    <filter id="shadow" x="-8%" y="-14%" width="116%" height="128%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#05100e" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      .bg { fill: #efeee7; }
+      .stone { fill: url(#stone); filter: url(#shadow); }
+      .deep { fill: url(#deep); filter: url(#shadow); }
+      .brass { fill: url(#brass); filter: url(#shadow); }
+      .cn { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-weight: 700; letter-spacing: 0.08em; }
+      .en { font-family: "Avenir Next", "Montserrat", sans-serif; font-weight: 600; letter-spacing: 0.18em; }
+      .label { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 28px; fill: #4d5c56; letter-spacing: 0.06em; }
+      .note { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 22px; fill: #67746e; }
+      .dark { fill: #0b1b18; }
+      .cream { fill: #f8efd9; }
+      .goldLine { stroke: #b9914f; stroke-width: 2; opacity: 0.7; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="2200" height="1400"/>
+  <text x="120" y="96" class="label">杭州雁洄文化科技有限公司 · 公司牌子 SVG</text>
+  <text x="120" y="136" class="note">logo 使用透明底原稿，去掉白框；门头采用浅石材/香槟金属底，更适合原色 logo。</text>
+
+  <g transform="translate(120 210)">
+    <text x="0" y="-34" class="label">A / 门头横牌、前台背景墙</text>
+    <rect class="stone" x="0" y="0" width="1960" height="420" rx="42"/>
+    <image href="yanhui-final-logo-transparent.png" x="96" y="42" width="630" height="318" preserveAspectRatio="xMidYMid meet"/>
+    <line x1="810" y1="92" x2="810" y2="328" class="goldLine"/>
+    <circle cx="810" cy="210" r="6" fill="#b9914f"/>
+    <text x="890" y="178" class="cn dark" font-size="76">杭州雁洄文化科技有限公司</text>
+    <text x="896" y="256" class="en dark" font-size="25">HANGZHOU YANHUI CULTURE TECHNOLOGY CO., LTD.</text>
+    <line x1="896" y1="300" x2="1768" y2="300" class="goldLine"/>
+    <text x="896" y="348" class="note">内容产品 · AI 工具 · 课程与品牌增长</text>
+  </g>
+
+  <g transform="translate(120 760)">
+    <text x="0" y="-34" class="label">B / 深色背景墙备选</text>
+    <rect class="deep" x="0" y="0" width="980" height="390" rx="28"/>
+    <rect x="54" y="62" width="380" height="250" rx="28" fill="#f4eee2" opacity="0.96"/>
+    <image href="yanhui-final-logo-transparent.png" x="78" y="102" width="330" height="166" preserveAspectRatio="xMidYMid meet"/>
+    <text x="500" y="150" class="cn cream" font-size="52">杭州雁洄</text>
+    <text x="500" y="224" class="cn cream" font-size="52">文化科技有限公司</text>
+    <text x="504" y="288" class="en" font-size="17" fill="#d7bf89">YANHUI CULTURE TECHNOLOGY</text>
+  </g>
+
+  <g transform="translate(1210 760)">
+    <text x="0" y="-34" class="label">C / 铜牌版本</text>
+    <rect class="brass" x="0" y="0" width="870" height="390" rx="28"/>
+    <rect x="30" y="30" width="810" height="330" rx="14" fill="none" stroke="#f6dfaa" stroke-width="4" opacity="0.72"/>
+    <image href="yanhui-final-logo-transparent.png" x="70" y="110" width="300" height="152" preserveAspectRatio="xMidYMid meet"/>
+    <text x="420" y="154" class="cn dark" font-size="52">杭州雁洄</text>
+    <text x="420" y="228" class="cn dark" font-size="52">文化科技有限公司</text>
+    <text x="424" y="292" class="en dark" font-size="17">YANHUI CULTURE TECHNOLOGY</text>
+  </g>
+
+  <text x="120" y="1260" class="note">交付说明：此 SVG 依赖同目录的 yanhui-final-logo-transparent.png。牌匾制作优先用 A，质感最干净。</text>
+</svg>

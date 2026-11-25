@@ -1,0 +1,229 @@
+<style>
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .theme-card {
+    border: 2px solid transparent;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+    box-shadow: 0 12px 36px rgba(28, 32, 48, .10);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .theme-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 46px rgba(28, 32, 48, .16);
+  }
+  .theme-card.selected {
+    border-color: #705cf6;
+    box-shadow: 0 0 0 4px rgba(112, 92, 246, .15), 0 18px 46px rgba(28, 32, 48, .16);
+  }
+  .site-preview {
+    min-height: 500px;
+    padding: 18px;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .preview-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 22px;
+    font-size: 9px;
+    letter-spacing: .08em;
+  }
+  .preview-logo { font-weight: 800; font-size: 13px; letter-spacing: -.02em; }
+  .preview-links { display: flex; gap: 10px; opacity: .62; }
+  .preview-kicker {
+    display: inline-flex;
+    padding: 5px 8px;
+    border-radius: 99px;
+    font-size: 8px;
+    letter-spacing: .08em;
+    margin: 18px 0 12px;
+  }
+  .preview-title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.03;
+    letter-spacing: -.055em;
+    font-weight: 820;
+  }
+  .preview-title em { font-weight: 650; }
+  .preview-sub {
+    max-width: 90%;
+    font-size: 10px;
+    line-height: 1.65;
+    margin: 12px 0 18px;
+    opacity: .65;
+  }
+  .preview-actions { display: flex; gap: 7px; margin-bottom: 26px; }
+  .preview-button {
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 8px;
+    font-weight: 750;
+  }
+  .preview-section-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+  .preview-article {
+    padding: 13px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .preview-article-meta { font-size: 7px; opacity: .52; margin-bottom: 6px; }
+  .preview-article-title { font-size: 12px; font-weight: 760; line-height: 1.25; }
+  .preview-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+  .preview-list > div {
+    padding: 9px;
+    border-radius: 8px;
+    font-size: 8px;
+    line-height: 1.35;
+  }
+  .theme-info { padding: 15px 16px 17px; }
+  .theme-info h3 { margin: 0 0 5px; font-size: 16px; }
+  .theme-info p { margin: 0; font-size: 12px; line-height: 1.5; color: #6f7280; }
+
+  .paper {
+    color: #20211e;
+    background:
+      radial-gradient(circle at 80% 10%, rgba(229, 85, 53, .12), transparent 25%),
+      #f4efe5;
+  }
+  .paper .preview-logo, .paper .preview-title em { color: #d55334; }
+  .paper .preview-kicker { background: #e8dfd0; color: #6e4a37; }
+  .paper .preview-button:first-child { background: #25251f; color: #fffaf0; }
+  .paper .preview-button:last-child { border: 1px solid #bdb3a2; }
+  .paper .preview-article { background: #fffaf0; border: 1px solid #ded4c4; }
+  .paper .preview-list > div { background: rgba(255,255,255,.42); border-top: 2px solid #d55334; }
+
+  .mist {
+    color: #24223c;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(125, 103, 255, .20), transparent 30%),
+      linear-gradient(150deg, #f4f3fb 0%, #e8edf5 100%);
+  }
+  .mist .preview-logo, .mist .preview-title em { color: #6f5be7; }
+  .mist .preview-kicker { background: rgba(111,91,231,.10); color: #5c49ce; border: 1px solid rgba(111,91,231,.20); }
+  .mist .preview-button:first-child { background: #6f5be7; color: white; box-shadow: 0 6px 18px rgba(111,91,231,.24); }
+  .mist .preview-button:last-child { background: rgba(255,255,255,.48); border: 1px solid rgba(65,64,96,.14); }
+  .mist .preview-article { background: rgba(255,255,255,.68); border: 1px solid rgba(80,76,120,.12); box-shadow: 0 8px 24px rgba(67,64,105,.08); }
+  .mist .preview-list > div { background: rgba(255,255,255,.48); border: 1px solid rgba(80,76,120,.10); }
+
+  .blueprint {
+    color: #142440;
+    background-color: #eaf3f7;
+    background-image:
+      linear-gradient(rgba(25, 87, 114, .065) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(25, 87, 114, .065) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .blueprint .preview-logo, .blueprint .preview-title em { color: #086ba3; }
+  .blueprint .preview-kicker { background: #d8eaf1; color: #235b72; border: 1px solid #b7d5df; }
+  .blueprint .preview-button:first-child { background: #0e6f9d; color: white; }
+  .blueprint .preview-button:last-child { background: #f8fcfd; border: 1px solid #a9c6d0; }
+  .blueprint .preview-article { background: #f9fcfb; border: 1px solid #a9c6d0; box-shadow: 5px 5px 0 #c5dce4; }
+  .blueprint .preview-list > div { background: rgba(249,252,251,.80); border-left: 3px solid #ef8a3b; }
+
+  @media (max-width: 1000px) {
+    .theme-grid { grid-template-columns: 1fr; }
+    .site-preview { min-height: 420px; }
+  }
+</style>
+
+<h2>liudayan.com 应该亮到什么程度？</h2>
+<p class="subtitle">三套都使用真实首页内容。点击你最想继续看的方向。</p>
+
+<div class="theme-grid">
+  <div class="theme-card card" data-choice="paper-editorial" onclick="toggleSelect(this)">
+    <div class="site-preview paper">
+      <div class="preview-nav">
+        <span class="preview-logo">liudayan.com</span>
+        <span class="preview-links"><span>关于</span><span>作品</span><span>文章</span><span>数据</span></span>
+      </div>
+      <div class="preview-kicker">2026 / Q3 · HANGZHOU</div>
+      <h3 class="preview-title">用 <em>vibecoding</em><br>把想法变成产品</h3>
+      <p class="preview-sub">15 年运营与产品经验，今天用 AI 编排，把想法压缩成可运行、可验证的产品。</p>
+      <div class="preview-actions"><span class="preview-button">看正在跑的产品 →</span><span class="preview-button">微信 / 邮箱</span></div>
+      <div class="preview-section-label"><span>最新写作</span><span>公众号自动同步</span></div>
+      <div class="preview-article">
+        <div class="preview-article-meta">OPC 周记 · 2026.05.22</div>
+        <div class="preview-article-title">拿到营业执照那天，我才想清楚一人公司到底是什么</div>
+      </div>
+      <div class="preview-list">
+        <div>深入 AI 大厂调研后，我看到两代企业的巨大割裂</div>
+        <div>第一个产品终于上线了</div>
+      </div>
+    </div>
+    <div class="theme-info">
+      <h3>A · 暖纸编辑部</h3>
+      <p>米白、炭灰、朱砂红。阅读感最强，个人表达最鲜明，最接近长期写作型个人站。</p>
+    </div>
+  </div>
+
+  <div class="theme-card card" data-choice="mist-lilac" onclick="toggleSelect(this)">
+    <div class="site-preview mist">
+      <div class="preview-nav">
+        <span class="preview-logo">liudayan.com</span>
+        <span class="preview-links"><span>关于</span><span>作品</span><span>文章</span><span>数据</span></span>
+      </div>
+      <div class="preview-kicker">2026 / Q3 · VIBECODING</div>
+      <h3 class="preview-title">用 <em>vibecoding</em><br>把想法变成产品</h3>
+      <p class="preview-sub">15 年运营与产品经验，今天用 AI 编排，把想法压缩成可运行、可验证的产品。</p>
+      <div class="preview-actions"><span class="preview-button">看正在跑的产品 →</span><span class="preview-button">微信 / 邮箱</span></div>
+      <div class="preview-section-label"><span>最新写作</span><span>公众号自动同步</span></div>
+      <div class="preview-article">
+        <div class="preview-article-meta">OPC 周记 · 2026.05.22</div>
+        <div class="preview-article-title">拿到营业执照那天，我才想清楚一人公司到底是什么</div>
+      </div>
+      <div class="preview-list">
+        <div>深入 AI 大厂调研后，我看到两代企业的巨大割裂</div>
+        <div>第一个产品终于上线了</div>
+      </div>
+    </div>
+    <div class="theme-info">
+      <h3>B · 雾紫工作台</h3>
+      <p>淡灰紫、墨蓝、品牌紫。保留现有科技感，整体亮度提升，产品与内容最均衡。</p>
+    </div>
+  </div>
+
+  <div class="theme-card card" data-choice="daylight-blueprint" onclick="toggleSelect(this)">
+    <div class="site-preview blueprint">
+      <div class="preview-nav">
+        <span class="preview-logo">liudayan.com</span>
+        <span class="preview-links"><span>关于</span><span>作品</span><span>文章</span><span>数据</span></span>
+      </div>
+      <div class="preview-kicker">2026 / Q3 · BUILD IN PUBLIC</div>
+      <h3 class="preview-title">用 <em>vibecoding</em><br>把想法变成产品</h3>
+      <p class="preview-sub">15 年运营与产品经验，今天用 AI 编排，把想法压缩成可运行、可验证的产品。</p>
+      <div class="preview-actions"><span class="preview-button">看正在跑的产品 →</span><span class="preview-button">微信 / 邮箱</span></div>
+      <div class="preview-section-label"><span>最新写作</span><span>公众号自动同步</span></div>
+      <div class="preview-article">
+        <div class="preview-article-meta">OPC 周记 · 2026.05.22</div>
+        <div class="preview-article-title">拿到营业执照那天，我才想清楚一人公司到底是什么</div>
+      </div>
+      <div class="preview-list">
+        <div>深入 AI 大厂调研后，我看到两代企业的巨大割裂</div>
+        <div>第一个产品终于上线了</div>
+      </div>
+    </div>
+    <div class="theme-info">
+      <h3>C · 日光蓝图</h3>
+      <p>浅蓝纸张、工程网格、橙色标记。仍有 vibecoding 识别度，气质更开放、更有行动感。</p>
+    </div>
+  </div>
+</div>

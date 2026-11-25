@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+  <defs>
+    <linearGradient id="warmBoard" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="0.55" stop-color="#f4ecdd"/>
+      <stop offset="1" stop-color="#e9dfcf"/>
+    </linearGradient>
+    <linearGradient id="brass" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#d9bd7c"/>
+      <stop offset="1" stop-color="#b99655"/>
+    </linearGradient>
+    <filter id="shadow" x="-8%" y="-14%" width="116%" height="128%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#05100e" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      .bg { fill: #efeee7; }
+      .board { fill: url(#warmBoard); filter: url(#shadow); }
+      .brass { fill: url(#brass); filter: url(#shadow); }
+      .cn { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-weight: 700; letter-spacing: 0.08em; }
+      .en { font-family: "Avenir Next", "Montserrat", sans-serif; font-weight: 600; letter-spacing: 0.18em; }
+      .label { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 28px; fill: #4d5c56; letter-spacing: 0.06em; }
+      .note { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 22px; fill: #67746e; }
+      .dark { fill: #0b1b18; }
+      .muted { fill: #66746e; }
+      .goldLine { stroke: #c59c56; stroke-width: 2; opacity: 0.62; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="2200" height="1400"/>
+  <text x="120" y="96" class="label">杭州雁洄文化科技有限公司 · 公司牌子 SVG</text>
+  <text x="120" y="136" class="note">logo 直接使用 image2 终稿裁图，保持原样，不重画、不改形。</text>
+
+  <!-- Main sign: original logo on warm board -->
+  <g transform="translate(120 210)">
+    <text x="0" y="-34" class="label">A / 门头横牌、前台背景墙</text>
+    <rect class="board" x="0" y="0" width="1960" height="420" rx="42"/>
+    <image href="yanhui-final-logo-crop.png" x="100" y="42" width="620" height="302" preserveAspectRatio="xMidYMid meet"/>
+    <line x1="800" y1="92" x2="800" y2="328" class="goldLine"/>
+    <circle cx="800" cy="210" r="6" fill="#c59c56"/>
+    <text x="880" y="178" class="cn dark" font-size="76">杭州雁洄文化科技有限公司</text>
+    <text x="886" y="256" class="en dark" font-size="25">HANGZHOU YANHUI CULTURE TECHNOLOGY CO., LTD.</text>
+    <line x1="886" y1="300" x2="1760" y2="300" class="goldLine"/>
+    <text x="886" y="348" class="note">内容产品 · AI 工具 · 课程与品牌增长</text>
+  </g>
+
+  <!-- Brass plaque -->
+  <g transform="translate(120 760)">
+    <text x="0" y="-34" class="label">B / 办公室铜牌、工商门口挂牌</text>
+    <rect class="brass" x="0" y="0" width="980" height="390" rx="24"/>
+    <rect x="30" y="30" width="920" height="330" rx="14" fill="none" stroke="#f6dfaa" stroke-width="4" opacity="0.72"/>
+    <rect x="72" y="94" width="330" height="166" rx="22" fill="#fff8eb" opacity="0.9"/>
+    <image href="yanhui-final-logo-crop.png" x="86" y="112" width="300" height="146" preserveAspectRatio="xMidYMid meet"/>
+    <text x="458" y="150" class="cn dark" font-size="52">杭州雁洄</text>
+    <text x="458" y="224" class="cn dark" font-size="52">文化科技有限公司</text>
+    <text x="462" y="288" class="en dark" font-size="17">YANHUI CULTURE TECHNOLOGY</text>
+  </g>
+
+  <!-- Simple lightbox/card -->
+  <g transform="translate(1210 760)">
+    <text x="0" y="-34" class="label">C / 圆形灯箱、侧牌参考</text>
+    <rect class="board" x="0" y="0" width="870" height="390" rx="32"/>
+    <circle cx="214" cy="196" r="138" fill="#fff8eb" stroke="#d7c7ad" stroke-width="2"/>
+    <image href="yanhui-final-logo-crop.png" x="90" y="134" width="250" height="122" preserveAspectRatio="xMidYMid meet"/>
+    <text x="420" y="156" class="cn dark" font-size="54">雁洄</text>
+    <text x="424" y="220" class="en dark" font-size="24">YANHUI</text>
+    <text x="424" y="278" class="note">用于小尺寸场景时，直接裁原 logo 做独立图标。</text>
+  </g>
+
+  <text x="120" y="1260" class="note">交付说明：此 SVG 依赖同目录的 yanhui-final-logo-crop.png。制作方若要全矢量，可先按这张原样描摹。</text>
+</svg>

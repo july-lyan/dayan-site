@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1400" viewBox="0 0 1800 1400">
+  <defs>
+    <linearGradient id="deep" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071615"/>
+      <stop offset="1" stop-color="#12332d"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f1d8a1"/>
+      <stop offset="1" stop-color="#b88d47"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#05100e" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .bg { fill: #efeee7; }
+      .card { fill: #fbfaf4; stroke: #ded7c7; stroke-width: 1.5; filter: url(#shadow); }
+      .title { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-size: 44px; font-weight: 700; fill: #101b18; letter-spacing: 0.08em; }
+      .sub { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 23px; fill: #5d6863; }
+      .label { font-family: "Avenir Next", "PingFang SC", sans-serif; font-size: 24px; font-weight: 700; fill: #253530; letter-spacing: 0.06em; }
+      .desc { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 18px; fill: #66726d; }
+      .cn { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-weight: 700; letter-spacing: 0.08em; }
+      .en { font-family: "Avenir Next", "Montserrat", sans-serif; font-weight: 600; letter-spacing: 0.18em; }
+      .dark { fill: #101b18; }
+      .deep { fill: url(#deep); }
+      .gold { fill: url(#gold); }
+      .cream { fill: #f8efd9; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1800" height="1400"/>
+  <text x="90" y="90" class="title">雁洄 Logo V3 · 减线重做</text>
+  <text x="90" y="132" class="sub">保留“雁”和“洄”的含义，删除乱线。每个方案都控制在一个稳定轮廓里，先看符号气质。</text>
+
+  <!-- A -->
+  <g transform="translate(90 210)">
+    <rect class="card" width="500" height="380" rx="34"/>
+    <text x="36" y="56" class="label">A / 雁首回环</text>
+    <text x="36" y="88" class="desc">最接近公司名，适合主 logo。</text>
+    <g transform="translate(128 128)">
+      <path class="dark" d="M14 112 C88 18 236 12 322 86 C250 58 156 76 94 134 C164 108 246 112 330 150 C228 152 144 174 72 228 C122 160 202 126 306 126 C278 100 230 88 174 94 C222 52 286 48 342 78 C386 88 418 112 438 146 L500 116 L444 178 C414 140 374 120 322 116 C236 90 130 114 14 112Z"/>
+    </g>
+  </g>
+
+  <!-- B -->
+  <g transform="translate(650 210)">
+    <rect class="card" width="500" height="380" rx="34"/>
+    <text x="36" y="56" class="label">B / 洄字印章</text>
+    <text x="36" y="88" class="desc">文化感更强，适合公众号头像。</text>
+    <g transform="translate(156 122)">
+      <rect x="0" y="0" width="188" height="188" rx="42" class="deep"/>
+      <path class="cream" d="M46 62 C88 34 142 36 164 76 C124 58 80 68 58 104 C92 86 132 88 168 108 C122 112 82 128 48 158 C64 116 98 94 146 96 C124 76 88 74 46 90Z"/>
+      <path class="gold" d="M138 76 C164 82 180 96 190 116 L218 104 L190 138 C172 124 156 102 138 76Z"/>
+    </g>
+  </g>
+
+  <!-- C -->
+  <g transform="translate(1210 210)">
+    <rect class="card" width="500" height="380" rx="34"/>
+    <text x="36" y="56" class="label">C / YH 字标</text>
+    <text x="36" y="88" class="desc">最现代，适合科技公司名片。</text>
+    <g transform="translate(110 128)">
+      <path class="dark" d="M0 0 H44 L112 92 L180 0 H224 L132 126 V224 H92 V126L0 0Z"/>
+      <path class="dark" d="M254 0 H296 V88 H408 V0 H450 V224 H408 V126 H296 V224 H254V0Z"/>
+      <path class="gold" d="M132 126 C214 88 322 86 430 116 L430 132 C326 108 220 112 132 154V126Z"/>
+    </g>
+  </g>
+
+  <!-- Lockups -->
+  <g transform="translate(90 700)">
+    <rect width="1620" height="420" rx="40" class="deep" filter="url(#shadow)"/>
+    <text x="52" y="62" class="label" fill="#f8efd9">推荐落地组合</text>
+    <g transform="translate(88 130) scale(0.5)">
+      <path class="gold" d="M14 112 C88 18 236 12 322 86 C250 58 156 76 94 134 C164 108 246 112 330 150 C228 152 144 174 72 228 C122 160 202 126 306 126 C278 100 230 88 174 94 C222 52 286 48 342 78 C386 88 418 112 438 146 L500 116 L444 178 C414 140 374 120 322 116 C236 90 130 114 14 112Z"/>
+    </g>
+    <text x="430" y="205" class="cn cream" font-size="66">杭州雁洄文化科技有限公司</text>
+    <text x="434" y="270" class="en" font-size="22" fill="#d7bf89">HANGZHOU YANHUI CULTURE TECHNOLOGY CO., LTD.</text>
+    <line x1="434" y1="304" x2="1280" y2="304" stroke="#caa767" stroke-width="2" opacity="0.5"/>
+    <text x="434" y="352" class="sub" fill="#aeb9ae">内容产品 · AI 工具 · 课程与品牌增长</text>
+  </g>
+
+  <g transform="translate(90 1200)">
+    <text x="0" y="0" class="sub">判断：A 最适合做公司主标；B 适合做社交头像和印章周边；C 适合产品线、PPT、名片角标。</text>
+  </g>
+</svg>

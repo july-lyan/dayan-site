@@ -1,0 +1,197 @@
+{
+  "checkedAt": "2026.07.23",
+  "updatedAt": "2026.07.23",
+  "projects": [
+    {
+      "id": "contentflow",
+      "glyph": "CF",
+      "name": "ContentFlow",
+      "desc": "自媒体创作者 AI 一体化工具。一次输入生成图文/口播，5 层去 AI 痕迹处理，支持爆款拆解仿写，覆盖小红书 / 公众号全流程。",
+      "stack": [
+        "Next.js",
+        "Claude"
+      ],
+      "status": "live",
+      "link": "contentflow.one",
+      "screenshot": "assets/proj-contentflow.png",
+      "stat": null
+    },
+    {
+      "id": "sticker",
+      "glyph": "ST",
+      "name": "AI 表情包批量工场",
+      "desc": "AI 表情包生成工具。上传图片 + 输入文案，多模态模型秒出个性化贴纸，内置多种艺术风格，支持自定义文案，从创意到下载一步完成。",
+      "stack": [
+        "React",
+        "Tailwind",
+        "多模态模型"
+      ],
+      "status": "live",
+      "link": "cines.top",
+      "screenshot": "assets/proj-sticker.png",
+      "stat": null
+    },
+    {
+      "id": "magic-words",
+      "glyph": "字",
+      "name": "魔法识字课",
+      "desc": "专为幼儿设计的 AI 识字小程序。基于真实家庭教育场景，游戏化互动帮助孩子认字，独立完成从设计到上线全流程。",
+      "stack": [
+        "微信小程序",
+        "AI"
+      ],
+      "status": "live",
+      "link": "微信小程序",
+      "qr": "assets/qr-magic-words.png",
+      "screenshot": "assets/proj-magic-words.png",
+      "stat": null
+    },
+    {
+      "id": "drama-clip",
+      "glyph": "DC",
+      "name": "drama-clip",
+      "desc": "短剧二创自动化流水线桌面工具。扫描本地剧集目录，AI 自动生成分镜脚本 + TTS 配音 + 字幕对齐，批量渲染导出，本地运行无需云端。",
+      "stack": [
+        "Electron",
+        "Python",
+        "TTS",
+        "AI"
+      ],
+      "status": "wip",
+      "link": null,
+      "screenshot": "assets/proj-drama-clip.png",
+      "stat": null
+    },
+    {
+      "id": "pic-learn",
+      "glyph": "看",
+      "name": "看图识字",
+      "desc": "AI 个性化识字绘本小程序。基于孩子当前识字量智能生成专属绘本，每本新增 3-5 个生字，大字配拼音支持跟读，故事角色可按孩子喜好定制，科学分级自动进阶。",
+      "stack": [
+        "微信小程序",
+        "多模态模型",
+        "TTS"
+      ],
+      "status": "wip",
+      "link": null,
+      "screenshot": "assets/proj-pic-learn.png",
+      "stat": null
+    },
+    {
+      "id": "e-book",
+      "glyph": "绘",
+      "name": "电子绘本",
+      "desc": "AI 辅助实体绘本生成工具。输入主题与角色，AI 完成构思→分镜→生图→排版→封面全流程，最终输出可印刷的高清 PDF，生成一本真正属于孩子的实体绘本。",
+      "stack": [
+        "AI 生图",
+        "TTS",
+        "微信小程序"
+      ],
+      "status": "wip",
+      "link": null,
+      "screenshot": "assets/proj-e-book.png",
+      "stat": null
+    }
+  ],
+  "posts": [
+    {
+      "id": "xhs-vibecoding-explained",
+      "date": "2026.07",
+      "cat": "vibe",
+      "title": "什么是 vibecoding，一句话解释清楚",
+      "excerpt": "从真实使用场景出发，快速理解 vibecoding 的核心。",
+      "link": "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5",
+      "source": "xiaohongshu"
+    },
+    {
+      "id": "xhs-codex-notes-travel",
+      "date": "2026.07",
+      "cat": "vibe",
+      "title": "CODEX + 备忘录：旅行路书和出行清单全自动化",
+      "excerpt": "把 Codex 和备忘录串起来，生成旅行路书与可执行的出行清单。",
+      "link": "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5",
+      "source": "xiaohongshu"
+    },
+    {
+      "id": "xhs-codex-newbie-blockers",
+      "date": "2026.07",
+      "cat": "vibe",
+      "title": "Codex 新手最容易卡住的 5 件事",
+      "excerpt": "整理 Codex 新手常见卡点和对应的处理方法。",
+      "link": "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5",
+      "source": "xiaohongshu"
+    },
+    {
+      "date": "2026.05.22",
+      "cat": "solo",
+      "title": "OPC周记：520 拿到营业执照那天，我才想清楚一人公司到底是什么",
+      "excerpt": "这个时间很好，520，先从爱自己开始。19 号核名提交，20 号走流程，21 号办结，22 号下证。0 手续费。",
+      "link": "https://mp.weixin.qq.com/s/HscrQBDOapYEHzmtFkC7Sw",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.05.15",
+      "cat": "post",
+      "title": "OPC周记：深入AI大厂调研后，我看到了两代企业的巨大割裂",
+      "excerpt": "一次打破滤镜的实地参访，深入AI大厂调研后，我看到了两代企业的巨大割裂。——实在智能参观后感悟",
+      "link": "https://mp.weixin.qq.com/s/nUyHoZsvA6w4IhNpZUvrVQ",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.05.09",
+      "cat": "post",
+      "title": "OPC周记：比预期晚了半年，我的第一个产品终于上线了",
+      "excerpt": "这中间我拒了2个咨询单，放弃了1个创业项目，验收了1个产品。这周，我发了一条小红书视频：我的第一个跨境项目终于验收通过了。",
+      "link": "https://mp.weixin.qq.com/s/TzbgE0BrKejH4WYUqLI-fA",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.04.24",
+      "cat": "vibe",
+      "title": "OPC周记：当AI开始互相沟通，我这个“老板”在做什么？",
+      "excerpt": "这一周，我经历了一个魔幻时刻，才终于发现自己只是个“AI传声筒”。",
+      "link": "https://mp.weixin.qq.com/s/8xEtTjP98ZZTbzVflFJebg",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.04.17",
+      "cat": "vibe",
+      "title": "OPC上班第2周：5个平台、3条路、1个答案",
+      "excerpt": "上周我写了给自己打工的第一周。这周的关键词是：焦虑、想通、选路。",
+      "link": "https://mp.weixin.qq.com/s/IqHRiry5972eZSGvzsK7qg",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.03.05",
+      "cat": "media",
+      "title": "一条视频百万播放后，我想明白了一件事",
+      "excerpt": "一个人，7天，23条视频，三平台同步发。抖音第一条百万播放，一周涨粉2.4万。没有团队没有投流，靠自己用vibecoding做 的工具撑起了全部产能。第一周复盘，聊聊数据、方法和下一步。",
+      "link": "https://mp.weixin.qq.com/s/JKK2AbfR-wzTkHduW8Y42w",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.01.16",
+      "cat": "media",
+      "title": "别再空谈Agent、SKills、Workflow、MCP了！用一个真实项目讲清楚它们的本质",
+      "excerpt": "一句话需求变一个完整工具：看“微故事写作器”如何落地AI工程化思维你是否曾在各种AI技术讨论中感到迷失？",
+      "link": "https://mp.weixin.qq.com/s/UtK0fSUqKsixUcp-KNmwhA",
+      "source": "wechat"
+    },
+    {
+      "date": "2026.01.09",
+      "cat": "vibe",
+      "title": "Vibecoding的idea 从哪来？用GitHub + Cursor“抄”出第一个可运行版本",
+      "excerpt": "先在 GitHub 找到一个“已经有人做过、能跑起来”的项目，让 Cursor/IDE 把它拉到本地跑通。你要做的不是从 0 创造，而是从 1 变成 1.1、1.2……直到变成你的产品。",
+      "link": "https://mp.weixin.qq.com/s/2BhtO2XNJM2uRIgveqYBtg",
+      "source": "wechat"
+    },
+    {
+      "date": "2025.12.31",
+      "cat": "post",
+      "title": "2025年终总结：用AI做产品，也把生活重新搭起来",
+      "excerpt": "2025这一年，我最大的变化不是“学了多少新工具”，而是把过去擅长的产品能力， 真正放回到生活里：为孩子做产品、为自己做选择、也为未来做一条可持续的路。这篇总结，我想用四个关键词来讲讲：转身、作品、运营、数据。",
+      "link": "https://mp.weixin.qq.com/s/fnnvjCJvqN60dq64YsQcdA",
+      "source": "wechat"
+    }
+  ]
+}

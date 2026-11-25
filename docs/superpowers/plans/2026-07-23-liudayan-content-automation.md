@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 更新 liudayan.com 首页的过期内容，并让公众号文章与 B站数据每天自动核验和发布。
+**Goal:** 将 liudayan.com 更新为暖纸编辑部双主题内容站，并让公众号文章与 B站数据每天自动核验和发布。
 
-**Architecture:** 页面继续使用静态 JSON 作为唯一数据源。Node 同步脚本读取微信公众平台与 B站公开接口，成功后写回 JSON；GitHub Actions 每天运行脚本、提交数据变化，Vercel 通过 GitHub 集成发布。
+**Architecture:** 页面使用 CSS 设计变量提供默认暖纸主题和可切换的原蓝紫深色主题，静态 JSON 继续作为内容唯一数据源。Node 同步脚本读取微信公众平台与 B站公开接口，成功后写回 JSON；GitHub Actions 每天运行脚本、提交数据变化，Vercel 通过 GitHub 集成发布。
 
 **Tech Stack:** HTML、React UMD、Node.js ESM、Node test runner、GitHub Actions、Vercel
 
@@ -12,7 +12,11 @@
 
 ## 文件结构
 
-- `app.jsx`：动态季度和“此刻”卡片。
+- `index.html`：首次绘制前恢复主题。
+- `app.jsx`：主题切换、动态季度和“此刻”卡片。
+- `styles.css`：暖纸默认设计变量、原蓝紫深色变量和全局组件。
+- `sections.jsx`：最新文章主卡、近期文章列表和公众号订阅入口。
+- `sections.css`：内容型 Blog 首页布局。
 - `stats.json`：平台粉丝数、来源、核验日期。
 - `data/site-content.json`：公众号文章与作品数据。
 - `scripts/sync-wechat-posts.mjs`：公众号文章同步。
@@ -34,6 +38,7 @@
 ```js
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { mergePosts, sameBusinessData, shanghaiDate } from "../scripts/sync-utils.mjs";
 
 test("mergePosts deduplicates by link and sorts newest first", () => {
@@ -118,19 +123,184 @@ git add package.json scripts/sync-utils.mjs tests/sync-utils.test.mjs
 git commit -m "test: cover site sync data rules"
 ```
 
-### Task 2: 更新首页与真实数据
+### Task 2: 暖纸编辑部双主题
+
+**Files:**
+- Modify: `index.html`
+- Modify: `app.jsx`
+- Modify: `styles.css`
+- Modify: `sections.css`
+- Modify: `tests/sync-utils.test.mjs`
+
+- [ ] **Step 1: 增加主题静态约束测试**
+
+```js
+test("site defaults to paper theme and keeps dark theme", () => {
+  const index = readFileSync("index.html", "utf8");
+  const app = readFileSync("app.jsx", "utf8");
+  const styles = readFileSync("styles.css", "utf8");
+  assert.match(index, /dayan-theme/);
+  assert.match(app, /ThemeToggle/);
+  assert.match(styles, /#F4EFE5/i);
+  assert.match(styles, /data-theme="dark"/);
+});
+```
+
+- [ ] **Step 2: 运行测试并确认失败**
+
+Run: `npm test`
+
+Expected: FAIL，缺少 `dayan-theme`、`ThemeToggle` 或暖纸变量。
+
+- [ ] **Step 3: 首次绘制前恢复主题**
+
+在 `index.html` 的 CSS 引用前增加：
+
+```html
+<script>
+  (() => {
+    const savedTheme = localStorage.getItem("dayan-theme");
+    document.documentElement.dataset.theme = savedTheme === "dark" ? "dark" : "paper";
+  })();
+</script>
+```
+
+- [ ] **Step 4: 增加主题切换组件**
+
+```js
+function ThemeToggle() {
+  const [theme, setTheme] = React.useState(
+    () => document.documentElement.dataset.theme || "paper",
+  );
+
+  function toggleTheme() {
+    const nextTheme = theme === "paper" ? "dark" : "paper";
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("dayan-theme", nextTheme);
+    setTheme(nextTheme);
+  }
+
+  return (
+    <button className="theme-toggle" onClick={toggleTheme} aria-label="切换明暗主题">
+      <span aria-hidden="true">{theme === "paper" ? "夜" : "昼"}</span>
+    </button>
+  );
+}
+```
+
+将 `<ThemeToggle />` 放到导航链接和在线状态之间。
+
+- [ ] **Step 5: 将暖纸主题设为默认设计变量**
+
+```css
+:root,
+:root[data-theme="paper"] {
+  color-scheme: light;
+  --bg: #f4efe5;
+  --bg-grain: #eee6d8;
+  --surface: #fffaf0;
+  --surface-2: #f8f1e5;
+  --surface-3: #eee4d3;
+  --hairline: rgba(74, 63, 48, 0.12);
+  --hairline-strong: rgba(74, 63, 48, 0.20);
+  --hairline-bright: rgba(74, 63, 48, 0.30);
+  --fg: #25251f;
+  --fg-dim: #514d45;
+  --fg-muted: #716b60;
+  --fg-faint: #9b9285;
+  --primary: #d55334;
+  --primary-glow: rgba(213, 83, 52, 0.24);
+  --primary-soft: rgba(213, 83, 52, 0.10);
+  --accent: #5f58c9;
+  --good: #2f7a5c;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #08090c;
+  --surface: #0f1116;
+  --surface-2: #15171f;
+  --surface-3: #1c1f29;
+  --fg: #ededee;
+  --fg-dim: #b8babf;
+  --fg-muted: #9ea2b0;
+  --fg-faint: #6b6e7e;
+  --primary: #8b7cff;
+  --primary-glow: rgba(139, 124, 255, 0.55);
+  --primary-soft: rgba(139, 124, 255, 0.10);
+  --accent: #4dd4e0;
+  --good: #5dd49a;
+}
+```
+
+将导航背景、网格、阴影和卡片颜色中硬编码的深色值替换为主题变量。飞鸟图片不加色相滤镜。
+
+- [ ] **Step 6: 增加暖纸组件质感**
+
+```css
+body {
+  background:
+    radial-gradient(ellipse 900px 520px at 82% -10%, var(--primary-soft), transparent 64%),
+    var(--bg);
+}
+
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  color: var(--fg);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.blog-card,
+.proj-card,
+.now-card {
+  border-color: var(--hairline-strong);
+  background: var(--surface);
+  box-shadow: 0 14px 34px rgba(74, 63, 48, 0.08);
+}
+
+.blog-card:hover,
+.proj-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+}
+
+@media (max-width: 720px) {
+  .blog-feature-layout,
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+- [ ] **Step 7: 运行测试**
+
+Run: `npm test`
+
+Expected: 全部测试通过。
+
+- [ ] **Step 8: 提交**
+
+```bash
+git add index.html app.jsx styles.css sections.css tests/sync-utils.test.mjs
+git commit -m "feat: add warm editorial dual theme"
+```
+
+### Task 3: 更新首页与真实数据
 
 **Files:**
 - Modify: `app.jsx`
 - Modify: `stats.json`
 - Modify: `data/site-content.json`
 - Modify: `sections.jsx`
+- Modify: `sections.css`
 
 - [ ] **Step 1: 在测试中增加页面静态约束**
 
 ```js
-import { readFileSync } from "node:fs";
-
 test("homepage removes stale realtime copy", () => {
   const app = readFileSync("app.jsx", "utf8");
   assert.doesNotMatch(app, /2026 \/ Q2|本周产出|最近在读|>实时</);
@@ -170,7 +340,48 @@ function NowCard() {
 
 Hero badge 使用 `{currentQuarter()}`。卡片行改为“最新公众号”，标题链接到 `latestPost.link`；保留“公开入口”和“自媒体数据”；状态文案使用“最近核验”。
 
-- [ ] **Step 4: 写入核验数据并删除失效文章**
+- [ ] **Step 4: 将 Blog 改为内容型首页结构**
+
+```js
+const [featuredPost, ...recentPosts] = posts;
+
+<div className="blog-feature-layout">
+  <a className="blog-featured" href={featuredPost.link} target="_blank" rel="noopener noreferrer">
+    <div className="blog-card-meta">
+      <span className="chip">{categoryLabel(featuredPost.cat)}</span>
+      <span className="blog-card-date">{featuredPost.date}</span>
+    </div>
+    <h3>{featuredPost.title}</h3>
+    <p>{featuredPost.excerpt}</p>
+    <span>读最新文章 ↗</span>
+  </a>
+  <div className="blog-recent-list">
+    {recentPosts.slice(0, 3).map((post) => (
+      <a href={post.link} target="_blank" rel="noopener noreferrer" key={post.link}>
+        <span>{post.date}</span>
+        <strong>{post.title}</strong>
+      </a>
+    ))}
+  </div>
+</div>
+```
+
+在文章区底部增加公众号入口：
+
+```jsx
+<a
+  className="blog-subscribe"
+  href="http://weixin.qq.com/r/mp/WyNBWXfEwSq_rTM693ZJ"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  关注公众号，接收最新文章 →
+</a>
+```
+
+`sections.css` 使用桌面双栏、移动端单栏布局。主文章占更强视觉权重，近期列表保持紧凑。
+
+- [ ] **Step 5: 写入核验数据并删除失效文章**
 
 `stats.json` 使用以下业务值：
 
@@ -191,7 +402,7 @@ Hero badge 使用 `{currentQuarter()}`。卡片行改为“最新公众号”，
 https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5
 ```
 
-- [ ] **Step 5: 更新邮箱并验证**
+- [ ] **Step 6: 更新邮箱并验证**
 
 `app.jsx` 的 `SITE.email` 改为：
 
@@ -203,14 +414,14 @@ Run: `npm test`
 
 Expected: 全部测试通过。
 
-- [ ] **Step 6: 提交**
+- [ ] **Step 7: 提交**
 
 ```bash
-git add app.jsx sections.jsx stats.json data/site-content.json tests/sync-utils.test.mjs
+git add app.jsx sections.jsx sections.css stats.json data/site-content.json tests/sync-utils.test.mjs
 git commit -m "feat: refresh homepage data"
 ```
 
-### Task 3: 公众号与 B站同步
+### Task 4: 公众号与 B站同步
 
 **Files:**
 - Modify: `scripts/sync-wechat-posts.mjs`
@@ -283,7 +494,7 @@ git add scripts/sync-wechat-posts.mjs scripts/sync-site-data.mjs tests/sync-util
 git commit -m "feat: sync wechat posts and bilibili stats"
 ```
 
-### Task 4: 每日自动任务
+### Task 5: 每日自动任务
 
 **Files:**
 - Create: `.github/workflows/sync-site.yml`
@@ -353,7 +564,7 @@ git add .github/workflows/sync-site.yml README.md
 git commit -m "ci: automate daily site content sync"
 ```
 
-### Task 5: 本地与生产验收
+### Task 6: 本地与生产验收
 
 **Files:**
 - Modify: `scripts/verify-live-site.mjs`
@@ -396,4 +607,3 @@ Expected: 首页、JSON、公众号文章与留言接口验证通过。
 git add scripts/verify-live-site.mjs
 git commit -m "test: verify refreshed live content"
 ```
-

@@ -1,4 +1,4 @@
-// sections.jsx — About, Projects, Demo, Blog, Dashboard, Course, Newsletter
+// sections.jsx — About, Projects, Demo, Blog, Dashboard
 // All sections share window-scope so app.jsx can compose them.
 
 /* ─────────────────────── RATE LIMIT (localStorage) ─────────────────────── */
@@ -41,7 +41,7 @@ const TIMELINE = [
   },
 ];
 
-const PROJECTS = [
+const DEFAULT_PROJECTS = [
   {
     id: "contentflow",
     glyph: "CF",
@@ -125,7 +125,34 @@ const BLOG_CATS = [
   { id: "solo", label: "一人公司" },
 ];
 
-const POSTS = [
+const DEFAULT_POSTS = [
+  {
+    id: "xhs-vibecoding-explained",
+    date: "2026.07",
+    cat: "vibe",
+    title: "什么是 vibecoding，一句话解释清楚",
+    excerpt: "从真实使用场景出发，快速理解 vibecoding 的核心。",
+    link: "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5",
+    source: "xiaohongshu",
+  },
+  {
+    id: "xhs-codex-notes-travel",
+    date: "2026.07",
+    cat: "vibe",
+    title: "CODEX + 备忘录：旅行路书和出行清单全自动化",
+    excerpt: "把 Codex 和备忘录串起来，生成旅行路书与可执行的出行清单。",
+    link: "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5",
+    source: "xiaohongshu",
+  },
+  {
+    id: "xhs-codex-newbie-blockers",
+    date: "2026.07",
+    cat: "vibe",
+    title: "Codex 新手最容易卡住的 5 件事",
+    excerpt: "整理 Codex 新手常见卡点和对应的处理方法。",
+    link: "https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5",
+    source: "xiaohongshu",
+  },
   {
     date: "2026.05.09",
     cat: "post",
@@ -148,32 +175,11 @@ const POSTS = [
     link: "https://mp.weixin.qq.com/s/UtK0fSUqKsixUcp-KNmwhA",
   },
   {
-    date: "2026.04.14",
-    cat: "solo",
-    title: "OPC 日记：今天和几个「土老板」聊完，我想明白一件事",
-    excerpt: "卖汽车的、做保温杯的、跑外贸的，他们聊 AI 不聊模型——聊「我卖什么」。格子间出来的人该听的一课。",
-    link: "https://www.xiaohongshu.com/discovery/item/69de3d55000000001d01bc19",
-  },
-  {
-    date: "2026.04.08",
-    cat: "vibe",
-    title: "vibecoding 了个口播剪辑器，来看看我的思路",
-    excerpt: "做口播视频最痛的不是录，是剪——语气词、重复段、停顿。用 Claude Code 写了个专属粗剪工具，问题解决了。",
-    link: "https://www.xiaohongshu.com/discovery/item/69d61fa60000000021039675",
-  },
-  {
     date: "2026.04.05",
     cat: "media",
     title: "一条视频百万播放后，我想明白了一件事",
     excerpt: "播放量上来了，我坐在那没什么感觉。后来才想明白，自媒体的终点不是流量，是找到真正和你同频的那群人。",
     link: "https://mp.weixin.qq.com/s/JKK2AbfR-wzTkHduW8Y42w",
-  },
-  {
-    date: "2026.03.24",
-    cat: "vibe",
-    title: "微信能直接跟 Claude 对话了？5 分钟搞定",
-    excerpt: "发现一个方法，5 分钟让微信直接接上 Claude。从此聊天窗口就是 AI 工作台，有记忆，能调上下文。",
-    link: "https://www.xiaohongshu.com/discovery/item/69c1fb5a0000000022003b6b",
   },
   {
     date: "2026.03.15",
@@ -200,7 +206,67 @@ const POSTS = [
 
 /* ────────────────────────────── ABOUT ────────────────────────────── */
 
+const PORTRAIT_SLIDES = [
+  { src: "assets/photo-portrait-1.jpg", label: "2026 · 杭州" },
+  { src: "assets/photo-portrait-2.jpg", label: "workshop · 杭州" },
+];
+
+const STRIP_SLIDES = [
+  { src: "assets/photo-thumb-workshop.jpg", label: "workshop" },
+  { src: "assets/photo-thumb-archive.jpg",  label: "archive" },
+  { src: "assets/photo-thumb-team.jpg",     label: "team" },
+  { src: "assets/photo-thumb-meeting.jpg",  label: "collab" },
+];
+
+function useSiteContent() {
+  const [content, setContent] = React.useState({
+    projects: DEFAULT_PROJECTS,
+    posts: DEFAULT_POSTS,
+    updatedAt: null,
+  });
+
+  React.useEffect(() => {
+    fetch("/data/site-content.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d) return;
+        setContent({
+          projects: Array.isArray(d.projects) ? d.projects : DEFAULT_PROJECTS,
+          posts: Array.isArray(d.posts) ? d.posts : DEFAULT_POSTS,
+          updatedAt: d.updatedAt || null,
+        });
+      })
+      .catch(() => {});
+  }, []);
+
+  return content;
+}
+
 function About() {
+  const [slideIdx, setSlideIdx] = React.useState(0);
+  const [fading, setFading] = React.useState(false);
+  const [stripIdx, setStripIdx] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setFading(true);
+      setTimeout(() => {
+        setSlideIdx((i) => (i + 1) % PORTRAIT_SLIDES.length);
+        setFading(false);
+      }, 400);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, []);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setStripIdx((i) => (i + 1) % (STRIP_SLIDES.length - 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const current = PORTRAIT_SLIDES[slideIdx];
+
   return (
     <section id="about" className="section" data-screen-label="02 About">
       <div className="shell">
@@ -227,30 +293,41 @@ function About() {
         <div className="about-grid">
           <div className="portrait-stack">
             <div className="portrait-main">
-              <div className="portrait-ph portrait-ph-1">
-                <span className="portrait-glyph">大</span>
+              <div className="portrait-carousel-wrap">
+                <img
+                  key={slideIdx}
+                  src={current.src}
+                  alt="大雁"
+                  className={`portrait-carousel-img${fading ? " portrait-fade-out" : ""}`}
+                />
+                <div className="portrait-carousel-dots">
+                  {PORTRAIT_SLIDES.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`portrait-dot${i === slideIdx ? " active" : ""}`}
+                      onClick={() => setSlideIdx(i)}
+                    />
+                  ))}
+                </div>
               </div>
               <div className="portrait-caption">
-                <span>2026 · 杭州</span>
+                <span>{current.label}</span>
                 <span className="portrait-dim">daily</span>
               </div>
             </div>
-            <div className="portrait-row">
-              <div className="portrait-thumb">
-                <div className="portrait-ph portrait-ph-2">
-                  <span className="portrait-glyph portrait-glyph-sm">V</span>
-                </div>
-                <div className="portrait-caption">
-                  <span>workshop</span>
-                </div>
-              </div>
-              <div className="portrait-thumb">
-                <div className="portrait-ph portrait-ph-3">
-                  <span className="portrait-glyph portrait-glyph-sm">∞</span>
-                </div>
-                <div className="portrait-caption">
-                  <span>archive</span>
-                </div>
+            <div className="portrait-strip-outer">
+              <div
+                className="portrait-strip-track"
+                style={{ transform: `translateX(calc(-${stripIdx} * (50% + 5px)))` }}
+              >
+                {STRIP_SLIDES.map((s, i) => (
+                  <div key={i} className="portrait-strip-item">
+                    <img src={s.src} alt={s.label} className="portrait-strip-img" />
+                    <div className="portrait-caption">
+                      <span>{s.label}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -286,11 +363,12 @@ function About() {
 /* ────────────────────────────── PROJECTS ────────────────────────────── */
 
 function Projects() {
+  const { projects, updatedAt } = useSiteContent();
   const [filter, setFilter] = React.useState("all");
   const counts = {
-    all: PROJECTS.length,
-    live: PROJECTS.filter((p) => p.status === "live").length,
-    wip: PROJECTS.filter((p) => p.status === "wip").length,
+    all: projects.length,
+    live: projects.filter((p) => p.status === "live").length,
+    wip: projects.filter((p) => p.status === "wip").length,
   };
 
   const groups = [
@@ -313,7 +391,7 @@ function Projects() {
               凡是公开能看到的，都已经付费验证过。剩下的还在炉子里。
             </p>
           </div>
-          <div className="proj-filters">
+          <div className="proj-filters" title={`data/site-content.json · ${updatedAt || "local fallback"}`}>
             {[
               { id: "all", l: "全部" },
               { id: "live", l: "已上线" },
@@ -334,7 +412,7 @@ function Projects() {
         {groups
           .filter((g) => filter === "all" || filter === g.id)
           .map((g) => {
-            const items = PROJECTS.filter(g.filter);
+            const items = projects.filter(g.filter);
             if (items.length === 0) return null;
             return (
               <div className="proj-group" key={g.id}>
@@ -358,11 +436,16 @@ function Projects() {
 
 function ProjectCard({ p }) {
   const [qrOpen, setQrOpen] = React.useState(false);
-  const status = STATUS_LABELS[p.status];
+  const status = STATUS_LABELS[p.status] || STATUS_LABELS.wip;
   const chipClass =
     p.status === "live" ? "chip-live" : p.status === "wip" ? "chip-wip" : "chip-archived";
-  const href = p.link && (p.link.startsWith("http") || p.link.includes("."))
-    ? `https://${p.link}` : "#";
+  const href = p.link
+    ? p.link.startsWith("http")
+      ? p.link
+      : p.link.includes(".")
+        ? `https://${p.link}`
+        : "#"
+    : "#";
   const isExternal = !!p.link && href !== "#";
   return (
     <a
@@ -393,7 +476,7 @@ function ProjectCard({ p }) {
         <h4>{p.name}</h4>
         <p>{p.desc}</p>
         <div className="proj-stack">
-          {p.stack.map((s) => (
+          {(p.stack || []).map((s) => (
             <span key={s} className="chip">{s}</span>
           ))}
           {p.qr ? (
@@ -431,6 +514,18 @@ function ProjectCard({ p }) {
 /* ────────────────────────────── BLOG ────────────────────────────── */
 
 function Blog() {
+  const { posts } = useSiteContent();
+  const wechatPosts = posts.filter(
+    (post) => post.source === "wechat" || post.link?.includes("mp.weixin.qq.com"),
+  );
+  const featuredPost = wechatPosts[0] || posts[0];
+  const recentPosts = posts
+    .filter((post) => post !== featuredPost)
+    .slice(0, 3);
+  const categoryLabel = (category) => (
+    BLOG_CATS.find((item) => item.id === category)?.label || "记录"
+  );
+
   return (
     <section id="blog" className="section" data-screen-label="05 Blog">
       <div className="shell">
@@ -443,40 +538,65 @@ function Blog() {
               写下来才算<span className="accent"> 真的想清楚 </span>。
             </h2>
             <p className="section-sub">
-              每周更，复盘 + 教程为主。不写情绪文。
+              AI 产品、一人公司与内容实践记录。
             </p>
           </div>
           <div className="section-meta">
-            <div>// {POSTS.length} entries</div>
-            <div>// latest first</div>
+            <div>// {posts.length} entries</div>
+            <div>// data/site-content.json</div>
           </div>
         </div>
 
-        <div className="blog-cards">
-          {POSTS.slice(0, 4).map((p, i) => (
+        {featuredPost && (
+          <div className="blog-feature-layout">
             <a
-              key={i}
-              className="blog-card"
-              href={p.link || "#"}
-              target={p.link ? "_blank" : undefined}
-              rel={p.link ? "noopener noreferrer" : undefined}
+              className="blog-featured"
+              href={featuredPost.link || "#"}
+              target={featuredPost.link ? "_blank" : undefined}
+              rel={featuredPost.link ? "noopener noreferrer" : undefined}
             >
               <div className="blog-card-meta">
-                <span className="chip">{BLOG_CATS.find((c) => c.id === p.cat)?.label}</span>
-                <span className="blog-card-date">{p.date}</span>
+                <span className="chip">{categoryLabel(featuredPost.cat)}</span>
+                <span className="blog-card-date">{featuredPost.date}</span>
               </div>
-              <h3 className="blog-card-title">{p.title}</h3>
-              <p className="blog-card-excerpt">{p.excerpt}</p>
-              <div className="blog-card-foot">
-                读全文 <span className="blog-card-arrow">↗</span>
+              <div className="blog-feature-source">最新公众号文章</div>
+              <h3 className="blog-feature-title">{featuredPost.title}</h3>
+              <p className="blog-feature-excerpt">{featuredPost.excerpt}</p>
+              <div className="blog-feature-foot">
+                读最新文章 <span aria-hidden="true">↗</span>
               </div>
             </a>
-          ))}
-        </div>
+            <div className="blog-recent-list">
+              <div className="blog-recent-head">近期发布</div>
+              {recentPosts.map((post) => (
+                <a
+                  href={post.link || "#"}
+                  target={post.link ? "_blank" : undefined}
+                  rel={post.link ? "noopener noreferrer" : undefined}
+                  key={`${post.date}:${post.title}`}
+                >
+                  <span className="blog-recent-date">{post.date}</span>
+                  <strong>{post.title}</strong>
+                  <span className="blog-recent-cat">{categoryLabel(post.cat)}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
 
-        <a href="blog.html" className="blog-more-link">
-          查看全部 {POSTS.length} 篇文章 →
-        </a>
+        <div className="blog-actions">
+          <a href="blog.html" className="blog-more-link">
+            查看全部 {posts.length} 篇文章 →
+          </a>
+          <a
+            className="blog-subscribe"
+            href="http://weixin.qq.com/r/mp/WyNBWXfEwSq_rTM693ZJ"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            关注公众号，接收最新文章 →
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -978,224 +1098,149 @@ function Dashboard() {
   );
 }
 
-/* ────────────────────────────── COURSE ────────────────────────────── */
+/* ──────────────────────────── GUESTBOOK ─────────────────────────────── */
 
-function Course() {
-  const [form, setForm] = React.useState({ name: "", wechat: "", track: "个人主页", note: "" });
-  const [submitted, setSubmitted] = React.useState(false);
+function GuestBook() {
+  const [data, setData] = React.useState({ likes: null, messages: [], loaded: false, error: false });
+  const [liked, setLiked] = React.useState(() => localStorage.getItem("gb_liked") === "1");
+  const [name, setName] = React.useState("");
+  const [text, setText] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
+  const [sent, setSent] = React.useState(false);
   const [error, setError] = React.useState("");
-  const SEATS_TOTAL = 10;
-  const SEATS_LEFT = 10;
-  const filled = SEATS_TOTAL - SEATS_LEFT;
-  const pct = (filled / SEATS_TOTAL) * 100;
 
-  function update(k, v) {
-    setForm((f) => ({ ...f, [k]: v }));
+  React.useEffect(() => {
+    fetch("/api/guestbook")
+      .then(r => r.json())
+      .then(d => setData({
+        likes: d.likes ?? 0,
+        messages: Array.isArray(d.messages) ? d.messages : [],
+        loaded: true,
+        error: false,
+      }))
+      .catch(() => setData(d => ({ ...d, loaded: true, error: true })));
+  }, []);
+
+  async function handleLike() {
+    if (liked) return;
+    setLiked(true);
+    localStorage.setItem("gb_liked", "1");
+    try {
+      const r = await fetch("/api/guestbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "like" }),
+      });
+      const { likes } = await r.json();
+      setData(d => ({ ...d, likes }));
+    } catch {}
   }
-  async function submit(e) {
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (!form.name || !form.wechat) return;
+    if (!text.trim()) return;
     setSubmitting(true);
     setError("");
     try {
-      const res = await fetch("/api/signup", {
+      const r = await fetch("/api/guestbook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ action: "message", name: name.trim(), text: text.trim() }),
       });
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        const d = await res.json();
-        setError(d.error || "提交失败，请稍后重试");
-      }
-    } catch {
-      setError("网络错误，请稍后重试");
+      if (!r.ok) { const d = await r.json(); throw new Error(d.error); }
+      setSent(true);
+      setText("");
+      setName("");
+      const fresh = await (await fetch("/api/guestbook")).json();
+      setData(fresh);
+      setTimeout(() => setSent(false), 3000);
+    } catch (err) {
+      setError(err.message || "提交失败，稍后重试");
     } finally {
       setSubmitting(false);
     }
   }
 
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return `${d.getMonth() + 1}/${d.getDate()}`;
+  }
+
   return (
-    <section id="course" className="section" data-screen-label="07 Course">
+    <section id="guestbook" className="section" data-screen-label="08 Guestbook">
       <div className="shell">
         <div className="section-head">
           <div>
             <div className="t-eyebrow">
-              <span className="dot"></span>07 / 杭州工作坊
+              <span className="dot" />08 / 留下足迹
             </div>
             <h2 className="section-title">
-              5 月 17 日，<span className="accent">3.5 小时做出你的第一个网站</span>。
+              进来坐坐，<span className="accent">留个字</span>。
             </h2>
           </div>
         </div>
 
-        <div className="course">
-          <div className="course-head">
-            <div>
-              <div className="course-eyebrow">
-                <span className="pulse" />
-                Vibecoding 杭州 · 工作坊
-              </div>
-              <h3 className="course-title">
-                现场跟做，<br />
-                当天上线。
-              </h3>
-              <p className="course-sub">
-                13:30 你带一个想法到现场。17:00 你的网站已经上线、能发朋友圈。
-                零代码基础也能上手——我们用 CodeBuddy + EdgeOne，让 AI 替你写得对。
-              </p>
-              <div className="course-facts">
-                <div className="course-fact">
-                  <div className="k">Date</div>
-                  <div className="v">5 月 17 日<small>· 周日</small></div>
-                </div>
-                <div className="course-fact">
-                  <div className="k">Time</div>
-                  <div className="v">13:30<small>— 17:00</small></div>
-                </div>
-                <div className="course-fact">
-                  <div className="k">Location</div>
-                  <div className="v">杭州<small>· 具体地址私聊</small></div>
-                </div>
-                <div className="course-fact">
-                  <div className="k">Seats</div>
-                  <div className="v">{SEATS_TOTAL}<small>· 粉丝预留</small></div>
-                </div>
-                <div className="course-fact">
-                  <div className="k">Price</div>
-                  <div className="v">¥149<small>· 市场费用</small></div>
-                </div>
-                <div className="course-fact">
-                  <div className="k">After</div>
-                  <div className="v">7<small>天答疑</small></div>
-                </div>
-              </div>
-            </div>
+        <div className="gb-layout">
+          <button
+            className={`gb-like-btn${liked ? " gb-liked" : ""}`}
+            onClick={handleLike}
+            disabled={liked}
+          >
+            <span className="gb-like-icon">♥</span>
+            <span className="gb-like-count">{data.likes ?? "—"}</span>
+            <span className="gb-like-label">{liked ? "已赞过" : "点个赞"}</span>
+          </button>
 
-            <div className="course-form">
-              {submitted ? (
-                <div className="course-success">
-                  <div className="glyph">✓</div>
-                  <div style={{ color: "var(--fg)", marginBottom: 8, fontSize: 16, fontWeight: 600 }}>
-                    收到，{form.name}
-                  </div>
-                  <div style={{ color: "var(--fg-muted)", fontSize: 13, lineHeight: 1.6 }}>
-                    24 小时内通过微信 <span style={{ color: "var(--primary)" }}>{form.wechat}</span>{" "}
-                    联系你确认席位。
-                    <br />
-                    或直接微信加大雁，备注「<span style={{ color: "var(--primary)" }}>杭州5/17</span>」锁定更快。
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={submit}>
-                  <h4>锁定席位</h4>
-                  <div className="seats">
-                    剩 {SEATS_LEFT} / {SEATS_TOTAL}
-                    <span className="meter"><span style={{ width: `${pct}%` }} /></span>
-                  </div>
-                  <div className="form-row">
-                    <label>称呼</label>
-                    <input
-                      className="field"
-                      value={form.name}
-                      onChange={(e) => update("name", e.target.value)}
-                      placeholder="希望被怎么称呼"
-                      required
-                    />
-                  </div>
-                  <div className="form-row">
-                    <label>微信号</label>
-                    <input
-                      className="field"
-                      value={form.wechat}
-                      onChange={(e) => update("wechat", e.target.value)}
-                      placeholder="用于发地址 / 群"
-                      required
-                    />
-                  </div>
-                  <div className="form-row">
-                    <label>赛道选择</label>
-                    <select
-                      className="field"
-                      value={form.track}
-                      onChange={(e) => update("track", e.target.value)}
-                    >
-                      <option>个人主页</option>
-                      <option>小工具</option>
-                      <option>小游戏</option>
-                      <option>还没想好</option>
-                    </select>
-                  </div>
-                  <div className="form-row">
-                    <label>你想做什么？（选填）</label>
-                    <textarea
-                      className="field"
-                      style={{ minHeight: 60, resize: "vertical" }}
-                      value={form.note}
-                      onChange={(e) => update("note", e.target.value)}
-                      placeholder="一句话足够"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={submitting}
-                    style={{ width: "100%", justifyContent: "center", marginTop: 4, opacity: submitting ? 0.6 : 1 }}
-                  >
-                    {submitting ? "提交中…" : <><span>提交报名</span><span className="arrow">→</span></>}
-                  </button>
-                  {error && <div style={{ fontSize: 12, color: "#f87171", marginTop: 6 }}>{error}</div>}
-                  <div
-                    style={{
-                      marginTop: 10,
-                      fontFamily: "var(--f-mono)",
-                      fontSize: 11,
-                      color: "var(--fg-faint)",
-                      textAlign: "center",
-                    }}
-                  >
-                    或微信私信备注「杭州5/17」直接锁定
-                  </div>
-                </form>
-              )}
+          <form className="gb-form" onSubmit={handleSubmit}>
+            <input
+              className="gb-input"
+              placeholder="你的名字（选填）"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              maxLength={20}
+            />
+            <textarea
+              className="gb-textarea"
+              placeholder="留一句话（100字内）"
+              value={text}
+              onChange={e => setText(e.target.value)}
+              maxLength={100}
+              rows={3}
+              required
+            />
+            <div className="gb-form-foot">
+              <span className="gb-char-count">{text.length}/100</span>
+              <button
+                type="submit"
+                className="btn btn-primary gb-submit"
+                disabled={submitting || !text.trim()}
+              >
+                {submitting ? "发送中…" : sent ? "已发送 ✓" : "发送留言 →"}
+              </button>
             </div>
-          </div>
-
-          <div className="course-curriculum">
-            <h5>// 三赛道任选 · 离场带走一个能发朋友圈的网站链接</h5>
-            <div className="curr-grid">
-              <div className="curr-cell">
-                <div className="day">Track A</div>
-                <div className="topic">个人主页</div>
-                像本站这种——简历 / 作品集 / 联系入口。最适合 PM、运营、求职者。
-              </div>
-              <div className="curr-cell">
-                <div className="day">Track B</div>
-                <div className="topic">小工具</div>
-                解决一个具体小痛点的网页工具。最适合想做 SaaS 的创业者。
-              </div>
-              <div className="curr-cell">
-                <div className="day">Track C</div>
-                <div className="topic">小游戏</div>
-                轻量休闲、能发圈的小玩意。最适合想做内容引流的人。
-              </div>
-            </div>
-            <h5 style={{ marginTop: 28 }}>// 适合谁来</h5>
-            <div className="curr-grid">
-              <div className="curr-cell">
-                想把小想法做成网站的<strong style={{ color: "var(--fg)" }}>新手</strong>
-              </div>
-              <div className="curr-cell">
-                <strong style={{ color: "var(--fg)" }}>产品经理 / 运营 / 创业者</strong>
-              </div>
-              <div className="curr-cell">
-                看过录播课但<strong style={{ color: "var(--fg)" }}>一直没动手</strong>的人
-              </div>
-            </div>
-          </div>
+            {error && <p className="gb-error">{error}</p>}
+          </form>
         </div>
+
+        {data.error ? (
+          <p className="gb-empty">留言数据由线上 API 加载，本地静态预览不显示线上留言。</p>
+        ) : !data.loaded ? (
+          <p className="gb-empty">留言加载中…</p>
+        ) : data.messages.length > 0 ? (
+          <div className="gb-messages">
+            {data.messages.map(m => (
+              <div key={m.id} className="gb-msg">
+                <div className="gb-msg-head">
+                  <span className="gb-msg-name">&gt; {m.name}</span>
+                  <span className="gb-msg-date">{fmtDate(m.created_at)}</span>
+                </div>
+                <p className="gb-msg-body">{m.message}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="gb-empty">还没有留言，来第一个？</p>
+        )}
       </div>
     </section>
   );
@@ -1206,4 +1251,4 @@ window.Projects = Projects;
 window.Blog = Blog;
 window.DemoStrip = DemoStrip;
 window.Dashboard = Dashboard;
-window.Course = Course;
+window.GuestBook = GuestBook;

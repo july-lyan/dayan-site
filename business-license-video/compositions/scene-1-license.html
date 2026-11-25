@@ -1,0 +1,230 @@
+<template id="scene-1-license-template">
+  <div id="scene-1-license" data-composition-id="scene-1-license" data-width="1920" data-height="1080">
+    <div class="scene">
+      <div class="grid" data-layout-ignore></div>
+      <div class="scan scan-a" data-layout-ignore></div>
+      <div class="scan scan-b" data-layout-ignore></div>
+      <div class="hud top">DAYAN / COMPANY LICENSE / 2026</div>
+      <div class="layout">
+        <section class="copy">
+          <div class="kicker">LICENSE ARRIVED</div>
+          <h1>离职半年后<br />我拿到了营业执照</h1>
+          <p>这半年的等待，是一次把方向、现实和伙伴重新校准的过程。</p>
+        </section>
+        <section class="license-card">
+          <div class="doc-glow" data-layout-ignore></div>
+          <div class="doc">
+            <div class="seal">准</div>
+            <div class="doc-title">营业执照</div>
+            <div class="doc-line wide"></div>
+            <div class="doc-line"></div>
+            <div class="doc-line short"></div>
+            <div class="stamp">YH CULTURE TECH</div>
+          </div>
+          <div class="status">
+            <span></span>
+            IDENTITY VERIFIED
+          </div>
+        </section>
+      </div>
+      <div class="caption">今天，我终于拿到了自己的营业执照。</div>
+    </div>
+    <style>
+      #scene-1-license, #scene-1-license * { box-sizing: border-box; }
+      #scene-1-license .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #07080d;
+        color: #f4f6fb;
+        font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      }
+      #scene-1-license .grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(to right, rgba(139, 124, 255, 0.12) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(66, 217, 245, 0.08) 1px, transparent 1px);
+        background-size: 88px 88px;
+        opacity: 0.45;
+      }
+      #scene-1-license .scan {
+        position: absolute;
+        width: 680px;
+        height: 680px;
+        border-radius: 999px;
+        filter: blur(8px);
+      }
+      #scene-1-license .scan-a {
+        left: -150px;
+        top: -160px;
+        background: radial-gradient(circle, rgba(139, 124, 255, 0.34), transparent 66%);
+      }
+      #scene-1-license .scan-b {
+        right: -160px;
+        bottom: -180px;
+        background: radial-gradient(circle, rgba(247, 198, 90, 0.2), transparent 66%);
+      }
+      #scene-1-license .hud {
+        position: absolute;
+        left: 90px;
+        top: 58px;
+        font: 600 18px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.18em;
+        color: #42d9f5;
+      }
+      #scene-1-license .layout {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        padding: 150px 120px 132px;
+        display: grid;
+        grid-template-columns: 1.04fr 0.96fr;
+        gap: 72px;
+        align-items: center;
+      }
+      #scene-1-license .copy {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      #scene-1-license .kicker {
+        width: max-content;
+        padding: 12px 18px;
+        border: 1px solid rgba(66, 217, 245, 0.45);
+        border-radius: 6px;
+        color: #42d9f5;
+        font: 700 22px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.16em;
+        background: rgba(66, 217, 245, 0.08);
+      }
+      #scene-1-license h1 {
+        max-width: 900px;
+        font-size: 104px;
+        line-height: 1.04;
+        letter-spacing: 0;
+        font-weight: 800;
+      }
+      #scene-1-license p {
+        max-width: 760px;
+        font-size: 32px;
+        line-height: 1.55;
+        color: #b8c0d4;
+      }
+      #scene-1-license .license-card {
+        position: relative;
+        min-height: 680px;
+        display: grid;
+        place-items: center;
+      }
+      #scene-1-license .doc-glow {
+        position: absolute;
+        width: 560px;
+        height: 760px;
+        background: linear-gradient(160deg, rgba(247, 198, 90, 0.32), rgba(139, 124, 255, 0.14));
+        filter: blur(42px);
+        transform: rotate(-7deg);
+      }
+      #scene-1-license .doc {
+        position: relative;
+        width: 520px;
+        height: 680px;
+        padding: 58px;
+        border: 1px solid rgba(247, 198, 90, 0.58);
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 246, 213, 0.9)),
+          #fff8dd;
+        color: #16120a;
+        transform: rotate(-4deg);
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.24) inset;
+      }
+      #scene-1-license .seal {
+        width: 96px;
+        height: 96px;
+        display: grid;
+        place-items: center;
+        border: 5px solid #d7392f;
+        border-radius: 50%;
+        color: #d7392f;
+        font-size: 46px;
+        font-weight: 800;
+      }
+      #scene-1-license .doc-title {
+        margin-top: 54px;
+        font-size: 56px;
+        font-weight: 800;
+      }
+      #scene-1-license .doc-line {
+        height: 15px;
+        margin-top: 32px;
+        border-radius: 999px;
+        background: rgba(22, 18, 10, 0.18);
+      }
+      #scene-1-license .doc-line.wide { width: 100%; }
+      #scene-1-license .doc-line:not(.wide) { width: 82%; }
+      #scene-1-license .doc-line.short { width: 58%; }
+      #scene-1-license .stamp {
+        position: absolute;
+        right: 46px;
+        bottom: 52px;
+        color: #d7392f;
+        font: 800 18px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.08em;
+        border: 3px solid #d7392f;
+        padding: 14px 18px;
+        transform: rotate(-8deg);
+      }
+      #scene-1-license .status {
+        position: absolute;
+        right: 86px;
+        bottom: 62px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        border: 1px solid rgba(93, 212, 154, 0.54);
+        border-radius: 8px;
+        color: #5dd49a;
+        background: rgba(8, 10, 15, 0.86);
+        font: 700 18px/1 "JetBrains Mono", monospace;
+      }
+      #scene-1-license .status span {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #5dd49a;
+        box-shadow: 0 0 24px rgba(93, 212, 154, 0.9);
+      }
+      #scene-1-license .caption {
+        position: absolute;
+        left: 120px;
+        right: 120px;
+        bottom: 46px;
+        z-index: 3;
+        padding: 20px 26px;
+        border: 1px solid rgba(184, 192, 212, 0.2);
+        background: rgba(16, 19, 27, 0.82);
+        color: #f4f6fb;
+        font-size: 30px;
+        line-height: 1.35;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from(".hud", { y: -24, opacity: 0, duration: 0.4, ease: "power2.out" }, 0.1);
+      tl.from(".kicker", { x: -48, opacity: 0, duration: 0.45, ease: "power3.out" }, 0.3);
+      tl.from("h1", { y: 54, opacity: 0, duration: 0.72, ease: "power3.out" }, 0.55);
+      tl.from("p", { y: 32, opacity: 0, duration: 0.5, ease: "power2.out" }, 0.95);
+      tl.from(".doc", { x: 150, rotation: 6, scale: 0.86, opacity: 0, duration: 0.86, ease: "power3.out" }, 0.55);
+      tl.from(".status", { y: 32, opacity: 0, duration: 0.38, ease: "power2.out" }, 1.45);
+      tl.from(".caption", { y: 36, opacity: 0, duration: 0.42, ease: "power2.out" }, 1.6);
+      tl.to(".scan-a", { x: 110, y: 70, duration: 6.6, ease: "sine.inOut" }, 0);
+      tl.to(".scan-b", { x: -90, y: -80, duration: 6.6, ease: "sine.inOut" }, 0);
+      window.__timelines["scene-1-license"] = tl;
+    </script>
+  </div>
+</template>

@@ -1,6 +1,6 @@
 # 大雁的个人站
 
-`liudayan.com` — vibecoder 作品集 + Blog + 杭州线下营报名 + AI 助手「雁飞」。
+`liudayan.com` — vibecoder 作品集 + Blog + 自媒体数据 + AI 助手「雁飞」。
 
 基于 Claude Design 出的设计稿落地，纯静态 HTML/CSS + React (UMD via CDN) + 一个 Vercel serverless 函数跑 AI 对话。
 
@@ -41,15 +41,41 @@ npx vercel --prod
 
 设置完重新部署一次，AI 助手就会走真实模型（haiku-4.5 + system prompt caching）。
 
+## 自动更新
+
+站点内容由 `.github/workflows/sync-site.yml` 每天北京时间 08:15 核验一次，也可以在 GitHub Actions 中手动运行 `Sync site content`。
+
+自动任务会：
+
+- 重新读取已登记的公众号文章并刷新标题、摘要和日期
+- 尝试通过微信公众平台接口发现新文章
+- 调用 B站公开接口核验粉丝数
+- 数据变化或核验日期变化后提交 JSON，由 Vercel 自动发布
+- 单个来源失败时保留上一版有效数据
+
+GitHub 仓库需要配置两个 Repository Secrets：
+
+- `WECHAT_MP_APPID`
+- `WECHAT_MP_APPSECRET`
+
+当前公众号账号调用“已发布文章列表”返回 `48001 api unauthorized`，脚本会继续使用 `data/wechat-article-sources.json` 中的有效文章源。微信公众平台开放该接口权限后，新文章会自动进入站点；在此之前，把新文章分享链接加入该 JSON 即可进入每日自动核验。
+
+本地执行：
+
+```bash
+npm test
+npm run sync:site
+```
+
 ## 文件结构
 
 ```
 dayan-site/
 ├── index.html        # 入口
 ├── styles.css        # 设计系统：颜色、字体、布局壳
-├── sections.css      # Hero / About / Projects / Blog / Dashboard / Course 的样式
-├── app.jsx           # 顶层组合 + Hero + Nav + Footer + AnnounceBar
-├── sections.jsx      # About / Projects / Demo / Blog / Dashboard / Course / Newsletter
+├── sections.css      # Hero / About / Projects / Blog / Dashboard 的样式
+├── app.jsx           # 顶层组合 + Hero + Nav + Footer
+├── sections.jsx      # About / Projects / Demo / Blog / Dashboard / Guestbook
 ├── chat.jsx          # AI 助手「雁飞」+ canned fallback
 ├── api/
 │   └── chat.js       # Vercel serverless: POST /api/chat → Anthropic Haiku 4.5
@@ -66,11 +92,9 @@ dayan-site/
 |---|---|---|
 | `app.jsx` | `SITE.name` / `domain` / `wechat` / `email` | 顶部标识 |
 | `sections.jsx` | `TIMELINE` 数组 | 履历每段的 period / role / org / body / tags |
-| `sections.jsx` | `PROJECTS` 数组 | 项目 name / desc / stack / link / stat |
-| `sections.jsx` | `POSTS` 数组 | Blog 文章列表（建议从 Obsidian 同步） |
-| `sections.jsx` | `Dashboard` 里的 `cells` 和 `bars` | 公众号 / 小红书 / Newsletter 真实数字 |
-| `sections.jsx` | `Course` 里的 `SEATS_LEFT` | 实时席位数 |
-| `app.jsx` | `AnnounceBar` 里的"仅剩 4 席" | 同上 |
+| `data/site-content.json` | `projects` 数组 | 项目 name / desc / stack / link / stat |
+| `data/site-content.json` | `posts` 数组 | Blog 文章列表 |
+| `stats.json` | 社媒平台数据 | 抖音 / 小红书 / 视频号 / B站真实数字 |
 | `api/chat.js` | `SYSTEM_KB` | 雁飞的 RAG 知识库 |
 
 每处都标了 `TODO:replace`，全局搜一下就能找全。
@@ -79,7 +103,7 @@ dayan-site/
 
 阶段 2 把这套迁到 Next.js（已经为此选好栈：Tailwind 4 + shadcn/ui + Vercel AI SDK + Supabase），承接：
 
-- 报名表单 → 微信支付 / Stripe
+- 数据同步 → `npm run sync:site`
 - Newsletter → Buttondown / Resend
 - Blog → MDX + Obsidian 同步脚本
 - 会员区（录播课 + 付费社群）

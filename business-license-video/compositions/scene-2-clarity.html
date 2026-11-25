@@ -1,0 +1,173 @@
+<template id="scene-2-clarity-template">
+  <div id="scene-2-clarity" data-composition-id="scene-2-clarity" data-width="1920" data-height="1080">
+    <div class="scene">
+      <div class="grid" data-layout-ignore></div>
+      <div class="layout">
+        <section class="copy">
+          <div class="tag">01 / 迷茫期</div>
+          <h2>先停下来<br />看清真实需求</h2>
+          <p>焦虑会把人推向所有热门方向，沉淀会把注意力拉回真正想做的路。</p>
+        </section>
+        <section class="radar">
+          <div class="orbit orbit-1" data-layout-ignore></div>
+          <div class="orbit orbit-2" data-layout-ignore></div>
+          <div class="pulse" data-layout-ignore></div>
+          <div class="chip chip-a">AI</div>
+          <div class="chip chip-b">自媒体</div>
+          <div class="chip chip-c">课程</div>
+          <div class="chip chip-d active">真正想做的路</div>
+          <div class="center">FOCUS</div>
+        </section>
+      </div>
+      <div class="caption">给自己一个迷茫期，分清外部机会和内心方向。</div>
+    </div>
+    <style>
+      #scene-2-clarity, #scene-2-clarity * { box-sizing: border-box; }
+      #scene-2-clarity .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        color: #f4f6fb;
+        background:
+          radial-gradient(circle at 75% 48%, rgba(139, 124, 255, 0.18), transparent 34%),
+          #07080d;
+        font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      }
+      #scene-2-clarity .grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.055) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(90deg, #000 0%, #000 78%, transparent 100%);
+      }
+      #scene-2-clarity .layout {
+        width: 100%;
+        height: 100%;
+        padding: 138px 116px 132px;
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 86px;
+        align-items: center;
+      }
+      #scene-2-clarity .copy {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+      #scene-2-clarity .tag {
+        width: max-content;
+        color: #8b7cff;
+        border: 1px solid rgba(139, 124, 255, 0.45);
+        background: rgba(139, 124, 255, 0.1);
+        padding: 12px 18px;
+        border-radius: 6px;
+        font: 700 22px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.12em;
+      }
+      #scene-2-clarity h2 {
+        font-size: 96px;
+        line-height: 1.06;
+        letter-spacing: 0;
+      }
+      #scene-2-clarity p {
+        width: 680px;
+        font-size: 32px;
+        line-height: 1.56;
+        color: #b8c0d4;
+      }
+      #scene-2-clarity .radar {
+        position: relative;
+        height: 700px;
+        border: 1px solid rgba(66, 217, 245, 0.22);
+        border-radius: 8px;
+        background: rgba(16, 19, 27, 0.68);
+        overflow: hidden;
+      }
+      #scene-2-clarity .orbit {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border: 1px solid rgba(66, 217, 245, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #scene-2-clarity .orbit-1 { width: 520px; height: 520px; }
+      #scene-2-clarity .orbit-2 { width: 760px; height: 760px; }
+      #scene-2-clarity .pulse {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(139, 124, 255, 0.34), transparent 66%);
+      }
+      #scene-2-clarity .center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #f4f6fb;
+        background: #10131b;
+        border: 1px solid rgba(139, 124, 255, 0.62);
+        box-shadow: 0 0 45px rgba(139, 124, 255, 0.35);
+        font: 800 24px/1 "JetBrains Mono", monospace;
+      }
+      #scene-2-clarity .chip {
+        position: absolute;
+        min-width: 150px;
+        padding: 18px 22px;
+        border: 1px solid rgba(184, 192, 212, 0.28);
+        border-radius: 8px;
+        color: #b8c0d4;
+        background: rgba(7, 8, 13, 0.86);
+        font-size: 28px;
+        text-align: center;
+      }
+      #scene-2-clarity .chip-a { left: 130px; top: 130px; }
+      #scene-2-clarity .chip-b { right: 120px; top: 170px; }
+      #scene-2-clarity .chip-c { left: 190px; bottom: 150px; }
+      #scene-2-clarity .chip-d {
+        right: 112px;
+        bottom: 126px;
+        color: #07080d;
+        background: #f7c65a;
+        border-color: rgba(247, 198, 90, 0.82);
+        font-weight: 800;
+      }
+      #scene-2-clarity .caption {
+        position: absolute;
+        left: 116px;
+        right: 116px;
+        bottom: 46px;
+        padding: 20px 26px;
+        border: 1px solid rgba(184, 192, 212, 0.2);
+        background: rgba(16, 19, 27, 0.82);
+        font-size: 30px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from(".tag", { x: -42, opacity: 0, duration: 0.38, ease: "power2.out" }, 0.15);
+      tl.from("h2", { y: 52, opacity: 0, duration: 0.62, ease: "power3.out" }, 0.35);
+      tl.from("p", { y: 30, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.78);
+      tl.from(".radar", { x: 90, opacity: 0, duration: 0.65, ease: "power3.out" }, 0.3);
+      tl.from(".chip", { scale: 0.84, opacity: 0, stagger: 0.16, duration: 0.38, ease: "back.out(1.6)" }, 1.05);
+      tl.to(".orbit-1", { rotation: 24, duration: 7.4, ease: "none" }, 0);
+      tl.to(".orbit-2", { rotation: -18, duration: 7.4, ease: "none" }, 0);
+      tl.from(".caption", { y: 36, opacity: 0, duration: 0.42, ease: "power2.out" }, 1.7);
+      window.__timelines["scene-2-clarity"] = tl;
+    </script>
+  </div>
+</template>

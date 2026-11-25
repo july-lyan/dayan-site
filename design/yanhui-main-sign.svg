@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="520" viewBox="0 0 2000 520">
+  <defs>
+    <linearGradient id="stone" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4eee2"/>
+      <stop offset="0.55" stop-color="#e8dcc8"/>
+      <stop offset="1" stop-color="#d9c7aa"/>
+    </linearGradient>
+    <filter id="shadow" x="-6%" y="-18%" width="112%" height="136%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#05100e" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      .board { fill: url(#stone); filter: url(#shadow); }
+      .cn { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-weight: 700; letter-spacing: 0.08em; fill: #0b1b18; }
+      .en { font-family: "Avenir Next", "Montserrat", sans-serif; font-weight: 600; letter-spacing: 0.18em; fill: #0b1b18; }
+      .note { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 28px; fill: #66746e; }
+      .goldLine { stroke: #b9914f; stroke-width: 2; opacity: 0.7; }
+    </style>
+  </defs>
+
+  <rect class="board" x="28" y="28" width="1944" height="464" rx="44"/>
+  <image href="yanhui-final-logo-transparent.png" x="126" y="72" width="650" height="328" preserveAspectRatio="xMidYMid meet"/>
+  <line x1="860" y1="118" x2="860" y2="386" class="goldLine"/>
+  <circle cx="860" cy="252" r="7" fill="#b9914f"/>
+  <text x="950" y="220" class="cn" font-size="76">杭州雁洄文化科技有限公司</text>
+  <text x="956" y="300" class="en" font-size="25">HANGZHOU YANHUI CULTURE TECHNOLOGY CO., LTD.</text>
+  <line x1="956" y1="344" x2="1848" y2="344" class="goldLine"/>
+  <text x="956" y="396" class="note">内容产品 · AI 工具 · 课程与品牌增长</text>
+</svg>

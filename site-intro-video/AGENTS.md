@@ -1,58 +1,58 @@
-# HyperFrames Composition Project
+# AGENTS.md
 
-## Skills
+## HyperFrames 项目规则
 
-This project uses AI agent skills for framework-specific patterns. Install them if not already present:
+创建或修改 composition 前，先使用对应 HyperFrames skill。框架关键规则包括 `window.__timelines` 注册、`data-*` 属性语义、Tailwind v4 browser runtime、shader-compatible CSS 等。
 
-```bash
-npx skills add heygen-com/hyperframes
-```
-
-Skills encode patterns like `window.__timelines` registration, `data-*` attribute semantics, Tailwind v4 browser-runtime styling for `--tailwind` projects, and shader-compatible CSS rules that are not in generic web docs. Using them produces correct compositions from the start.
-
-## Commands
+## 常用命令
 
 ```bash
-npm run dev          # preview in browser (studio editor)
-npm run check        # lint + validate + inspect
-npm run render       # render to MP4
-npm run publish      # publish and get a shareable link
-npx hyperframes docs <topic> # reference docs in terminal
+npm run dev
+npm run check
+npm run render
+npm run publish
+npx hyperframes lint --verbose
+npx hyperframes lint --json
+npx hyperframes docs <topic>
 ```
 
-## Project Structure
+`npm run dev` 是长运行预览服务，应作为后台进程保持运行。
 
-- `index.html` — main composition (root timeline)
-- `compositions/` — sub-compositions referenced via `data-composition-src`
-- `assets/` — media files (video, audio, images)
-- `meta.json` — project metadata (id, name)
-- `transcript.json` — whisper word-level transcript (if generated)
+## 文档
 
-## Linting — Always Run After Changes
+优先使用本地 CLI 文档：
 
-After creating or editing any `.html` composition, run the full check before considering the task complete:
+```bash
+npx hyperframes docs <topic>
+```
+
+常用 topic：`data-attributes`、`gsap`、`compositions`、`rendering`、`examples`、`troubleshooting`。
+
+完整文档入口通过 machine-readable index 发现：`https://hyperframes.heygen.com/llms.txt`。不要猜测具体文档 URL。
+
+## 项目结构
+
+- `index.html`：主 composition。
+- `compositions/`：子 composition。
+- `assets/`：媒体文件。
+- `meta.json`：项目元数据。
+- `transcript.json`：Whisper word-level transcript。
+
+## 验证
+
+创建或编辑任何 `.html` composition 后运行：
 
 ```bash
 npm run check
 ```
 
-Fix all errors before presenting the result.
+修复所有 error，再进入 render 或交付。inspect warning 需要人工判断。
 
-## Key Rules
+## 关键规则
 
-1. Every timed element needs `data-start`, `data-duration`, and `data-track-index`
-2. Visible timed elements **must** have `class="clip"` — the framework uses this for visibility control
-3. GSAP timelines must be paused and registered on `window.__timelines`:
-   ```js
-   window.__timelines = window.__timelines || {};
-   window.__timelines["composition-id"] = gsap.timeline({ paused: true });
-   ```
-4. Videos use `muted` with a separate `<audio>` element for the audio track
-5. Sub-compositions use `data-composition-src="compositions/file.html"`
-6. Only deterministic logic — no `Date.now()`, no `Math.random()`, no network fetches
-
-## Documentation
-
-Full docs: https://hyperframes.heygen.com/introduction
-
-Machine-readable index for AI tools: https://hyperframes.heygen.com/llms.txt
+1. 每个 timed element 需要 `data-start`、`data-duration`、`data-track-index`。
+2. visible timed element 必须有 `class="clip"`。
+3. GSAP timeline 必须 paused 并注册到 `window.__timelines`。
+4. video 使用 `muted`，音频用单独 `<audio>`。
+5. 子 composition 用 `data-composition-src="compositions/file.html"`。
+6. 逻辑必须 deterministic，禁止 `Date.now()`、`Math.random()` 和网络 fetch。

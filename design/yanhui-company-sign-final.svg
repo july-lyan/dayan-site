@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+  <defs>
+    <linearGradient id="deepPanel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071514"/>
+      <stop offset="1" stop-color="#12342e"/>
+    </linearGradient>
+    <linearGradient id="deepInk" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071816"/>
+      <stop offset="1" stop-color="#14352f"/>
+    </linearGradient>
+    <linearGradient id="champagne" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f0d7a0"/>
+      <stop offset="0.52" stop-color="#c19750"/>
+      <stop offset="1" stop-color="#e7c477"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#55d8c0"/>
+      <stop offset="1" stop-color="#17806f"/>
+    </linearGradient>
+    <filter id="plateShadow" x="-8%" y="-14%" width="116%" height="128%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#05100e" flood-opacity="0.22"/>
+    </filter>
+    <filter id="softShadow" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#05100e" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .bg { fill: #efeee7; }
+      .panel { fill: url(#deepPanel); filter: url(#plateShadow); }
+      .brass { fill: #c6a567; filter: url(#softShadow); }
+      .deep { fill: url(#deepInk); }
+      .gold { fill: url(#champagne); }
+      .tealLine { fill: none; stroke: url(#teal); stroke-width: 12; stroke-linecap: round; }
+      .cn { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-weight: 700; letter-spacing: 0.08em; }
+      .en { font-family: "Avenir Next", "Montserrat", sans-serif; font-weight: 600; letter-spacing: 0.18em; }
+      .label { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 28px; fill: #4d5c56; letter-spacing: 0.06em; }
+      .note { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 22px; fill: #67746e; }
+      .cream { fill: #f8efd9; }
+      .darkText { fill: #0d1b18; }
+    </style>
+
+    <symbol id="yanhuiLogo" viewBox="0 0 700 360">
+      <!-- tail return current -->
+      <path class="tealLine" d="M28 282 C118 300, 248 286, 354 244"/>
+      <circle cx="28" cy="282" r="20" fill="none" stroke="url(#teal)" stroke-width="12"/>
+
+      <!-- upper broad wing -->
+      <path class="deep" d="M170 18 C220 72, 304 116, 402 158 C482 194, 548 240, 562 278 C566 290, 560 298, 548 296 C448 242, 322 212, 214 174 C180 126, 162 74, 170 18Z"/>
+
+      <!-- champagne inner wing -->
+      <path class="gold" d="M220 130 C276 174, 348 196, 470 210 C400 164, 312 146, 220 130Z"/>
+
+      <!-- gliding body and lower wing -->
+      <path class="deep" d="M236 292 C322 232, 422 210, 504 226 C540 214, 584 186, 628 176 C652 170, 678 178, 696 198 C676 214, 648 218, 626 210 C592 218, 550 244, 494 278 C414 326, 324 344, 238 342 C300 324, 364 292, 406 258 C338 246, 278 258, 236 292Z"/>
+
+      <!-- long neck and head -->
+      <path class="deep" d="M482 230 C530 198, 582 166, 624 164 C654 162, 680 176, 692 196 C660 192, 632 196, 602 210 C560 230, 524 252, 482 230Z"/>
+      <path class="gold" d="M686 188 L746 204 L686 222 C704 208, 704 200, 686 188Z"/>
+      <ellipse cx="646" cy="188" rx="17" ry="8" fill="#f8efd9" transform="rotate(12 646 188)"/>
+
+      <!-- lower cut / tail feather -->
+      <path class="deep" d="M184 306 C232 272, 290 254, 360 252 C326 286, 270 316, 202 338 C194 330, 188 320, 184 306Z"/>
+    </symbol>
+
+    <symbol id="yanhuiLogoLight" viewBox="0 0 700 360">
+      <!-- tail return current -->
+      <path class="tealLine" d="M28 282 C118 300, 248 286, 354 244"/>
+      <circle cx="28" cy="282" r="20" fill="none" stroke="url(#teal)" stroke-width="12"/>
+
+      <!-- upper broad wing -->
+      <path class="gold" d="M170 18 C220 72, 304 116, 402 158 C482 194, 548 240, 562 278 C566 290, 560 298, 548 296 C448 242, 322 212, 214 174 C180 126, 162 74, 170 18Z"/>
+
+      <!-- ivory inner cut accent -->
+      <path class="cream" d="M220 130 C276 174, 348 196, 470 210 C400 164, 312 146, 220 130Z"/>
+
+      <!-- gliding body and lower wing -->
+      <path class="gold" d="M236 292 C322 232, 422 210, 504 226 C540 214, 584 186, 628 176 C652 170, 678 178, 696 198 C676 214, 648 218, 626 210 C592 218, 550 244, 494 278 C414 326, 324 344, 238 342 C300 324, 364 292, 406 258 C338 246, 278 258, 236 292Z"/>
+
+      <!-- long neck and head -->
+      <path class="gold" d="M482 230 C530 198, 582 166, 624 164 C654 162, 680 176, 692 196 C660 192, 632 196, 602 210 C560 230, 524 252, 482 230Z"/>
+      <path class="cream" d="M686 188 L746 204 L686 222 C704 208, 704 200, 686 188Z"/>
+      <ellipse cx="646" cy="188" rx="17" ry="8" fill="#12342e" transform="rotate(12 646 188)"/>
+
+      <!-- lower cut / tail feather -->
+      <path class="gold" d="M184 306 C232 272, 290 254, 360 252 C326 286, 270 316, 202 338 C194 330, 188 320, 184 306Z"/>
+    </symbol>
+  </defs>
+
+  <rect class="bg" width="2200" height="1400"/>
+  <text x="120" y="96" class="label">杭州雁洄文化科技有限公司 · 公司牌子 SVG 终稿</text>
+  <text x="120" y="136" class="note">主标：A2 的大雁识别 + B1 的轻微前冲感 + C3 的单节点回流。</text>
+
+  <!-- Main horizontal signage -->
+  <g transform="translate(120 210)">
+    <text x="0" y="-34" class="label">A / 门头横牌、背景墙</text>
+    <rect class="panel" x="0" y="0" width="1960" height="420" rx="42"/>
+    <use href="#yanhuiLogoLight" x="88" y="72" width="520" height="268"/>
+    <line x1="690" y1="92" x2="690" y2="328" stroke="#caa768" stroke-width="2" opacity="0.65"/>
+    <circle cx="690" cy="210" r="6" fill="#caa768"/>
+    <text x="770" y="178" class="cn cream" font-size="76">杭州雁洄文化科技有限公司</text>
+    <text x="776" y="256" class="en" font-size="25" fill="#d7bf89">HANGZHOU YANHUI CULTURE TECHNOLOGY CO., LTD.</text>
+    <line x1="776" y1="300" x2="1648" y2="300" stroke="#caa768" stroke-width="2" opacity="0.48"/>
+    <text x="776" y="348" class="note" fill="#94a39d">内容产品 · AI 工具 · 课程与品牌增长</text>
+  </g>
+
+  <!-- Brass office plaque -->
+  <g transform="translate(120 760)">
+    <text x="0" y="-34" class="label">B / 办公室铜牌、工商门口挂牌</text>
+    <rect class="brass" x="0" y="0" width="980" height="390" rx="24"/>
+    <rect x="30" y="30" width="920" height="330" rx="14" fill="none" stroke="#f4dfad" stroke-width="4" opacity="0.72"/>
+    <use href="#yanhuiLogo" x="82" y="110" width="300" height="154"/>
+    <text x="436" y="150" class="cn darkText" font-size="52">杭州雁洄</text>
+    <text x="436" y="224" class="cn darkText" font-size="52">文化科技有限公司</text>
+    <text x="440" y="288" class="en darkText" font-size="17">YANHUI CULTURE TECHNOLOGY</text>
+  </g>
+
+  <!-- Round lightbox / avatar reference -->
+  <g transform="translate(1210 760)">
+    <text x="0" y="-34" class="label">C / 圆形灯箱、头像、门侧小牌</text>
+    <rect x="0" y="0" width="870" height="390" rx="32" fill="#fbfaf4" stroke="#ded7c7" stroke-width="1.5" filter="url(#softShadow)"/>
+    <circle cx="212" cy="196" r="132" class="deep"/>
+    <use href="#yanhuiLogo" x="92" y="126" width="248" height="128"/>
+    <text x="410" y="156" class="cn darkText" font-size="54">雁洄</text>
+    <text x="414" y="220" class="en darkText" font-size="24">YANHUI</text>
+    <text x="414" y="278" class="note">小尺寸优先保留单色版，回流节点可作为品牌记忆点。</text>
+  </g>
+
+  <!-- Production note -->
+  <g transform="translate(120 1240)">
+    <text x="0" y="0" class="note">制作建议：门头用深青黑亚克力底板 + 香槟金金属字；logo 主体可做金属烤漆或背光字；铜牌版本直接用 B。</text>
+  </g>
+</svg>

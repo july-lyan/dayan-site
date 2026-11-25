@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <title>营业执照口播动画</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #07080d;
+      }
+      #root {
+        position: relative;
+        overflow: hidden;
+        background: #07080d;
+        color: #f4f6fb;
+        font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+      #root::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 18% 16%, rgba(139, 124, 255, 0.16), transparent 30%),
+          radial-gradient(circle at 76% 78%, rgba(66, 217, 245, 0.12), transparent 32%),
+          linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+        background-size: auto, auto, 72px 72px, 72px 72px;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+      .topbar {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        top: 44px;
+        z-index: 8;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #8c94aa;
+        font: 700 18px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.1em;
+      }
+      .progress {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        bottom: 34px;
+        z-index: 8;
+        height: 6px;
+        background: rgba(184, 192, 212, 0.14);
+      }
+      .progress span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform: scaleX(0);
+        transform-origin: left center;
+        background: linear-gradient(90deg, #8b7cff, #42d9f5, #f7c65a, #5dd49a);
+      }
+      .layout {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        padding: 120px 96px 104px;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 56px;
+        align-items: stretch;
+      }
+      .copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+        min-width: 0;
+      }
+      .tag {
+        width: max-content;
+        padding: 10px 16px;
+        border: 1px solid rgba(66, 217, 245, 0.42);
+        border-radius: 6px;
+        color: #42d9f5;
+        background: rgba(66, 217, 245, 0.08);
+        font: 800 19px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.12em;
+      }
+      h1, h2 {
+        letter-spacing: 0;
+        font-weight: 900;
+      }
+      h1 {
+        font-size: 86px;
+        line-height: 1.05;
+      }
+      h2 {
+        font-size: 78px;
+        line-height: 1.08;
+      }
+      p {
+        max-width: 680px;
+        color: #b8c0d4;
+        font-size: 29px;
+        line-height: 1.55;
+      }
+      .caption {
+        position: absolute;
+        left: 96px;
+        right: 96px;
+        bottom: 58px;
+        z-index: 6;
+        padding: 18px 24px;
+        border: 1px solid rgba(184, 192, 212, 0.2);
+        background: rgba(16, 19, 27, 0.88);
+        color: #f4f6fb;
+        font-size: 28px;
+        line-height: 1.35;
+      }
+      .board {
+        min-width: 0;
+        min-height: 0;
+        padding: 30px;
+        border: 1px solid rgba(184, 192, 212, 0.18);
+        border-radius: 8px;
+        background: rgba(16, 19, 27, 0.78);
+        box-shadow: 0 0 70px rgba(0, 0, 0, 0.24);
+      }
+      .board-title {
+        margin-bottom: 22px;
+        color: #f7c65a;
+        font: 900 20px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.12em;
+      }
+      .license-wrap {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 24px;
+        height: 100%;
+      }
+      .doc {
+        min-height: 560px;
+        padding: 42px;
+        color: #16120a;
+        background: linear-gradient(135deg, #fffef7, #fff0bc);
+        border: 1px solid rgba(247, 198, 90, 0.72);
+        transform: rotate(-3deg);
+        box-shadow: 0 0 48px rgba(247, 198, 90, 0.2);
+      }
+      .seal {
+        width: 84px;
+        height: 84px;
+        display: grid;
+        place-items: center;
+        border: 5px solid #d7392f;
+        border-radius: 50%;
+        color: #d7392f;
+        font-size: 42px;
+        font-weight: 900;
+      }
+      .doc-title {
+        margin-top: 42px;
+        font-size: 48px;
+        font-weight: 900;
+      }
+      .doc-line {
+        height: 13px;
+        margin-top: 28px;
+        border-radius: 999px;
+        background: rgba(22, 18, 10, 0.18);
+      }
+      .doc-line.a { width: 100%; }
+      .doc-line.b { width: 82%; }
+      .doc-line.c { width: 58%; }
+      .stamp {
+        margin-top: 68px;
+        width: max-content;
+        padding: 13px 16px;
+        border: 3px solid #d7392f;
+        color: #d7392f;
+        font: 900 16px/1 "JetBrains Mono", monospace;
+        transform: rotate(-7deg);
+      }
+      .mini-stack {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+      .mini-card, .month, .matrix-cell, .task, .persona, .route-card {
+        border: 1px solid rgba(184, 192, 212, 0.16);
+        border-radius: 8px;
+        background: rgba(7, 8, 13, 0.74);
+      }
+      .mini-card {
+        padding: 18px;
+      }
+      .mini-card b {
+        display: block;
+        margin-bottom: 8px;
+        color: #f4f6fb;
+        font-size: 24px;
+      }
+      .mini-card span {
+        color: #9ea7bd;
+        font-size: 18px;
+        line-height: 1.4;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 10px;
+      }
+      .month {
+        min-height: 152px;
+        padding: 18px;
+      }
+      .month b {
+        color: #42d9f5;
+        font: 900 18px/1 "JetBrains Mono", monospace;
+      }
+      .month span {
+        display: block;
+        margin-top: 14px;
+        color: #e9ecf4;
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .month small {
+        display: block;
+        margin-top: 8px;
+        color: #8c94aa;
+        font-size: 16px;
+        line-height: 1.35;
+      }
+      .matrix {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .matrix-cell {
+        min-height: 182px;
+        padding: 20px;
+      }
+      .matrix-cell strong {
+        display: block;
+        color: #f4f6fb;
+        font-size: 26px;
+      }
+      .matrix-cell em {
+        display: block;
+        margin-top: 10px;
+        color: #8c94aa;
+        font-style: normal;
+        font-size: 18px;
+        line-height: 1.38;
+      }
+      .matrix-cell.selected {
+        border-color: rgba(247, 198, 90, 0.72);
+        background: rgba(247, 198, 90, 0.1);
+      }
+      .checklist {
+        display: grid;
+        gap: 14px;
+      }
+      .task {
+        min-height: 88px;
+        padding: 18px 20px;
+        display: grid;
+        grid-template-columns: 1fr 180px;
+        align-items: center;
+        gap: 18px;
+      }
+      .task strong {
+        font-size: 28px;
+      }
+      .task span {
+        color: #5dd49a;
+        font: 900 18px/1 "JetBrains Mono", monospace;
+      }
+      .bar {
+        height: 8px;
+        margin-top: 12px;
+        border-radius: 999px;
+        background: rgba(184, 192, 212, 0.16);
+        overflow: hidden;
+      }
+      .bar i {
+        display: block;
+        width: var(--w);
+        height: 100%;
+        background: linear-gradient(90deg, #f7c65a, #5dd49a);
+      }
+      .community-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .persona {
+        min-height: 182px;
+        padding: 22px;
+      }
+      .persona b {
+        display: block;
+        color: #42d9f5;
+        font-size: 26px;
+      }
+      .persona span {
+        display: block;
+        margin-top: 12px;
+        color: #b8c0d4;
+        font-size: 20px;
+        line-height: 1.42;
+      }
+      .route {
+        display: grid;
+        gap: 16px;
+      }
+      .route-card {
+        padding: 18px 22px;
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        gap: 18px;
+        align-items: center;
+      }
+      .route-card b {
+        color: #f7c65a;
+        font: 900 20px/1 "JetBrains Mono", monospace;
+      }
+      .route-card span {
+        color: #f4f6fb;
+        font-size: 25px;
+        font-weight: 800;
+      }
+      .launch-button {
+        min-height: 110px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        color: #07080d;
+        background: linear-gradient(90deg, #f7c65a, #5dd49a, #42d9f5);
+        font: 900 33px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="120" data-width="1920" data-height="1080">
+      <div class="topbar"><span>DAYAN / LICENSE DAY</span><span>离职半年复盘系统</span></div>
+      <div class="progress"><span></span></div>
+
+      <section id="s1" class="clip scene" data-start="0" data-duration="24" data-track-index="1">
+        <div class="layout">
+          <div class="copy">
+            <div class="tag">OPENING / 拿到执照</div>
+            <h1>离职半年后<br />我才成立公司</h1>
+            <p>慢下来的半年，把焦虑、现实问题、产品方向和同路人都重新整理了一遍。</p>
+          </div>
+          <div class="board license-wrap">
+            <div class="doc">
+              <div class="seal">准</div>
+              <div class="doc-title">营业执照</div>
+              <div class="doc-line a"></div>
+              <div class="doc-line b"></div>
+              <div class="doc-line c"></div>
+              <div class="stamp">YH CULTURE TECH</div>
+            </div>
+            <div class="mini-stack" data-layout-allow-overflow>
+              <div class="mini-card"><b>从员工身份</b><span>离开大厂后的第一件事，是把生活节奏拿回来。</span></div>
+              <div class="mini-card"><b>到公司主体</b><span>公司成立是结果，前面有很多看不见的准备。</span></div>
+              <div class="mini-card"><b>关键词</b><span>等待、沉淀、校准、出发。</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption" data-layout-allow-overflow>今天，我终于拿到了自己的营业执照。离职半年后，我才迈出这一步。</div>
+      </section>
+
+      <section id="s2" class="clip scene" data-start="24" data-duration="24" data-track-index="1">
+        <div class="layout">
+          <div class="copy">
+            <div class="tag">01 / 给自己迷茫期</div>
+            <h2>先把半年<br />拆成六个阶段</h2>
+            <p>刚离开职场，很容易被热门方向推着走。真正有价值的部分，是看清自己需要什么。</p>
+          </div>
+          <div class="board">
+            <div class="board-title">6-MONTH CLARITY MAP</div>
+            <div class="timeline" data-layout-allow-overflow>
+              <div class="month"><b>M01</b><span>脱离惯性</span><small>从组织节奏切回个人节奏</small></div>
+              <div class="month"><b>M02</b><span>焦虑试探</span><small>AI、自媒体、课程都看一遍</small></div>
+              <div class="month"><b>M03</b><span>筛掉噪音</span><small>区分热闹和适合</small></div>
+              <div class="month"><b>M04</b><span>产品复盘</span><small>把过往能力重新组合</small></div>
+              <div class="month"><b>M05</b><span>社区碰撞</span><small>用外部视角修正判断</small></div>
+              <div class="month"><b>M06</b><span>水到渠成</span><small>成立公司变成自然动作</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption" data-layout-allow-overflow>这半年让我分清了别人眼里的机会，也看清我真正想做的路。</div>
+      </section>
+
+      <section id="s3" class="clip scene" data-start="48" data-duration="24" data-track-index="1">
+        <div class="layout">
+          <div class="copy">
+            <div class="tag">02 / 机会筛选</div>
+            <h2>热门方向很多<br />真正要筛选</h2>
+            <p>AI、自媒体、课程都可以做，关键是它们和自己的能力、长期生活方式能不能接上。</p>
+          </div>
+          <div class="board">
+            <div class="board-title">OPPORTUNITY FILTER</div>
+            <div class="matrix" data-layout-allow-overflow>
+              <div class="matrix-cell"><strong>AI 工具</strong><em>技术势能强，适合做产品原型和效率系统。</em></div>
+              <div class="matrix-cell"><strong>自媒体</strong><em>反馈快，适合验证表达、定位和人群。</em></div>
+              <div class="matrix-cell"><strong>课程</strong><em>能沉淀方法论，也考验交付和运营。</em></div>
+              <div class="matrix-cell selected"><strong>我的路</strong><em>产品能力 + AI 工作流 + 内容表达 + 真实交付。</em></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption" data-layout-allow-overflow>沉淀下来以后，我开始看见哪条路和自己真正匹配。</div>
+      </section>
+
+      <section id="s4" class="clip scene" data-start="72" data-duration="24" data-track-index="1">
+        <div class="layout">
+          <div class="copy">
+            <div class="tag">03 / 弹药准备</div>
+            <h2>现实问题<br />先一件件安顿好</h2>
+            <p>离职后不是真空状态，生活系统稳定下来，创业系统才有持续输出的能量。</p>
+          </div>
+          <div class="board">
+            <div class="board-title">REALITY CHECKLIST</div>
+            <div class="checklist">
+              <div class="task"><div><strong>公积金提取</strong><div class="bar"><i style="--w: 88%"></i></div></div><span>SETTLED</span></div>
+              <div class="task"><div><strong>失业金申领</strong><div class="bar"><i style="--w: 76%"></i></div></div><span>READY</span></div>
+              <div class="task"><div><strong>家庭琐事处理</strong><div class="bar"><i style="--w: 92%"></i></div></div><span>STABLE</span></div>
+              <div class="task"><div><strong>现金流缓冲</strong><div class="bar"><i style="--w: 70%"></i></div></div><span>BUFFER</span></div>
+              <div class="task"><div><strong>工作节奏重建</strong><div class="bar"><i style="--w: 83%"></i></div></div><span>ONLINE</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption" data-layout-allow-overflow>弹药准备好，往前冲才有底气。</div>
+      </section>
+
+      <section id="s5" class="clip scene" data-start="96" data-duration="24" data-track-index="1">
+        <div class="layout">
+          <div class="copy">
+            <div class="tag">04 / 同路人 + 出发</div>
+            <h2>找到人<br />方向才变清晰</h2>
+            <p>在 OPC 社区，产品视角和商业、运营、内容视角接上了，下一步开始变得具体。</p>
+          </div>
+          <div class="board">
+            <div class="board-title">FROM SOLO TO SYSTEM</div>
+            <div class="community-grid">
+              <div class="persona"><b>我 / 产品</b><span>把问题拆成流程、界面、工具和交付。</span></div>
+              <div class="persona"><b>搭子 / 商业</b><span>提醒我看客户、定价、转化和复购。</span></div>
+              <div class="persona"><b>搭子 / 运营</b><span>把想法变成节奏、活动和反馈回路。</span></div>
+              <div class="persona"><b>搭子 / 内容</b><span>把经验讲清楚，让人知道我能解决什么。</span></div>
+            </div>
+            <div class="route" data-layout-allow-overflow style="margin-top: 18px">
+              <div class="route-card"><b>STEP 01</b><span>看清路</span></div>
+              <div class="route-card"><b>STEP 02</b><span>找到人</span></div>
+              <div class="launch-button">START COMPANY</div>
+            </div>
+          </div>
+        </div>
+        <div class="caption" data-layout-allow-overflow>先给自己一点时间，看清路，找到人，再出发，会走得更稳。</div>
+      </section>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.to(".progress span", { scaleX: 1, duration: 120, ease: "none" }, 0);
+      ["#s1", "#s2", "#s3", "#s4", "#s5"].forEach((id, index) => {
+        const starts = [0, 24, 48, 72, 96];
+        const durations = [24, 24, 24, 24, 24];
+        const t = starts[index];
+        const d = durations[index];
+        tl.from(id, { opacity: 0, scale: 1.006, duration: 0.7, ease: "power2.out" }, t);
+        tl.from(`${id} .tag`, { y: 20, opacity: 0, duration: 0.55, ease: "power2.out" }, t + 0.7);
+        tl.from(`${id} h1, ${id} h2`, { y: 42, opacity: 0, duration: 0.8, ease: "power3.out" }, t + 1.6);
+        tl.from(`${id} p`, { y: 24, opacity: 0, duration: 0.65, ease: "power2.out" }, t + 3.1);
+        tl.from(`${id} .board`, { x: 56, opacity: 0, duration: 0.9, ease: "power3.out" }, t + 5.0);
+        tl.from(`${id} .caption`, { y: 28, opacity: 0, duration: 0.55, ease: "power2.out" }, t + 6.4);
+        tl.to(`${id} .layout`, { y: -8, duration: d - 7.5, ease: "sine.inOut" }, t + 7.0);
+      });
+      tl.from("#s1 .doc", { rotation: 4, scale: 0.9, opacity: 0, duration: 0.9, ease: "power3.out" }, 5.5);
+      tl.from("#s1 .mini-card", { y: 24, opacity: 0, stagger: 1.7, duration: 0.45, ease: "power2.out" }, 8.0);
+      tl.from("#s2 .month", { y: 28, opacity: 0, stagger: 1.35, duration: 0.5, ease: "power2.out" }, 31.0);
+      tl.from("#s3 .matrix-cell", { scale: 0.94, opacity: 0, stagger: 2.0, duration: 0.55, ease: "power2.out" }, 55.0);
+      tl.from("#s4 .task", { x: 34, opacity: 0, stagger: 1.6, duration: 0.5, ease: "power2.out" }, 78.5);
+      tl.from("#s4 .bar i", { scaleX: 0, transformOrigin: "left center", stagger: 1.6, duration: 0.75, ease: "power3.out" }, 79.1);
+      tl.from("#s5 .persona", { y: 26, opacity: 0, stagger: 1.45, duration: 0.5, ease: "power2.out" }, 103.0);
+      tl.from("#s5 .route-card, #s5 .launch-button", { x: 36, opacity: 0, stagger: 1.3, duration: 0.5, ease: "power2.out" }, 110.0);
+      tl.to("#s5 .launch-button", { scale: 1.025, duration: 0.65, repeat: 8, yoyo: true, ease: "sine.inOut" }, 114.0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

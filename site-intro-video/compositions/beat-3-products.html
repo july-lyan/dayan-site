@@ -1,171 +1,107 @@
 <template id="beat-3-products-template">
   <div id="beat-3-products" data-composition-id="beat-3-products" data-width="1920" data-height="1080">
-    <div class="scene scene-products">
-      <div class="bg-grid"></div>
-      <div class="bg-shot"></div>
-      <div class="scene-content">
-        <div class="eyebrow t-mono">PRODUCTS / LIVE</div>
-        <h2 class="headline">已经上线的东西，<br />就在眼前。</h2>
+    <div class="scene">
+      <div class="grid"></div>
+      <div class="copy">
+        <div class="eyebrow">WHAT'S INSIDE</div>
+        <h2>作品，复盘，<br />真实数据。</h2>
+        <p>这个网站不是简历页。它把正在做的产品、公开写下来的思考、以及可验证的数据，都放到台前。</p>
       </div>
-      <div class="cards">
-        <div class="card card-a">
-          <div class="card-badge">LIVE</div>
-          <div class="thumb thumb-a"></div>
-          <div class="meta">
-            <div class="name">ContentFlow</div>
-            <div class="stack t-mono">Next.js / Claude</div>
-          </div>
-        </div>
-        <div class="card card-b">
-          <div class="card-badge">LIVE</div>
-          <div class="thumb thumb-b"></div>
-          <div class="meta">
-            <div class="name">AI 表情包批量工场</div>
-            <div class="stack t-mono">React / Tailwind</div>
-          </div>
-        </div>
-        <div class="card card-c">
-          <div class="card-badge">LIVE</div>
-          <div class="thumb thumb-c"></div>
-          <div class="meta">
-            <div class="name">魔法识字课</div>
-            <div class="stack t-mono">Mini Program / AI</div>
-          </div>
-        </div>
+      <div class="showcase">
+        <div class="shot projects"><img src="../capture/screenshots/scroll-026.png" alt="" /></div>
+        <div class="shot blog"><img src="../capture/screenshots/scroll-066.png" alt="" /></div>
       </div>
     </div>
     <style>
-      #beat-3-products {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        color: #ededee;
-        background: #08090c;
-        font-family: "PingFang SC", "Noto Sans SC", sans-serif;
-      }
-      .scene {
+      [data-composition-id="beat-3-products"], [data-composition-id="beat-3-products"] * { box-sizing: border-box; }
+      [data-composition-id="beat-3-products"] .scene {
         position: relative;
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background:
-          radial-gradient(circle at 18% 15%, rgba(139,124,255,0.16), transparent 25%),
-          #08090c;
+        background: #08090c;
+        color: #fff;
+        font-family: "Noto Sans SC", "PingFang SC", sans-serif;
       }
-      .bg-grid {
+      [data-composition-id="beat-3-products"] .grid {
         position: absolute;
         inset: 0;
         background-image:
-          linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
-        background-size: 64px 64px;
-        opacity: 0.22;
+          linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+        background-size: 72px 72px;
       }
-      .bg-shot {
+      [data-composition-id="beat-3-products"] .copy {
         position: absolute;
-        inset: 0;
-        opacity: 0.16;
+        left: 160px;
+        top: 150px;
+        width: 700px;
+        padding: 40px 42px;
+        border-radius: 30px;
+        background: rgba(248, 250, 252, 0.96);
       }
-      .bg-shot {
-        background-image: url("../capture/screenshots/scroll-026.png");
-        background-size: cover;
-        background-position: center 24%;
+      [data-composition-id="beat-3-products"] .eyebrow {
+        margin-bottom: 24px;
+        font: 600 18px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.18em;
+        color: #6d5efc;
       }
-      .scene-content {
-        position: absolute;
-        left: 140px;
-        top: 90px;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
+      [data-composition-id="beat-3-products"] h2 {
+        margin: 0 0 28px;
+        font-size: 96px;
+        line-height: 0.96;
+        color: #0b0f19;
       }
-      .t-mono {
-        font-family: "JetBrains Mono", "SF Mono", monospace;
-        letter-spacing: 0.14em;
-      }
-      .eyebrow {
-        font-size: 16px;
-        color: #c8bfff;
-      }
-      .headline {
+      [data-composition-id="beat-3-products"] p {
         margin: 0;
-        font-size: 84px;
-        line-height: 1;
-        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.5;
+        color: #1f2937;
       }
-      .cards {
+      [data-composition-id="beat-3-products"] .showcase {
         position: absolute;
-        left: 120px;
-        right: 120px;
-        bottom: 90px;
-        display: flex;
-        gap: 26px;
+        right: 160px;
+        top: 120px;
+        width: 780px;
+        height: 820px;
       }
-      .card {
-        position: relative;
-        flex: 1;
-        height: 640px;
-        padding: 18px;
-        border-radius: 28px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(15,17,22,0.92);
-        box-shadow: 0 24px 60px rgba(0,0,0,0.32);
-      }
-      .card-badge {
+      [data-composition-id="beat-3-products"] .shot {
         position: absolute;
-        right: 18px;
-        top: 18px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 13px;
-        color: #5dd49a;
-        background: rgba(93,212,154,0.08);
-        border: 1px solid rgba(93,212,154,0.2);
-      }
-      .thumb {
-        height: 440px;
         overflow: hidden;
-        border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: #11141a;
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: #111318;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.34);
       }
-      .thumb {
-        background-image: url("../capture/screenshots/scroll-026.png");
-        background-size: cover;
+      [data-composition-id="beat-3-products"] .shot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
-      .thumb-a { background-position: left 18% top; }
-      .thumb-b { background-position: center top; }
-      .thumb-c { background-position: right 18% top; }
-      .meta {
-        padding: 18px 6px 0;
+      [data-composition-id="beat-3-products"] .projects {
+        left: 0;
+        top: 0;
+        width: 780px;
+        height: 420px;
       }
-      .name {
-        font-size: 34px;
-        font-weight: 700;
-        margin-bottom: 12px;
+      [data-composition-id="beat-3-products"] .projects img { object-position: center 28%; }
+      [data-composition-id="beat-3-products"] .blog {
+        left: 80px;
+        top: 470px;
+        width: 620px;
+        height: 300px;
       }
-      .stack {
-        font-size: 15px;
-        color: #b8babf;
-      }
-      .card-b {
-        margin-top: -24px;
-        border-color: rgba(139,124,255,0.34);
-        box-shadow: 0 0 0 1px rgba(139,124,255,0.12), 0 30px 80px rgba(139,124,255,0.16);
-      }
+      [data-composition-id="beat-3-products"] .blog img { object-position: center 18%; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      tl.from(".eyebrow", { y: 20, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.05);
-      tl.from(".headline", { y: 46, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.1);
-      tl.from(".card-a", { y: 80, x: -30, rotate: -2, opacity: 0, duration: 0.75, ease: "power3.out" }, 0.35);
-      tl.from(".card-b", { y: 90, scale: 0.94, opacity: 0, duration: 0.8, ease: "power3.out" }, 0.48);
-      tl.from(".card-c", { y: 80, x: 30, rotate: 2, opacity: 0, duration: 0.75, ease: "power3.out" }, 0.62);
-      tl.to(".card-a", { y: -8, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 0 }, 1.5);
-      tl.to(".card-b", { y: -10, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 0 }, 1.56);
-      tl.to(".card-c", { y: -8, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 0 }, 1.62);
+      tl.from(".eyebrow", { y: 18, opacity: 0, duration: 0.3 }, 0.08);
+      tl.from("h2", { y: 36, opacity: 0, duration: 0.55, ease: "power3.out" }, 0.18);
+      tl.from("p", { y: 24, opacity: 0, duration: 0.38 }, 0.42);
+      tl.from(".projects", { x: 48, opacity: 0, duration: 0.55, ease: "power2.out" }, 0.28);
+      tl.from(".blog", { x: 48, opacity: 0, duration: 0.48, ease: "power2.out" }, 0.5);
       window.__timelines["beat-3-products"] = tl;
     </script>
   </div>

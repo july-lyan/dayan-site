@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1400" viewBox="0 0 1800 1400">
+  <defs>
+    <linearGradient id="ink" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0c1715"/>
+      <stop offset="1" stop-color="#17302c"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4dfad"/>
+      <stop offset="0.55" stop-color="#b7914e"/>
+      <stop offset="1" stop-color="#e7c474"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#4fd8bd"/>
+      <stop offset="1" stop-color="#1f8f7a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#07100f" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      .bg { fill: #eeeee6; }
+      .title { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-size: 42px; font-weight: 700; fill: #16211f; letter-spacing: 0.08em; }
+      .sub { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 23px; fill: #596762; }
+      .label { font-family: "Avenir Next", "PingFang SC", sans-serif; font-size: 22px; fill: #36443f; font-weight: 700; letter-spacing: 0.06em; }
+      .desc { font-family: "PingFang SC", "Noto Sans CJK SC", sans-serif; font-size: 17px; fill: #68746f; }
+      .card { fill: #fbfaf3; stroke: #d9d4c4; stroke-width: 1.5; filter: url(#shadow); }
+      .dark { fill: #0d1917; }
+      .muted { fill: #78837d; }
+      .gold-stroke { fill: none; stroke: url(#gold); stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+      .dark-stroke { fill: none; stroke: #0d1917; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+      .thin-stroke { fill: none; stroke: #0d1917; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+      .teal-stroke { fill: none; stroke: url(#teal); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+      .cn { font-family: "Songti SC", "Noto Serif CJK SC", serif; font-weight: 700; letter-spacing: 0.08em; }
+      .en { font-family: "Avenir Next", "Montserrat", sans-serif; font-weight: 600; letter-spacing: 0.18em; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1800" height="1400"/>
+  <text x="86" y="86" class="title">雁洄 · Logo 方向探索</text>
+  <text x="86" y="128" class="sub">先定核心识别，再做牌匾。推荐从 01、03、06 三个方向继续深化，视觉成熟度更高。</text>
+
+  <!-- 01 -->
+  <g transform="translate(86 190)">
+    <rect class="card" x="0" y="0" width="500" height="340" rx="30"/>
+    <text x="32" y="48" class="label">01 / 回雁 · 推荐</text>
+    <text x="32" y="78" class="desc">一笔回环形成长颈大雁，识别清楚，适合门头和头像。</text>
+    <g transform="translate(116 112)">
+      <path class="dark-stroke" d="M12 124 C78 32, 202 20, 294 76"/>
+      <path class="dark-stroke" d="M68 152 C154 94, 260 86, 360 116"/>
+      <path class="thin-stroke" d="M124 132 C214 102, 304 100, 404 116"/>
+      <path class="dark-stroke" d="M290 76 C344 84, 386 112, 414 144 C438 142, 462 134, 484 120"/>
+      <path class="dark" d="M482 120 L536 142 L482 164 C498 148 498 136 482 120Z"/>
+      <circle cx="432" cy="137" r="7" class="dark"/>
+    </g>
+  </g>
+
+  <!-- 02 -->
+  <g transform="translate(650 190)">
+    <rect class="card" x="0" y="0" width="500" height="340" rx="30"/>
+    <text x="32" y="48" class="label">02 / 雁阵</text>
+    <text x="32" y="78" class="desc">三只雁构成向前队形，强调团队、增长、迁徙和方向感。</text>
+    <g transform="translate(118 120)">
+      <path class="dark-stroke" d="M0 70 C56 18, 132 12, 202 54"/>
+      <path class="dark-stroke" d="M74 122 C144 68, 240 58, 328 96"/>
+      <path class="dark-stroke" d="M164 174 C234 126, 320 114, 412 146"/>
+      <path class="teal-stroke" d="M112 120 C188 92, 278 88, 370 106"/>
+      <circle cx="356" cy="103" r="9" fill="#1f8f7a"/>
+      <path class="dark" d="M402 137 L452 154 L404 174 C418 160 418 148 402 137Z"/>
+    </g>
+  </g>
+
+  <!-- 03 -->
+  <g transform="translate(1214 190)">
+    <rect class="card" x="0" y="0" width="500" height="340" rx="30"/>
+    <text x="32" y="48" class="label">03 / 雁洄印 · 推荐</text>
+    <text x="32" y="78" class="desc">把“雁”和“洄”压成篆印感图形，文化属性更强。</text>
+    <g transform="translate(166 112)">
+      <rect x="0" y="0" width="170" height="170" rx="34" fill="#0d1917"/>
+      <path d="M38 48 C78 22, 122 24, 142 52 C108 42, 76 52, 56 78" fill="none" stroke="#f4dfad" stroke-width="12" stroke-linecap="round"/>
+      <path d="M42 112 C76 86, 118 82, 146 100" fill="none" stroke="#f4dfad" stroke-width="12" stroke-linecap="round"/>
+      <path d="M72 82 C108 70, 138 72, 160 86" fill="none" stroke="#4fd8bd" stroke-width="7" stroke-linecap="round"/>
+      <path d="M116 52 C142 60, 154 74, 162 88 L184 78 L162 104 C146 96, 134 84, 116 52Z" fill="#f4dfad"/>
+    </g>
+  </g>
+
+  <!-- 04 -->
+  <g transform="translate(86 590)">
+    <rect class="card" x="0" y="0" width="500" height="340" rx="30"/>
+    <text x="32" y="48" class="label">04 / 水纹回环</text>
+    <text x="32" y="78" class="desc">突出“洄”的水流与回旋，气质温和，适合内容品牌。</text>
+    <g transform="translate(104 128)">
+      <path d="M0 78 C72 22, 172 22, 240 78 C178 56, 104 60, 54 108" fill="none" stroke="#0d1917" stroke-width="15" stroke-linecap="round"/>
+      <path d="M84 126 C168 72, 286 70, 368 126 C276 106, 182 112, 108 160" fill="none" stroke="#0d1917" stroke-width="15" stroke-linecap="round"/>
+      <path d="M184 72 C232 76, 276 98, 306 126 C330 122, 354 112, 376 96" fill="none" stroke="#0d1917" stroke-width="12" stroke-linecap="round"/>
+      <path d="M374 96 L426 116 L374 138 C390 122, 390 110, 374 96Z" fill="#0d1917"/>
+    </g>
+  </g>
+
+  <!-- 05 -->
+  <g transform="translate(650 590)">
+    <rect class="card" x="0" y="0" width="500" height="340" rx="30"/>
+    <text x="32" y="48" class="label">05 / 科技节点</text>
+    <text x="32" y="78" class="desc">承接个人站的电路感，适合 AI 工具和产品矩阵。</text>
+    <g transform="translate(110 120)">
+      <path d="M12 112 C76 42, 172 30, 250 74 C188 70, 128 94, 82 138" fill="none" stroke="#0d1917" stroke-width="12" stroke-linecap="round"/>
+      <path d="M96 152 C178 110, 280 108, 358 138" fill="none" stroke="#0d1917" stroke-width="12" stroke-linecap="round"/>
+      <path d="M250 74 C306 82, 354 112, 386 142 L436 124" fill="none" stroke="#0d1917" stroke-width="11" stroke-linecap="round"/>
+      <path d="M434 124 L486 146 L434 168 C450 152, 450 140, 434 124Z" fill="#0d1917"/>
+      <path d="M12 184 H82 V212 H146" class="teal-stroke"/>
+      <path d="M54 96 H108" class="teal-stroke"/>
+      <circle cx="82" cy="212" r="8" fill="#1f8f7a"/>
+      <circle cx="386" cy="142" r="8" fill="#1f8f7a"/>
+      <circle cx="108" cy="96" r="6" fill="#1f8f7a"/>
+    </g>
+  </g>
+
+  <!-- 06 -->
+  <g transform="translate(1214 590)">
+    <rect class="card" x="0" y="0" width="500" height="340" rx="30"/>
+    <text x="32" y="48" class="label">06 / YH 字母雁 · 推荐</text>
+    <text x="32" y="78" class="desc">YH monogram 融入雁头和回旋线，更现代，扩展性强。</text>
+    <g transform="translate(136 112)">
+      <path d="M10 8 L92 96 L174 8" fill="none" stroke="#0d1917" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M206 8 V176" fill="none" stroke="#0d1917" stroke-width="22" stroke-linecap="round"/>
+      <path d="M206 88 H316" fill="none" stroke="#0d1917" stroke-width="22" stroke-linecap="round"/>
+      <path d="M316 8 V176" fill="none" stroke="#0d1917" stroke-width="22" stroke-linecap="round"/>
+      <path d="M88 98 C150 66, 238 62, 316 86" class="teal-stroke"/>
+      <path d="M316 86 C352 88, 384 76, 410 54" fill="none" stroke="#0d1917" stroke-width="14" stroke-linecap="round"/>
+      <path d="M408 54 L462 76 L408 98 C424 82, 424 70, 408 54Z" fill="#0d1917"/>
+    </g>
+  </g>
+
+  <!-- Recommended lockups -->
+  <g transform="translate(86 1010)">
+    <rect x="0" y="0" width="1628" height="280" rx="36" fill="url(#ink)" filter="url(#shadow)"/>
+    <text x="40" y="58" class="label" fill="#f7efd9">推荐组合效果 / 先深化 01，再保留 03 和 06 作为备选</text>
+    <g transform="translate(54 94) scale(0.46)">
+      <path class="gold-stroke" d="M12 124 C78 32, 202 20, 294 76"/>
+      <path class="gold-stroke" d="M68 152 C154 94, 260 86, 360 116"/>
+      <path class="teal-stroke" d="M124 132 C214 102, 304 100, 404 116"/>
+      <path class="gold-stroke" d="M290 76 C344 84, 386 112, 414 144 C438 142, 462 134, 484 120"/>
+      <path class="gold" d="M482 120 L536 142 L482 164 C498 148 498 136 482 120Z"/>
+      <circle cx="432" cy="137" r="8" class="gold"/>
+    </g>
+    <text x="360" y="150" class="cn" font-size="62" fill="#f7efd9">杭州雁洄文化科技有限公司</text>
+    <text x="364" y="208" class="en" font-size="21" fill="#d7c391">HANGZHOU YANHUI CULTURE TECHNOLOGY CO., LTD.</text>
+  </g>
+</svg>

@@ -1,0 +1,433 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - link "大雁 logo liudayan.com / v0.1.3" [ref=e5] [cursor=pointer]:
+        - /url: "#top"
+        - img "大雁 logo" [ref=e6]
+        - generic [ref=e7]: liudayan.com
+        - generic [ref=e8]: / v0.1.3
+      - generic [ref=e9]:
+        - link "[关于]" [ref=e10] [cursor=pointer]:
+          - /url: "#about"
+        - link "[作品]" [ref=e11] [cursor=pointer]:
+          - /url: "#projects"
+        - link "[Blog]" [ref=e12] [cursor=pointer]:
+          - /url: "#blog"
+        - link "[数据]" [ref=e13] [cursor=pointer]:
+          - /url: "#dash"
+        - link "[留言]" [ref=e14] [cursor=pointer]:
+          - /url: "#guestbook"
+        - button "♥" [ref=e15] [cursor=pointer]:
+          - generic [ref=e16]: ♥
+      - generic [ref=e17]: ONLINE
+  - main [ref=e19]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: 2026 / Q2
+          - text: freelance · vibecoding · 杭州
+        - heading "用 vibecoding 把想法 变成产品 ▌" [level=1] [ref=e26]:
+          - text: 用 vibecoding 把想法
+          - text: 变成产品
+          - generic [ref=e27]: ▌
+        - paragraph [ref=e28]: 从想法到可付费的链接，24 小时。15 年大厂运营和 PM 沉淀，今天用 AI 编排把它压缩进一周一个产品。
+        - generic [ref=e29]:
+          - generic [ref=e30]: 10y 阿里运营
+          - generic [ref=e31]: →
+          - generic [ref=e32]: 5y 小电 PM
+          - generic [ref=e33]: →
+          - generic [ref=e34]: freelance · vibecoding
+        - generic [ref=e35]:
+          - link "看正在跑的产品 →" [ref=e36] [cursor=pointer]:
+            - /url: "#projects"
+            - text: 看正在跑的产品
+            - generic [ref=e37]: →
+          - link "微信 / 邮箱" [ref=e38] [cursor=pointer]:
+            - /url: "#contact"
+          - generic [ref=e39]: "wechat: DaYan__Liu · hi@liudayan.com"
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: 此刻
+          - generic [ref=e44]: 实时
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - generic [ref=e48]: ▶
+            - generic [ref=e49]:
+              - generic [ref=e50]: 正在做
+              - generic [ref=e51]: ContentFlow 2.0 · 选题标签 UI
+            - generic [ref=e52]: 开发中
+          - generic [ref=e53]:
+            - generic [ref=e54]: ✦
+            - generic [ref=e55]:
+              - generic [ref=e56]: 本周产出
+              - generic [ref=e57]: 整理中…
+            - generic [ref=e58]: 第 21 周
+          - generic [ref=e59]:
+            - generic [ref=e60]: ♪
+            - generic [ref=e61]:
+              - generic [ref=e62]: 最近在读
+              - generic [ref=e63]: 《Working in Public》— Nadia Eghbal
+            - generic [ref=e64]: p.142
+          - generic [ref=e65]:
+            - generic [ref=e66]: ◎
+            - generic [ref=e67]:
+              - generic [ref=e68]: 公开入口
+              - generic [ref=e69]: 作品集 · Blog · 自媒体矩阵
+            - generic [ref=e70]: 更新中
+          - generic [ref=e71]:
+            - generic [ref=e72]: ◈
+            - generic [ref=e73]:
+              - generic [ref=e74]: 自媒体数据
+              - generic [ref=e75]:
+                - generic [ref=e76]:
+                  - generic [ref=e77]: 小红书
+                  - generic [ref=e78]: 2,646
+                - generic [ref=e79]:
+                  - generic [ref=e80]: 抖音
+                  - generic [ref=e81]: 4.5万+
+                - generic [ref=e82]:
+                  - generic [ref=e83]: 视频号
+                  - generic [ref=e84]: 2,019
+                - generic [ref=e85]:
+                  - generic [ref=e86]: B站
+                  - generic [ref=e87]: "477"
+        - generic [ref=e88]:
+          - generic [ref=e89]: 数据截至 2026.05.21
+          - generic [ref=e90]: 在线
+    - generic [ref=e93]:
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]: 02 / About
+          - heading "做了 15 年 别人想做的事， 现在做自己想做的。" [level=2] [ref=e98]:
+            - text: 做了 15 年 别人想做的事，
+            - text: 现在做自己想做的。
+          - paragraph [ref=e99]: 履历不是简历。是关于路径依赖与跳出路径依赖。
+        - generic [ref=e100]:
+          - generic [ref=e101]: // born 1989
+          - generic [ref=e102]: // based in Hangzhou
+      - generic [ref=e103]:
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - img "大雁" [ref=e433]
+            - generic [ref=e111]:
+              - generic [ref=e112]: workshop · 5/10
+              - generic [ref=e113]: daily
+          - generic [ref=e115]:
+            - generic [ref=e116]:
+              - img "workshop" [ref=e117]
+              - generic [ref=e119]: workshop
+            - generic [ref=e120]:
+              - img "archive" [ref=e121]
+              - generic [ref=e123]: archive
+            - generic [ref=e124]:
+              - img "team" [ref=e125]
+              - generic [ref=e127]: team
+            - generic [ref=e128]:
+              - img "collab" [ref=e129]
+              - generic [ref=e131]: collab
+        - generic [ref=e132]:
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - generic [ref=e135]: 2025 — now
+              - generic [ref=e136]: · freelance
+              - generic [ref=e137]: now
+            - heading "独立产品人 / vibecoder" [level=3] [ref=e138]
+            - generic [ref=e139]: 自由职业 · 杭州
+            - generic [ref=e140]:
+              - paragraph [ref=e142]: 把 15 年大厂沉淀带进 AI 时代，以一人公司模式持续实践：搭 AI 自媒体内容矩阵（小红书 + 公众号日更），独立开发 AI 识字小程序与表情包生成工具并完成上线。Vibe Coding 实践者，用 Claude Code / Codex 走完从需求到部署的完整闭环。
+              - generic [ref=e143]:
+                - generic [ref=e144]: vibecoding
+                - generic [ref=e145]: AI 产品
+                - generic [ref=e146]: 独立开发
+                - generic [ref=e147]: 内容创作
+          - generic [ref=e148]:
+            - generic [ref=e149]:
+              - generic [ref=e150]: 2021 — 2025
+              - generic [ref=e151]: · 约5年
+            - heading "资深产品经理" [level=3] [ref=e152]
+            - generic [ref=e153]: 小电科技
+            - generic [ref=e154]:
+              - paragraph [ref=e156]: 主导公司首套智能客服多 Agent 体系从 0 到 1，覆盖「意图识别 → 路由 → 自动执行 → 人工兜底」全链路，上线后外包客服成本降低 50%，意图识别转人工准确率达 95%。同期搭建两轮充电桩与共享寄存柜 IOT 平台，横跨平台 / B 端 / C 端共 4 个模态产品。
+              - generic [ref=e157]:
+                - generic [ref=e158]: AI 产品
+                - generic [ref=e159]: 智能客服
+                - generic [ref=e160]: IOT 系统
+          - generic [ref=e161]:
+            - generic [ref=e162]:
+              - generic [ref=e163]: 2010 — 2020
+              - generic [ref=e164]: · 10 年
+            - heading "产品 / 运营" [level=3] [ref=e165]
+            - generic [ref=e166]: 阿里巴巴
+            - generic [ref=e167]:
+              - paragraph [ref=e169]: 历经天猫国际、菜鸟、支付宝三条业务线。天猫国际做过流量搜索的产品与运营；菜鸟期间针对非标品建立结构化 SKU 数据标准，优化人货场匹配效率；支付宝期间搭建传媒服务团队 SOP 与舆情监控体系。十年沉淀了从 C 端运营到 B 端产品的完整认知迁移路径。
+              - generic [ref=e170]:
+                - generic [ref=e171]: 电商运营
+                - generic [ref=e172]: B 端产品
+                - generic [ref=e173]: 数据产品
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - generic [ref=e177]:
+          - generic [ref=e178]: 03 / Projects
+          - heading "一些 在跑的东西。" [level=2] [ref=e180]
+          - paragraph [ref=e181]: 凡是公开能看到的，都已经付费验证过。剩下的还在炉子里。
+        - generic "data/site-content.json · 2026.05.21" [ref=e434]:
+          - button "全部 6" [ref=e183] [cursor=pointer]:
+            - text: 全部
+            - generic [ref=e184]: "6"
+          - button "已上线 3" [ref=e185] [cursor=pointer]:
+            - text: 已上线
+            - generic [ref=e186]: "3"
+          - button "开发中 3" [ref=e187] [cursor=pointer]:
+            - text: 开发中
+            - generic [ref=e188]: "3"
+      - generic [ref=e189]:
+        - generic [ref=e190]:
+          - heading "已上线" [level=3] [ref=e191]
+          - generic [ref=e192]: — 3
+        - generic [ref=e194]:
+          - link "ContentFlow ● 已上线 ContentFlow 自媒体创作者 AI 一体化工具。一次输入生成图文/口播，5 层去 AI 痕迹处理，支持爆款拆解仿写，覆盖小红书 / 公众号全流程。 Next.js Claude contentflow.one →" [ref=e195] [cursor=pointer]:
+            - /url: https://contentflow.one
+            - generic [ref=e196]:
+              - img "ContentFlow" [ref=e197]
+              - generic [ref=e198]: ● 已上线
+            - generic [ref=e199]:
+              - heading "ContentFlow" [level=4] [ref=e200]
+              - paragraph [ref=e201]: 自媒体创作者 AI 一体化工具。一次输入生成图文/口播，5 层去 AI 痕迹处理，支持爆款拆解仿写，覆盖小红书 / 公众号全流程。
+              - generic [ref=e202]:
+                - generic [ref=e203]: Next.js
+                - generic [ref=e204]: Claude
+                - link "contentflow.one →" [ref=e205]:
+                  - /url: https://contentflow.one
+          - link "AI 表情包批量工场 ● 已上线 AI 表情包批量工场 AI 表情包生成工具。上传图片 + 输入文案，多模态模型秒出个性化贴纸，内置多种艺术风格，支持自定义文案，从创意到下载一步完成。 React Tailwind 多模态模型 cines.top →" [ref=e206] [cursor=pointer]:
+            - /url: https://cines.top
+            - generic [ref=e207]:
+              - img "AI 表情包批量工场" [ref=e208]
+              - generic [ref=e209]: ● 已上线
+            - generic [ref=e210]:
+              - heading "AI 表情包批量工场" [level=4] [ref=e211]
+              - paragraph [ref=e212]: AI 表情包生成工具。上传图片 + 输入文案，多模态模型秒出个性化贴纸，内置多种艺术风格，支持自定义文案，从创意到下载一步完成。
+              - generic [ref=e213]:
+                - generic [ref=e214]: React
+                - generic [ref=e215]: Tailwind
+                - generic [ref=e216]: 多模态模型
+                - link "cines.top →" [ref=e217]:
+                  - /url: https://cines.top
+          - generic [ref=e218]:
+            - generic [ref=e219]:
+              - img "魔法识字课" [ref=e220]
+              - generic [ref=e221]: ● 已上线
+            - generic [ref=e222]:
+              - heading "魔法识字课" [level=4] [ref=e223]
+              - paragraph [ref=e224]: 专为幼儿设计的 AI 识字小程序。基于真实家庭教育场景，游戏化互动帮助孩子认字，独立完成从设计到上线全流程。
+              - generic [ref=e225]:
+                - generic [ref=e226]: 微信小程序
+                - generic [ref=e227]: AI
+                - button "扫码 ↗" [ref=e229] [cursor=pointer]
+      - generic [ref=e230]:
+        - generic [ref=e231]:
+          - heading "开发中" [level=3] [ref=e232]
+          - generic [ref=e233]: — 3
+        - generic [ref=e235]:
+          - generic [ref=e236]:
+            - generic [ref=e237]:
+              - img "drama-clip" [ref=e238]
+              - generic [ref=e239]: ◐ 开发中
+            - generic [ref=e240]:
+              - heading "drama-clip" [level=4] [ref=e241]
+              - paragraph [ref=e242]: 短剧二创自动化流水线桌面工具。扫描本地剧集目录，AI 自动生成分镜脚本 + TTS 配音 + 字幕对齐，批量渲染导出，本地运行无需云端。
+              - generic [ref=e243]:
+                - generic [ref=e244]: Electron
+                - generic [ref=e245]: Python
+                - generic [ref=e246]: TTS
+                - generic [ref=e247]: AI
+          - generic [ref=e248]:
+            - generic [ref=e249]:
+              - img "看图识字" [ref=e250]
+              - generic [ref=e251]: ◐ 开发中
+            - generic [ref=e252]:
+              - heading "看图识字" [level=4] [ref=e253]
+              - paragraph [ref=e254]: AI 个性化识字绘本小程序。基于孩子当前识字量智能生成专属绘本，每本新增 3-5 个生字，大字配拼音支持跟读，故事角色可按孩子喜好定制，科学分级自动进阶。
+              - generic [ref=e255]:
+                - generic [ref=e256]: 微信小程序
+                - generic [ref=e257]: 多模态模型
+                - generic [ref=e258]: TTS
+          - generic [ref=e259]:
+            - generic [ref=e260]:
+              - img "电子绘本" [ref=e261]
+              - generic [ref=e262]: ◐ 开发中
+            - generic [ref=e263]:
+              - heading "电子绘本" [level=4] [ref=e264]
+              - paragraph [ref=e265]: AI 辅助实体绘本生成工具。输入主题与角色，AI 完成构思→分镜→生图→排版→封面全流程，最终输出可印刷的高清 PDF，生成一本真正属于孩子的实体绘本。
+              - generic [ref=e266]:
+                - generic [ref=e267]: AI 生图
+                - generic [ref=e268]: TTS
+                - generic [ref=e269]: 微信小程序
+    - generic [ref=e271]:
+      - generic [ref=e273]:
+        - generic [ref=e274]: 04 / Live demo
+        - heading "不要 iframe，直接在站内跑。" [level=2] [ref=e276]
+        - paragraph [ref=e277]: 工具就在这里。点一下，立刻见结果。
+      - generic [ref=e278]:
+        - generic [ref=e279]:
+          - generic [ref=e280]:
+            - generic [ref=e281]: 📝 简历改写工具 · 试一下
+            - generic [ref=e282]: LIVE
+          - generic [ref=e285]:
+            - textbox "我在阿里巴巴工作，做了一些运营相关的事情。" [ref=e286]
+            - button "✦ AI 改写" [ref=e288] [cursor=pointer]
+        - generic [ref=e289]:
+          - generic [ref=e290]:
+            - generic [ref=e291]: 🔥 爆款标题分析 · 试一下
+            - generic [ref=e292]: LIVE
+          - generic [ref=e295]:
+            - textbox "月薪3000怎么逆袭买了2套房" [ref=e296]
+            - button "🔥 分析标题" [ref=e298] [cursor=pointer]
+    - generic [ref=e300]:
+      - generic [ref=e301]:
+        - generic [ref=e302]:
+          - generic [ref=e303]: 05 / Blog
+          - heading "写下来才算 真的想清楚 。" [level=2] [ref=e305]
+          - paragraph [ref=e306]: 每周更，复盘 + 教程为主。不写情绪文。
+        - generic [ref=e307]:
+          - generic [ref=e308]: // 10 entries
+          - generic [ref=e309]: // data/site-content.json
+      - generic [ref=e310]:
+        - link "产品复盘 2026.05.09 OPC 周记：比预期晚了半年，我的第一个产品终于上线了 从去年 11 月开始，原计划 3 月上线，5 月才验收通过。跑通了整条商业链路：有支付，有生成，能跑。 读全文 ↗" [ref=e435] [cursor=pointer]:
+          - /url: https://mp.weixin.qq.com/s/fnnvjCJvqN60dq64YsQcdA
+          - generic [ref=e312]:
+            - generic [ref=e313]: 产品复盘
+            - generic [ref=e314]: 2026.05.09
+          - heading "OPC 周记：比预期晚了半年，我的第一个产品终于上线了" [level=3] [ref=e315]
+          - paragraph [ref=e316]: 从去年 11 月开始，原计划 3 月上线，5 月才验收通过。跑通了整条商业链路：有支付，有生成，能跑。
+          - generic [ref=e317]: 读全文 ↗
+        - link "vibecoding 教程 2026.04.22 OPC 周记：当 AI 开始互相沟通，我这个「老板」在做什么？ Claude 在发邮件，Codex 在跑流水线，我发现自己的角色变了：从执行者变成指挥者。 读全文 ↗" [ref=e436] [cursor=pointer]:
+          - /url: https://mp.weixin.qq.com/s/2BhtO2XNJM2uRIgveqYBtg
+          - generic [ref=e319]:
+            - generic [ref=e320]: vibecoding 教程
+            - generic [ref=e321]: 2026.04.22
+          - heading "OPC 周记：当 AI 开始互相沟通，我这个「老板」在做什么？" [level=3] [ref=e322]
+          - paragraph [ref=e323]: Claude 在发邮件，Codex 在跑流水线，我发现自己的角色变了：从执行者变成指挥者。
+          - generic [ref=e324]: 读全文 ↗
+        - link "自媒体运营 2026.04.17 OPC 上班第 2 周：5 个平台、3 条路、1 个答案 百家号和 B 站同时过审后，重新判断 5 个平台的投入方式，主线认真打，支线轻搬运。 读全文 ↗" [ref=e437] [cursor=pointer]:
+          - /url: https://mp.weixin.qq.com/s/UtK0fSUqKsixUcp-KNmwhA
+          - generic [ref=e326]:
+            - generic [ref=e327]: 自媒体运营
+            - generic [ref=e328]: 2026.04.17
+          - heading "OPC 上班第 2 周：5 个平台、3 条路、1 个答案" [level=3] [ref=e329]
+          - paragraph [ref=e330]: 百家号和 B 站同时过审后，重新判断 5 个平台的投入方式，主线认真打，支线轻搬运。
+          - generic [ref=e331]: 读全文 ↗
+        - link "一人公司 2026.04.14 OPC 日记：今天和几个「土老板」聊完，我想明白一件事 卖汽车、做保温杯、跑外贸的人聊 AI，核心问题落在业务和交易，给格子间经验补了一课。 读全文 ↗" [ref=e438] [cursor=pointer]:
+          - /url: https://www.xiaohongshu.com/discovery/item/69de3d55000000001d01bc19
+          - generic [ref=e333]:
+            - generic [ref=e334]: 一人公司
+            - generic [ref=e335]: 2026.04.14
+          - heading "OPC 日记：今天和几个「土老板」聊完，我想明白一件事" [level=3] [ref=e336]
+          - paragraph [ref=e337]: 卖汽车、做保温杯、跑外贸的人聊 AI，核心问题落在业务和交易，给格子间经验补了一课。
+          - generic [ref=e338]: 读全文 ↗
+      - link "查看全部 10 篇文章 →" [ref=e339] [cursor=pointer]:
+        - /url: blog.html
+    - generic [ref=e341]:
+      - generic [ref=e342]:
+        - generic [ref=e343]:
+          - generic [ref=e344]: 06 / vibecoding 实战数据
+          - heading "真实数据是最好的简历。" [level=2] [ref=e346]
+          - paragraph [ref=e347]: 全平台同名：刘大雁AI版 · 数据截至 2026.05.21
+        - generic [ref=e348]:
+          - generic [ref=e349]: // 手动更新
+          - generic [ref=e350]: // stats.json
+      - generic [ref=e351]:
+        - link "抖音粉丝 ↗ 4.5万+" [ref=e439] [cursor=pointer]:
+          - /url: https://v.douyin.com/afNYl3mBqPY/
+          - generic [ref=e440]:
+            - generic [ref=e441]: 抖音粉丝
+            - generic [ref=e442]: ↗
+          - generic [ref=e443]: 4.5万+
+        - link "小红书粉丝 ↗ 2,646" [ref=e444] [cursor=pointer]:
+          - /url: https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5
+          - generic [ref=e445]:
+            - generic [ref=e446]: 小红书粉丝
+            - generic [ref=e447]: ↗
+          - generic [ref=e448]: 2,646
+        - generic [ref=e360] [cursor=pointer]:
+          - generic [ref=e361]:
+            - generic [ref=e362]: 视频号粉丝
+            - generic [ref=e363]: ⊞
+          - generic [ref=e364]: 2,019
+        - link "B站粉丝 ↗ 477" [ref=e449] [cursor=pointer]:
+          - /url: https://space.bilibili.com/613257828
+          - generic [ref=e450]:
+            - generic [ref=e451]: B站粉丝
+            - generic [ref=e452]: ↗
+          - generic [ref=e453]: "477"
+    - generic [ref=e370]:
+      - generic [ref=e372]:
+        - generic [ref=e373]: 08 / 留下足迹
+        - heading "进来坐坐，留个字。" [level=2] [ref=e375]
+      - generic [ref=e376]:
+        - button "♥ 0 点个赞" [ref=e377] [cursor=pointer]:
+          - generic [ref=e378]: ♥
+          - generic [ref=e379]: "0"
+          - generic [ref=e380]: 点个赞
+        - generic [ref=e381]:
+          - textbox "你的名字（选填）" [ref=e382]
+          - textbox "留一句话（100字内）" [ref=e383]
+          - generic [ref=e384]:
+            - generic [ref=e385]: 0/100
+            - button "发送留言 →" [disabled] [ref=e386] [cursor=pointer]
+      - paragraph [ref=e387]: 还没有留言，来第一个？
+  - contentinfo [ref=e388]:
+    - generic [ref=e389]:
+      - generic [ref=e390]:
+        - generic [ref=e391]:
+          - link "大雁 logo liudayan.com" [ref=e392] [cursor=pointer]:
+            - /url: "#top"
+            - img "大雁 logo" [ref=e393]
+            - generic [ref=e394]: liudayan.com
+          - paragraph [ref=e395]: 一个用 AI 把想法变成产品的杭州独立产品人。本站本身就是 vibecoding 的实验场。
+          - generic [ref=e396]: built in 6h · self-hosted · open-source
+        - generic [ref=e397]:
+          - heading "页内" [level=5] [ref=e398]
+          - list [ref=e399]:
+            - listitem [ref=e400]:
+              - link "关于" [ref=e401] [cursor=pointer]:
+                - /url: "#about"
+            - listitem [ref=e402]:
+              - link "作品" [ref=e403] [cursor=pointer]:
+                - /url: "#projects"
+            - listitem [ref=e404]:
+              - link "Blog" [ref=e405] [cursor=pointer]:
+                - /url: "#blog"
+            - listitem [ref=e406]:
+              - link "留言" [ref=e407] [cursor=pointer]:
+                - /url: "#guestbook"
+        - generic [ref=e408]:
+          - heading "联络" [level=5] [ref=e409]
+          - list [ref=e410]:
+            - listitem [ref=e411]:
+              - link "微信[复制]" [ref=e412] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e413]:
+              - link "小红书↗" [ref=e414] [cursor=pointer]:
+                - /url: https://www.xiaohongshu.com/user/profile/5b810cb3db2e605e7777b2d5
+            - listitem [ref=e415]:
+              - link "公众号↗" [ref=e416] [cursor=pointer]:
+                - /url: http://weixin.qq.com/r/mp/WyNBWXfEwSq_rTM693ZJ
+            - listitem [ref=e417]:
+              - link "抖音↗" [ref=e418] [cursor=pointer]:
+                - /url: https://v.douyin.com/GASPAvymhfA/
+        - generic [ref=e419]:
+          - heading "订阅 / 合作" [level=5] [ref=e420]
+          - list [ref=e421]:
+            - listitem [ref=e422]:
+              - link "vibecoding 日报" [ref=e423] [cursor=pointer]:
+                - /url: "#blog"
+            - listitem [ref=e424]:
+              - link "加微信进群[复制]" [ref=e425] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e426]:
+              - link "邮箱[复制]" [ref=e427] [cursor=pointer]:
+                - /url: "#"
+      - generic [ref=e428]:
+        - generic [ref=e429]: © 2026 大雁. all systems nominal.
+        - generic [ref=e430]: // 2026-05-21
+  - button "聊聊大雁的项目" [ref=e431] [cursor=pointer]: 聊聊大雁的项目

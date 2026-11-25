@@ -1,0 +1,176 @@
+<template id="scene-4-community-template">
+  <div id="scene-4-community" data-composition-id="scene-4-community" data-width="1920" data-height="1080">
+    <div class="scene">
+      <div class="grid" data-layout-ignore></div>
+      <div class="layout">
+        <section class="copy">
+          <div class="tag">03 / 同路人</div>
+          <h2>找到搭子<br />方向开始变清晰</h2>
+          <p>产品视角接上商业、运营和内容视角，路径从个人判断变成共同校准。</p>
+        </section>
+        <section class="network">
+          <svg viewBox="0 0 760 620" aria-hidden="true">
+            <path class="link link-a" d="M380 310 L150 160" />
+            <path class="link link-b" d="M380 310 L630 170" />
+            <path class="link link-c" d="M380 310 L190 500" />
+            <path class="link link-d" d="M380 310 L604 480" />
+          </svg>
+          <div class="node center" data-layout-allow-overflow>我<br /><span>产品</span></div>
+          <div class="node n1">OPC</div>
+          <div class="node n2">商业</div>
+          <div class="node n3">运营</div>
+          <div class="node n4">内容</div>
+          <div class="signal s1" data-layout-ignore></div>
+          <div class="signal s2" data-layout-ignore></div>
+        </section>
+      </div>
+      <div class="caption">同路人的视角碰撞，让水到渠成的感觉出现了。</div>
+    </div>
+    <style>
+      #scene-4-community, #scene-4-community * { box-sizing: border-box; }
+      #scene-4-community .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 74% 45%, rgba(66, 217, 245, 0.18), transparent 36%),
+          #07080d;
+        color: #f4f6fb;
+        font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+      }
+      #scene-4-community .grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(to right, rgba(66, 217, 245, 0.08) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+        background-size: 80px 80px;
+      }
+      #scene-4-community .layout {
+        width: 100%;
+        height: 100%;
+        padding: 128px 116px 132px;
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 86px;
+        align-items: center;
+      }
+      #scene-4-community .copy {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+      #scene-4-community .tag {
+        width: max-content;
+        padding: 12px 18px;
+        border: 1px solid rgba(66, 217, 245, 0.45);
+        border-radius: 6px;
+        color: #42d9f5;
+        background: rgba(66, 217, 245, 0.1);
+        font: 700 22px/1 "JetBrains Mono", monospace;
+        letter-spacing: 0.12em;
+      }
+      #scene-4-community h2 {
+        max-width: 790px;
+        font-size: 92px;
+        line-height: 1.08;
+      }
+      #scene-4-community p {
+        max-width: 700px;
+        font-size: 32px;
+        line-height: 1.56;
+        color: #b8c0d4;
+      }
+      #scene-4-community .network {
+        position: relative;
+        height: 700px;
+        border: 1px solid rgba(66, 217, 245, 0.26);
+        border-radius: 8px;
+        background: rgba(16, 19, 27, 0.68);
+        overflow: hidden;
+      }
+      #scene-4-community svg {
+        position: absolute;
+        inset: 40px 54px;
+        width: calc(100% - 108px);
+        height: calc(100% - 80px);
+      }
+      #scene-4-community .link {
+        fill: none;
+        stroke: rgba(66, 217, 245, 0.65);
+        stroke-width: 3;
+        stroke-dasharray: 12 16;
+      }
+      #scene-4-community .node {
+        position: absolute;
+        width: 142px;
+        height: 142px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        color: #f4f6fb;
+        background: rgba(7, 8, 13, 0.9);
+        border: 1px solid rgba(66, 217, 245, 0.58);
+        box-shadow: 0 0 42px rgba(66, 217, 245, 0.2);
+        font-size: 30px;
+        font-weight: 800;
+      }
+      #scene-4-community .node span {
+        display: block;
+        margin-top: 6px;
+        color: #42d9f5;
+        font: 700 16px/1 "JetBrains Mono", monospace;
+      }
+      #scene-4-community .center {
+        left: 50%;
+        top: 50%;
+        width: 188px;
+        height: 188px;
+        transform: translate(-50%, -50%);
+        background: #10131b;
+        border-color: rgba(139, 124, 255, 0.72);
+        box-shadow: 0 0 68px rgba(139, 124, 255, 0.38);
+      }
+      #scene-4-community .n1 { left: 114px; top: 112px; }
+      #scene-4-community .n2 { right: 114px; top: 122px; }
+      #scene-4-community .n3 { left: 148px; bottom: 106px; }
+      #scene-4-community .n4 { right: 138px; bottom: 116px; }
+      #scene-4-community .signal {
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        border: 1px solid rgba(139, 124, 255, 0.16);
+      }
+      #scene-4-community .s1 { left: 220px; top: 150px; }
+      #scene-4-community .s2 { right: 170px; bottom: 90px; }
+      #scene-4-community .caption {
+        position: absolute;
+        left: 116px;
+        right: 116px;
+        bottom: 46px;
+        padding: 20px 26px;
+        border: 1px solid rgba(184, 192, 212, 0.2);
+        background: rgba(16, 19, 27, 0.82);
+        font-size: 30px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from(".tag", { x: -42, opacity: 0, duration: 0.38, ease: "power2.out" }, 0.2);
+      tl.from("h2", { y: 52, opacity: 0, duration: 0.62, ease: "power3.out" }, 0.42);
+      tl.from("p", { y: 30, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.82);
+      tl.from(".network", { x: 86, opacity: 0, duration: 0.62, ease: "power3.out" }, 0.32);
+      tl.from(".center", { scale: 0.6, opacity: 0, duration: 0.44, ease: "back.out(1.7)" }, 0.84);
+      tl.from(".node:not(.center)", { scale: 0.62, opacity: 0, stagger: 0.14, duration: 0.42, ease: "back.out(1.7)" }, 1.15);
+      tl.from(".link", { strokeDashoffset: 120, opacity: 0, stagger: 0.12, duration: 0.72, ease: "power2.out" }, 1.18);
+      tl.to(".signal", { scale: 1.14, opacity: 0.35, duration: 7.1, ease: "sine.inOut" }, 0);
+      tl.from(".caption", { y: 36, opacity: 0, duration: 0.42, ease: "power2.out" }, 1.85);
+      window.__timelines["scene-4-community"] = tl;
+    </script>
+  </div>
+</template>

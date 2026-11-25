@@ -62,9 +62,10 @@
   <script type="text/babel" data-presets="react">
     function BlogPage() {
       const [cat, setCat] = React.useState("all");
-      const filtered = cat === "all" ? POSTS : POSTS.filter((p) => p.cat === cat);
+      const { posts } = useSiteContent();
+      const filtered = cat === "all" ? posts : posts.filter((p) => p.cat === cat);
       const counts = BLOG_CATS.reduce((acc, c) => {
-        acc[c.id] = c.id === "all" ? POSTS.length : POSTS.filter((p) => p.cat === c.id).length;
+        acc[c.id] = c.id === "all" ? posts.length : posts.filter((p) => p.cat === c.id).length;
         return acc;
       }, {});
 
@@ -79,7 +80,7 @@
               <span className="dot"></span>Blog
             </div>
             <h1>写下来才算<span className="accent"> 真的想清楚</span>。</h1>
-            <p>每周更，复盘 + 教程为主。不写情绪文。// {POSTS.length} entries</p>
+            <p>每周更，复盘 + 教程为主。不写情绪文。// {posts.length} entries</p>
           </div>
 
           <div className="blog-tabs">
