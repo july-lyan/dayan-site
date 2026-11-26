@@ -98,7 +98,8 @@ function renderSection(sec) {
           </div>
           <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.65">
             请备注「公司 / 机构 + 想解决的问题」<br/>
-            邮箱：${esc(site.email)}
+            邮箱：${esc(site.email)}<br/>
+            自媒体：${esc(site.social || "小红书 / 抖音 / 视频号：刘大雁AI版")}
           </p>
         </div>
       </div>
@@ -269,9 +270,10 @@ for (const id of order) {
   });
 }
 
-// 2b. 读取 content/kb/*.md 补充知识库按 ## 切块
-const kbDir = join(ROOT, "content/kb");
-if (existsSync(kbDir)) {
+// 2b. 读取 content/kb/*.md 及白名单同步的 content/kb/synced/*.md 按 ## 切块
+const kbDirs = [join(ROOT, "content/kb"), join(ROOT, "content/kb/synced")];
+for (const kbDir of kbDirs) {
+  if (!existsSync(kbDir)) continue;
   const files = readdirSync(kbDir).filter((f) => f.endsWith(".md")).sort();
   for (const f of files) {
     const raw = readFileSync(join(kbDir, f), "utf-8");

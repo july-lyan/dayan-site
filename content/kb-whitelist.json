@@ -1,0 +1,41 @@
+{
+  "knowledgeRoot": "/Users/july/knowledge",
+  "description": "白名单公开知识库清单：仅同步明确审核可公开的个人观点与 AI 落地方法论，自动隔离隐私、客户原件与内部台账。",
+  "items": [
+    {
+      "source": "05-内容/长文/2026-07-17-OPC最难的是做出差异.md",
+      "outName": "sync-01-opc-differentiation.md",
+      "pageId": "consulting",
+      "slug": "/consulting",
+      "title": "OPC 与 AI 产品的差异化判断"
+    },
+    {
+      "source": "05-内容/长文/2026-08-31-公众号-找AI陪跑服务商先问清7件事.md",
+      "outName": "sync-02-ai-partner-checklist.md",
+      "pageId": "consulting",
+      "slug": "/consulting",
+      "title": "找 AI 陪跑服务商先问清的 7 件事"
+    },
+    {
+      "source": "05-内容/长文/2026-09-14-公众号-企业Agent定制报价单怎么看.md",
+      "outName": "sync-03-agent-pricing-guide.md",
+      "pageId": "consulting",
+      "slug": "/consulting",
+      "title": "企业 Agent 定制报价单怎么看"
+    },
+    {
+      "source": "05-内容/长文/2026-08-28-中小企业AI落地从哪开始先做诊断再选一个最小业务单元-公众号-DRAFT.md",
+      "outName": "sync-04-sme-ai-start.md",
+      "pageId": "consulting",
+      "slug": "/consulting",
+      "title": "中小企业 AI 落地从哪开始"
+    },
+    {
+      "source": "05-内容/长文/2026-08-14-我为什么没有急着推进客户的AI化改造-公众号-DRAFT.md",
+      "outName": "sync-05-why-not-rush-ai.md",
+      "pageId": "fde",
+      "slug": "/cases/fde",
+      "title": "为什么不急着推进客户的 AI 化改造"
+    }
+  ]
+}

@@ -109,7 +109,8 @@ function renderSectionHtml(sec, site) {
           </div>
           <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.65">
             请备注「公司 / 机构 + 想解决的问题」<br/>
-            邮箱：${escapeHtml(site.email)}
+            邮箱：${escapeHtml(site.email)}<br/>
+            自媒体：${escapeHtml(site.social || "小红书 / 抖音 / 视频号：刘大雁AI版")}
           </p>
         </div>
       </div>

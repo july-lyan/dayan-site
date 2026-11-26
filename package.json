@@ -5,6 +5,7 @@
   "description": "liudayan.com — 刘大雁个人 Agent 与企业 AI 落地主页",
   "type": "module",
   "scripts": {
+    "sync:kb": "node scripts/sync-public-kb.mjs",
     "build": "node scripts/build.mjs",
     "dev": "npm run build && node scripts/dev-server.mjs",
     "deploy": "npm run build && vercel --prod"
