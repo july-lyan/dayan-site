@@ -1,0 +1,13 @@
+.DS_Store
+.env
+.env.*
+.git
+.zion-mcp
+node_modules
+site-intro-video
+docs
+assets/photos/OPC社区课
+assets/photos/个人照片
+assets/photos/杭州青年夜校
+assets/photos/微信二维码
+assets/photos/小程序二维码
