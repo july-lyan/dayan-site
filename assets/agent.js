@@ -435,7 +435,7 @@ function backHome() {
 
 async function init() {
   const [pagesResp, kbResp] = await Promise.all([
-    fetch("/content/pages.json"),
+    fetch("/data/site-manifest.json").then((r) => (r.ok ? r : fetch("/content/pages.json"))),
     fetch("/data/kb-chunks.json").catch(() => null),
   ]);
   SITE_DATA = await pagesResp.json();

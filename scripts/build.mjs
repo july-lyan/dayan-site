@@ -7,7 +7,33 @@ import { join, dirname } from "path";
 
 const ROOT = process.cwd();
 const pagesData = JSON.parse(readFileSync(join(ROOT, "content/pages.json"), "utf-8"));
-const { site, order, pages } = pagesData;
+const dynamicPath = join(ROOT, "content/dynamic-pages.json");
+const dynamicPages = existsSync(dynamicPath)
+  ? JSON.parse(readFileSync(dynamicPath, "utf-8"))
+  : [];
+
+const site = pagesData.site;
+const pages = { ...pagesData.pages };
+const order = [...pagesData.order];
+const quickPrompts = [...pagesData.quickPrompts];
+
+// 合并动态发布页（如寒假营、新活动）：插在 contact 之前；若 pinOnHome 为 true 则置顶进首页快捷胶囊
+for (const dp of dynamicPages) {
+  pages[dp.id] = dp;
+  const contactIdx = order.indexOf("contact");
+  if (contactIdx >= 0) order.splice(contactIdx, 0, dp.id);
+  else order.push(dp.id);
+  if (dp.pinOnHome) {
+    quickPrompts.unshift({ id: dp.id, label: dp.nav, question: `想了解「${dp.nav}」的安排和报名方式` });
+  }
+}
+
+mkdirSync(join(ROOT, "data"), { recursive: true });
+writeFileSync(
+  join(ROOT, "data/site-manifest.json"),
+  JSON.stringify({ site, order, quickPrompts: quickPrompts.slice(0, 5), pages }, null, 2),
+  "utf-8"
+);
 
 function esc(s) {
   return String(s || "")

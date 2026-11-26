@@ -7,7 +7,8 @@
   "scripts": {
     "sync:kb": "node scripts/sync-public-kb.mjs",
     "build": "node scripts/build.mjs",
-    "dev": "npm run build && node scripts/dev-server.mjs",
-    "deploy": "npm run build && vercel --prod"
+    "publish:local": "npm run sync:kb && npm run build",
+    "dev": "npm run publish:local && node scripts/dev-server.mjs",
+    "deploy": "npm run publish:local && vercel --prod"
   }
 }
