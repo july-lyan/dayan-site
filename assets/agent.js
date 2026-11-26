@@ -242,8 +242,7 @@ async function talkPreset(id, customQuestion) {
   await sleep(300);
   t.remove();
 
-  addAiMsg(`<div class="badge-row"><span class="src-badge preset">预设回答</span></div>
-    <div class="ai-text">${fmtRich(p.presetReply)}</div>
+  addAiMsg(`<div class="ai-text">${fmtRich(p.presetReply)}</div>
     <div class="ref-list">${refCardHtml(id)}</div>`);
   CHAT_HISTORY.push({ role: "assistant", content: p.presetReply });
   busy = false;
@@ -295,7 +294,7 @@ async function askFrom(inputId) {
   busy = true;
 
   addUserMsg(q);
-  const t = addAiMsg(`<div class="badge-row"><span class="src-badge rag">检索知识库…</span></div><div class="typing"><i></i><i></i><i></i></div>`);
+  const t = addAiMsg(`<div class="typing"><i></i><i></i><i></i></div>`);
 
   let data = null;
   try {
@@ -314,15 +313,13 @@ async function askFrom(inputId) {
   }
   t.remove();
 
-  const badgeLabel = data.source === "rag" ? "知识库 RAG" : data.source === "miss" ? "知识库未覆盖" : "知识库检索";
   const citesHtml = (data.citations || []).length
-    ? `<div class="rag-cite"><span>来源：</span>${data.citations
+    ? `<div class="rag-cite"><span>相关页面：</span>${data.citations
         .map((c) => `<button class="cite-chip" onclick="window.__agent.openPage('${escapeHtml(c.id)}')">${escapeHtml(c.title)} ↗</button>`)
         .join("")}</div>`
     : "";
 
-  addAiMsg(`<div class="badge-row"><span class="src-badge rag">${badgeLabel}</span></div>
-    <div class="ai-text">${fmtRich(data.reply)}</div>
+  addAiMsg(`<div class="ai-text">${fmtRich(data.reply)}</div>
     ${citesHtml}`);
 
   CHAT_HISTORY.push({ role: "user", content: q }, { role: "assistant", content: data.reply });
