@@ -23,7 +23,7 @@ async function logMissedQuestion(rawQ, normQ) {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
       body: JSON.stringify({ app_id: FEISHU_APP_ID, app_secret: FEISHU_APP_SECRET }),
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(8000),
     });
     const authData = await authResp.json();
     if (authData.code !== 0 || !authData.tenant_access_token) return false;
@@ -45,7 +45,7 @@ async function logMissedQuestion(rawQ, normQ) {
             处理状态: "待补充",
           },
         }),
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(8000),
       }
     );
     const wd = await writeResp.json();
