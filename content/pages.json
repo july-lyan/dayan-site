@@ -122,8 +122,8 @@
           "type": "case",
           "heading": "代表交付一 · 杭州青年夜校小程序开发系列课",
           "badge": "线下系列课",
-          "image": "/assets/photos/workshop.jpg",
-          "imageCaption": "线下授课与现场实操（后续可替换为最新上课照片）",
+          "image": "/assets/photos/workshop-night-school.jpg",
+          "imageCaption": "杭州青年夜校线下授课与现场实操",
           "bullets": [
             "教学方式：分步演示 + 学员实操 + 现场答疑 + 作品点评，带零基础学员围绕自己的真实想法完成小程序。",
             "交付验收：逐一进行现场本地验收，帮学员既把操作做出来，也学会判断 AI 生成的结果是否可用。"
@@ -133,6 +133,8 @@
           "type": "case",
           "heading": "代表交付二 · OPC 学院 AI 工具入门与创作营",
           "badge": "系列创作营",
+          "image": "/assets/photos/workshop-opc-1.jpg",
+          "imageCaption": "OPC 学院 AI 工具入门与创作营授课现场",
           "bullets": [
             "课程形态：三节系列实战课已完成全部授课，聚焦 AI 工具从零入门到动手创作落地。",
             "合作形式支持：专题讲座、半天/一天实操工作坊、系列课程、围绕具体业务项目的企业定制内训。"
@@ -160,18 +162,35 @@
           "type": "case",
           "heading": "代表项目一 · 德语学习小程序（德语成长中心）",
           "badge": "1 对 1 客户陪跑",
+          "image": "/assets/photos/german-poster.jpg",
+          "imageCaption": "德语成长中心 · 今日德语便签（慕尼黑土豆）",
           "bullets": [
             "陪跑范围：从零开始覆盖需求梳理、学习闭环功能开发、多轮测试与一致性修复验收。",
             "核心价值：不替客户包办黑盒代码，而是带着客户跑通 AI 协作开发与验收节奏，确保后续自己能继续迭代。"
+          ],
+          "miniprogram": {
+            "name": "德语成长中心小程序",
+            "qr": "/assets/photos/german-mp-qr.jpg",
+            "tip": "电脑端微信扫码、手机端长按识别直接打开小程序"
+          },
+          "actions": [
+            {
+              "label": "手机端直接打开小程序 ↗（待填微信 URL Link）",
+              "href": "",
+              "primary": true,
+              "tip": "在微信公众平台生成 https://wxaurl.cn/xxx 后填入 content/pages.json 的 href 字段即可点击直达"
+            }
           ]
         },
         {
           "type": "case",
           "heading": "代表项目二 · AI 表情包小程序（聊天就要有表情）",
           "badge": "小程序实战作品",
+          "image": "/assets/photos/workshop-opc-sticker.jpg",
+          "imageCaption": "现场拆解 AI 表情包小程序界面与开发流程",
           "bullets": [
             "产品演进：从 Web 原型迭代至微信小程序形态，支持「静态 4 张 + 动态 GIF」双入口、风格与情绪定制及微信云开发后端。",
-            "当前状态：持续迭代与验收中（产品界面截图待补充）。"
+            "当前状态：持续迭代与验收中。"
           ]
         },
         {
@@ -199,6 +218,18 @@
           "bullets": [
             "解决什么问题：面向小学一年级上册，支持语文拼音/单字/词语报题听写（「屏写」与「纸上写」双模式）以及 10/20 以内口算计时练习。",
             "真实进度：已产出手机与 iPad 离线试用版，iPhone 真机已验证两条核心听写流程；iPad Apple Pencil 体验与语文识别仍在持续打磨中。"
+          ],
+          "actions": [
+            {
+              "label": "直接打开试用（手机 / iPad / 电脑）↗",
+              "href": "/demos/little-dictation.html",
+              "primary": true
+            },
+            {
+              "label": "下载离线版到本地使用 ↓",
+              "href": "/demos/little-dictation.html",
+              "download": "小小听写本-一年级上册离线版.html"
+            }
           ]
         },
         {

@@ -33,13 +33,35 @@ function renderSection(sec) {
       ? `<img class="case-img" src="${esc(sec.image)}" alt="${esc(sec.heading)}" loading="lazy" />
          ${sec.imageCaption ? `<div class="case-cap">${esc(sec.imageCaption)}</div>` : ""}`
       : "";
+    const mp = sec.miniprogram
+      ? `<div class="mp-card">
+          <div class="mp-qr">
+            <img src="${esc(sec.miniprogram.qr)}" alt="${esc(sec.miniprogram.name)}小程序码" onerror="this.remove();this.parentNode.textContent='小程序码\\n待放入'" />
+          </div>
+          <div class="mp-info">
+            <b>${esc(sec.miniprogram.name)}</b>
+            <span>${esc(sec.miniprogram.tip)}</span>
+          </div>
+        </div>`
+      : "";
+    const actions = (sec.actions || []).length
+      ? `<div class="case-actions">${sec.actions
+          .map((a) => {
+            const cls = `act-btn${a.primary ? " primary" : ""}${!a.href ? " disabled" : ""}`;
+            if (!a.href) return `<span class="${cls}" title="${esc(a.tip || "")}">${esc(a.label)}</span>`;
+            const dl = a.download ? ` download="${esc(a.download)}"` : "";
+            const tgt = a.download ? "" : ` target="_blank" rel="noopener"`;
+            return `<a class="${cls}" href="${esc(a.href)}"${dl}${tgt}>${esc(a.label)}</a>`;
+          })
+          .join("")}</div>`
+      : "";
     return `<div class="case-box">
       <div class="case-head">
         <h4>${esc(sec.heading)}</h4>
         ${sec.badge ? `<span class="case-badge">${esc(sec.badge)}</span>` : ""}
       </div>
       <ul>${sec.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-      ${img}
+      ${img}${mp}${actions}
     </div>`;
   }
   if (sec.type === "note") {

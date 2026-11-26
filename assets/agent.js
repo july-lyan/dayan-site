@@ -43,13 +43,35 @@ function renderSectionHtml(sec, site) {
       ? `<img class="case-img" src="${escapeHtml(sec.image)}" alt="${escapeHtml(sec.heading)}" loading="lazy" />
          ${sec.imageCaption ? `<div class="case-cap">${escapeHtml(sec.imageCaption)}</div>` : ""}`
       : "";
+    const mpHtml = sec.miniprogram
+      ? `<div class="mp-card">
+          <div class="mp-qr">
+            <img src="${escapeHtml(sec.miniprogram.qr)}" alt="${escapeHtml(sec.miniprogram.name)}小程序码" onerror="this.remove();this.parentNode.textContent='小程序码\\n待放入'" />
+          </div>
+          <div class="mp-info">
+            <b>${escapeHtml(sec.miniprogram.name)}</b>
+            <span>${escapeHtml(sec.miniprogram.tip)}</span>
+          </div>
+        </div>`
+      : "";
+    const actionsHtml = (sec.actions || []).length
+      ? `<div class="case-actions">${sec.actions
+          .map((a) => {
+            const cls = `act-btn${a.primary ? " primary" : ""}${!a.href ? " disabled" : ""}`;
+            if (!a.href) return `<span class="${cls}" title="${escapeHtml(a.tip || "")}">${escapeHtml(a.label)}</span>`;
+            const dl = a.download ? ` download="${escapeHtml(a.download)}"` : "";
+            const tgt = a.download ? "" : ` target="_blank" rel="noopener"`;
+            return `<a class="${cls}" href="${escapeHtml(a.href)}"${dl}${tgt}>${escapeHtml(a.label)}</a>`;
+          })
+          .join("")}</div>`
+      : "";
     return `<div class="case-box">
       <div class="case-head">
         <h4>${escapeHtml(sec.heading)}</h4>
         ${sec.badge ? `<span class="case-badge">${escapeHtml(sec.badge)}</span>` : ""}
       </div>
       <ul>${sec.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
-      ${imgHtml}
+      ${imgHtml}${mpHtml}${actionsHtml}
     </div>`;
   }
   if (sec.type === "note") {
