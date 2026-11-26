@@ -3,9 +3,57 @@
 
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import { matchIntent, retrieveChunks, buildCitations } from "../assets/retrieval.js";
+import { normalizeQuery, matchIntent, retrieveChunks, buildCitations } from "../assets/retrieval.js";
 
 const MODEL = process.env.DEEPSEEK_MODEL || "deepseek-v4-flash";
+
+// 未命中提问自动收集到飞书多维表格「未命中提问收集」表（静默容错，不阻塞或报错）
+async function logMissedQuestion(rawQ, normQ) {
+  const {
+    FEISHU_APP_ID,
+    FEISHU_APP_SECRET,
+    FEISHU_BITABLE_APP_TOKEN,
+    FEISHU_BITABLE_MISS_TABLE_ID,
+  } = process.env;
+  if (!FEISHU_APP_ID || !FEISHU_APP_SECRET || !FEISHU_BITABLE_APP_TOKEN || !FEISHU_BITABLE_MISS_TABLE_ID) {
+    return false;
+  }
+  try {
+    const authResp = await fetch("https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({ app_id: FEISHU_APP_ID, app_secret: FEISHU_APP_SECRET }),
+      signal: AbortSignal.timeout(3000),
+    });
+    const authData = await authResp.json();
+    if (authData.code !== 0 || !authData.tenant_access_token) return false;
+
+    const now = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
+    const writeResp = await fetch(
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_BITABLE_APP_TOKEN}/tables/${FEISHU_BITABLE_MISS_TABLE_ID}/records`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${authData.tenant_access_token}`,
+        },
+        body: JSON.stringify({
+          fields: {
+            提问内容: rawQ.slice(0, 300),
+            归一化后: normQ.slice(0, 300),
+            提问时间: now,
+            处理状态: "待补充",
+          },
+        }),
+        signal: AbortSignal.timeout(3000),
+      }
+    );
+    const wd = await writeResp.json();
+    return writeResp.ok && wd.code === 0;
+  } catch {
+    return false;
+  }
+}
 
 let cachedChunks = null;
 function loadChunks() {
@@ -60,10 +108,12 @@ export default async function handler(req, res) {
   const citations = buildCitations(hits);
 
   if (hits.length === 0) {
+    const logged = await logMissedQuestion(q, normalizeQuery(q));
     res.status(200).json({
-      reply: "这个问题我的公开知识库里还没有覆盖到（为了保证准确，我不做猜测回答）。建议直接加微信 **DaYan__Liu** 或填写预约表单，把你的具体场景发给大雁本人回复。",
+      reply: "这个问题我暂时还没整理进公开问答里，我已经顺手记下来了，后续会补充。你现在可以直接加微信 **DaYan__Liu** 或填预约表单，由我本人回复你。",
       citations: [{ id: "contact", title: "联系与约谈", slug: "/contact" }],
       source: "miss",
+      logged,
     });
     return;
   }

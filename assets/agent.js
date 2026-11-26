@@ -258,7 +258,7 @@ function localSearch(query) {
   const hits = retrieveChunks(query, LOCAL_CHUNKS, 4);
   if (!hits.length) {
     return {
-      reply: "这个问题我的公开知识库里还没有覆盖到（为了保证准确，我不做猜测回答）。建议直接加微信 **DaYan__Liu** 或填预约表单，由我本人回复。",
+      reply: "这个问题我暂时还没整理进公开问答里，我已经顺手记下来了，后续会补充。你现在可以直接加微信 **DaYan__Liu** 或填预约表单，由我本人回复你。",
       citations: [{ id: "contact", title: "联系与约谈", slug: "/contact" }],
       source: "miss",
     };
