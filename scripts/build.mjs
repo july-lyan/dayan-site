@@ -29,10 +29,28 @@ function renderSection(sec) {
       <ul class="doc-list">${sec.items.map((it) => `<li>${esc(it)}</li>`).join("")}</ul>`;
   }
   if (sec.type === "case") {
-    const img = sec.image
-      ? `<img class="case-img" src="${esc(sec.image)}" alt="${esc(sec.heading)}" loading="lazy" />
-         ${sec.imageCaption ? `<div class="case-cap">${esc(sec.imageCaption)}</div>` : ""}`
-      : "";
+    let media = "";
+    if ((sec.images || []).length > 1) {
+      const slides = sec.images
+        .map((it) => `<div class="car-slide${it.contain ? " contain" : ""}"><img src="${esc(it.src)}" alt="${esc(it.caption || sec.heading)}" loading="lazy" /></div>`)
+        .join("");
+      const dots = sec.images
+        .map((_, i) => `<button type="button" class="car-dot${i === 0 ? " on" : ""}" data-idx="${i}" aria-label="第 ${i + 1} 张"></button>`)
+        .join("");
+      const caps = esc(JSON.stringify(sec.images.map((it) => it.caption || "")));
+      media = `<div class="carousel" data-index="0" data-caps="${caps}">
+        <div class="car-track">${slides}</div>
+        <button type="button" class="car-nav prev" aria-label="上一张">‹</button>
+        <button type="button" class="car-nav next" aria-label="下一张">›</button>
+        <div class="car-foot">
+          <span class="car-cap">${esc(sec.images[0].caption || "")}</span>
+          <div class="car-dots">${dots}</div>
+        </div>
+      </div>`;
+    } else if (sec.image) {
+      media = `<img class="case-img${sec.imageContain ? " contain" : ""}" src="${esc(sec.image)}" alt="${esc(sec.heading)}" loading="lazy" />
+         ${sec.imageCaption ? `<div class="case-cap">${esc(sec.imageCaption)}</div>` : ""}`;
+    }
     const mp = sec.miniprogram
       ? `<div class="mp-card">
           <div class="mp-qr">
@@ -61,7 +79,7 @@ function renderSection(sec) {
         ${sec.badge ? `<span class="case-badge">${esc(sec.badge)}</span>` : ""}
       </div>
       <ul>${sec.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
-      ${img}${mp}${actions}
+      ${media}${mp}${actions}
     </div>`;
   }
   if (sec.type === "note") {
@@ -133,6 +151,26 @@ if (f) {
 }
 </script>`;
 
+const CAROUSEL_SCRIPT = `<script>
+document.querySelectorAll(".carousel").forEach((car) => {
+  const track = car.querySelector(".car-track");
+  const dots = car.querySelectorAll(".car-dot");
+  const capEl = car.querySelector(".car-cap");
+  const caps = JSON.parse(car.dataset.caps || "[]");
+  const total = dots.length;
+  const go = (idx) => {
+    const next = (idx + total) % total;
+    car.dataset.index = String(next);
+    track.style.transform = "translateX(-" + (next * 100) + "%)";
+    dots.forEach((d, i) => d.classList.toggle("on", i === next));
+    if (capEl) capEl.textContent = caps[next] || "";
+  };
+  car.querySelector(".prev")?.addEventListener("click", () => go(Number(car.dataset.index) - 1));
+  car.querySelector(".next")?.addEventListener("click", () => go(Number(car.dataset.index) + 1));
+  dots.forEach((d) => d.addEventListener("click", () => go(Number(d.dataset.idx))));
+});
+</script>`;
+
 // 1. 生成 6 个独立静态 HTML 页
 for (const id of order) {
   const p = pages[id];
@@ -141,6 +179,7 @@ for (const id of order) {
   mkdirSync(dirname(outFile), { recursive: true });
 
   const hasContact = p.sections.some((s) => s.type === "contact");
+  const hasCarousel = p.sections.some((s) => (s.images || []).length > 1);
   const cta = id === "contact"
     ? ""
     : `<div class="cv-cta">
@@ -175,6 +214,7 @@ for (const id of order) {
     ${p.sections.map(renderSection).join("\n")}
     ${cta}
   </main>
+  ${hasCarousel ? CAROUSEL_SCRIPT : ""}
   ${hasContact ? LEAD_SCRIPT : ""}
 </body>
 </html>`;

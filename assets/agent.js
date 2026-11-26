@@ -39,10 +39,28 @@ function renderSectionHtml(sec, site) {
       <ul class="doc-list">${sec.items.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}</ul>`;
   }
   if (sec.type === "case") {
-    const imgHtml = sec.image
-      ? `<img class="case-img" src="${escapeHtml(sec.image)}" alt="${escapeHtml(sec.heading)}" loading="lazy" />
-         ${sec.imageCaption ? `<div class="case-cap">${escapeHtml(sec.imageCaption)}</div>` : ""}`
-      : "";
+    let mediaHtml = "";
+    if ((sec.images || []).length > 1) {
+      const slides = sec.images
+        .map((it) => `<div class="car-slide${it.contain ? " contain" : ""}"><img src="${escapeHtml(it.src)}" alt="${escapeHtml(it.caption || sec.heading)}" loading="lazy" /></div>`)
+        .join("");
+      const dots = sec.images
+        .map((_, i) => `<button type="button" class="car-dot${i === 0 ? " on" : ""}" data-idx="${i}" aria-label="第 ${i + 1} 张"></button>`)
+        .join("");
+      const caps = escapeHtml(JSON.stringify(sec.images.map((it) => it.caption || "")));
+      mediaHtml = `<div class="carousel" data-index="0" data-caps="${caps}">
+        <div class="car-track">${slides}</div>
+        <button type="button" class="car-nav prev" aria-label="上一张">‹</button>
+        <button type="button" class="car-nav next" aria-label="下一张">›</button>
+        <div class="car-foot">
+          <span class="car-cap">${escapeHtml(sec.images[0].caption || "")}</span>
+          <div class="car-dots">${dots}</div>
+        </div>
+      </div>`;
+    } else if (sec.image) {
+      mediaHtml = `<img class="case-img${sec.imageContain ? " contain" : ""}" src="${escapeHtml(sec.image)}" alt="${escapeHtml(sec.heading)}" loading="lazy" />
+         ${sec.imageCaption ? `<div class="case-cap">${escapeHtml(sec.imageCaption)}</div>` : ""}`;
+    }
     const mpHtml = sec.miniprogram
       ? `<div class="mp-card">
           <div class="mp-qr">
@@ -71,7 +89,7 @@ function renderSectionHtml(sec, site) {
         ${sec.badge ? `<span class="case-badge">${escapeHtml(sec.badge)}</span>` : ""}
       </div>
       <ul>${sec.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
-      ${imgHtml}${mpHtml}${actionsHtml}
+      ${mediaHtml}${mpHtml}${actionsHtml}
     </div>`;
   }
   if (sec.type === "note") {
@@ -308,6 +326,26 @@ async function askFrom(inputId) {
   busy = false;
 }
 
+function bindCarousels(root) {
+  root.querySelectorAll(".carousel").forEach((car) => {
+    const track = car.querySelector(".car-track");
+    const dots = car.querySelectorAll(".car-dot");
+    const capEl = car.querySelector(".car-cap");
+    const caps = JSON.parse(car.dataset.caps || "[]");
+    const total = dots.length;
+    const go = (idx) => {
+      const next = (idx + total) % total;
+      car.dataset.index = String(next);
+      track.style.transform = `translateX(-${next * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle("on", i === next));
+      if (capEl) capEl.textContent = caps[next] || "";
+    };
+    car.querySelector(".prev")?.addEventListener("click", () => go(Number(car.dataset.index) - 1));
+    car.querySelector(".next")?.addEventListener("click", () => go(Number(car.dataset.index) + 1));
+    dots.forEach((d) => d.addEventListener("click", () => go(Number(d.dataset.idx))));
+  });
+}
+
 function openPage(id) {
   const p = SITE_DATA.pages[id];
   if (!p) return;
@@ -318,6 +356,7 @@ function openPage(id) {
   body.innerHTML = renderPageBody(p);
   body.scrollTop = 0;
   bindLeadForm(body, p.slug);
+  bindCarousels(body);
   $("#canvas").classList.add("open");
   $("#backdrop").classList.add("on");
 }

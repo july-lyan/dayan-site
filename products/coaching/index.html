@@ -28,7 +28,7 @@
         <span class="case-badge">1 对 1 客户陪跑</span>
       </div>
       <ul><li>陪跑范围：从零开始覆盖需求梳理、学习闭环功能开发、多轮测试与一致性修复验收。</li><li>核心价值：不替客户包办黑盒代码，而是带着客户跑通 AI 协作开发与验收节奏，确保后续自己能继续迭代。</li></ul>
-      <img class="case-img" src="/assets/photos/german-poster.jpg" alt="代表项目一 · 德语学习小程序（德语成长中心）" loading="lazy" />
+      <img class="case-img contain" src="/assets/photos/german-poster.jpg" alt="代表项目一 · 德语学习小程序（德语成长中心）" loading="lazy" />
          <div class="case-cap">德语成长中心 · 今日德语便签（慕尼黑土豆）</div><div class="mp-card">
           <div class="mp-qr">
             <img src="/assets/photos/german-mp-qr.jpg" alt="德语成长中心小程序小程序码" onerror="this.remove();this.parentNode.textContent='小程序码\n待放入'" />
@@ -45,8 +45,15 @@
         <span class="case-badge">小程序实战作品</span>
       </div>
       <ul><li>产品演进：从 Web 原型迭代至微信小程序形态，支持「静态 4 张 + 动态 GIF」双入口、风格与情绪定制及微信云开发后端。</li><li>当前状态：持续迭代与验收中。</li></ul>
-      <img class="case-img" src="/assets/photos/workshop-opc-sticker.jpg" alt="代表项目二 · AI 表情包小程序（聊天就要有表情）" loading="lazy" />
-         <div class="case-cap">现场拆解 AI 表情包小程序界面与开发流程</div>
+      <div class="carousel" data-index="0" data-caps="[&quot;小程序首页：静态 4 张 + 动态表情双入口（1/3）&quot;,&quot;动态表情实际生成成品页（2/3）&quot;,&quot;线下课现场拆解界面与开发流程（3/3）&quot;]">
+        <div class="car-track"><div class="car-slide contain"><img src="/assets/photos/sticker-ui-home.jpg" alt="小程序首页：静态 4 张 + 动态表情双入口（1/3）" loading="lazy" /></div><div class="car-slide contain"><img src="/assets/photos/sticker-ui-result.jpg" alt="动态表情实际生成成品页（2/3）" loading="lazy" /></div><div class="car-slide"><img src="/assets/photos/workshop-opc-sticker.jpg" alt="线下课现场拆解界面与开发流程（3/3）" loading="lazy" /></div></div>
+        <button type="button" class="car-nav prev" aria-label="上一张">‹</button>
+        <button type="button" class="car-nav next" aria-label="下一张">›</button>
+        <div class="car-foot">
+          <span class="car-cap">小程序首页：静态 4 张 + 动态表情双入口（1/3）</span>
+          <div class="car-dots"><button type="button" class="car-dot on" data-idx="0" aria-label="第 1 张"></button><button type="button" class="car-dot" data-idx="1" aria-label="第 2 张"></button><button type="button" class="car-dot" data-idx="2" aria-label="第 3 张"></button></div>
+        </div>
+      </div>
     </div>
 <h3 class="doc-h3">报价口径</h3><div class="note-box">按项目复杂度、目标交付形态与陪跑周期评估，不公开标价。</div>
     <div class="cv-cta">
@@ -54,6 +61,25 @@
         <a href="/contact">联系 / 预约</a>
       </div>
   </main>
+  <script>
+document.querySelectorAll(".carousel").forEach((car) => {
+  const track = car.querySelector(".car-track");
+  const dots = car.querySelectorAll(".car-dot");
+  const capEl = car.querySelector(".car-cap");
+  const caps = JSON.parse(car.dataset.caps || "[]");
+  const total = dots.length;
+  const go = (idx) => {
+    const next = (idx + total) % total;
+    car.dataset.index = String(next);
+    track.style.transform = "translateX(-" + (next * 100) + "%)";
+    dots.forEach((d, i) => d.classList.toggle("on", i === next));
+    if (capEl) capEl.textContent = caps[next] || "";
+  };
+  car.querySelector(".prev")?.addEventListener("click", () => go(Number(car.dataset.index) - 1));
+  car.querySelector(".next")?.addEventListener("click", () => go(Number(car.dataset.index) + 1));
+  dots.forEach((d) => d.addEventListener("click", () => go(Number(d.dataset.idx))));
+});
+</script>
   
 </body>
 </html>

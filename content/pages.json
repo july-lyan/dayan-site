@@ -122,8 +122,11 @@
           "type": "case",
           "heading": "代表交付一 · 杭州青年夜校小程序开发系列课",
           "badge": "线下系列课",
-          "image": "/assets/photos/workshop-night-school.jpg",
-          "imageCaption": "杭州青年夜校线下授课与现场实操",
+          "images": [
+            { "src": "/assets/photos/workshop-night-1.jpg", "caption": "现场拆解产品与设计完整逻辑（1/3）" },
+            { "src": "/assets/photos/workshop-night-2.jpg", "caption": "前端界面与任务流现场演示（2/3）" },
+            { "src": "/assets/photos/workshop-night-3.jpg", "caption": "学员带笔记本现场动手实操（3/3）" }
+          ],
           "bullets": [
             "教学方式：分步演示 + 学员实操 + 现场答疑 + 作品点评，带零基础学员围绕自己的真实想法完成小程序。",
             "交付验收：逐一进行现场本地验收，帮学员既把操作做出来，也学会判断 AI 生成的结果是否可用。"
@@ -133,8 +136,11 @@
           "type": "case",
           "heading": "代表交付二 · OPC 学院 AI 工具入门与创作营",
           "badge": "系列创作营",
-          "image": "/assets/photos/workshop-opc-1.jpg",
-          "imageCaption": "OPC 学院 AI 工具入门与创作营授课现场",
+          "images": [
+            { "src": "/assets/photos/workshop-opc-1.jpg", "caption": "OPC 学院 AI 工具入门与创作营现场（1/3）" },
+            { "src": "/assets/photos/workshop-opc-2.jpg", "caption": "一对一现场答疑与实操辅导（2/3）" },
+            { "src": "/assets/photos/workshop-opc-3.jpg", "caption": "满场学员动手完成项目验收（3/3）" }
+          ],
           "bullets": [
             "课程形态：三节系列实战课已完成全部授课，聚焦 AI 工具从零入门到动手创作落地。",
             "合作形式支持：专题讲座、半天/一天实操工作坊、系列课程、围绕具体业务项目的企业定制内训。"
@@ -163,6 +169,7 @@
           "heading": "代表项目一 · 德语学习小程序（德语成长中心）",
           "badge": "1 对 1 客户陪跑",
           "image": "/assets/photos/german-poster.jpg",
+          "imageContain": true,
           "imageCaption": "德语成长中心 · 今日德语便签（慕尼黑土豆）",
           "bullets": [
             "陪跑范围：从零开始覆盖需求梳理、学习闭环功能开发、多轮测试与一致性修复验收。",
@@ -186,8 +193,11 @@
           "type": "case",
           "heading": "代表项目二 · AI 表情包小程序（聊天就要有表情）",
           "badge": "小程序实战作品",
-          "image": "/assets/photos/workshop-opc-sticker.jpg",
-          "imageCaption": "现场拆解 AI 表情包小程序界面与开发流程",
+          "images": [
+            { "src": "/assets/photos/sticker-ui-home.jpg", "contain": true, "caption": "小程序首页：静态 4 张 + 动态表情双入口（1/3）" },
+            { "src": "/assets/photos/sticker-ui-result.jpg", "contain": true, "caption": "动态表情实际生成成品页（2/3）" },
+            { "src": "/assets/photos/workshop-opc-sticker.jpg", "caption": "线下课现场拆解界面与开发流程（3/3）" }
+          ],
           "bullets": [
             "产品演进：从 Web 原型迭代至微信小程序形态，支持「静态 4 张 + 动态 GIF」双入口、风格与情绪定制及微信云开发后端。",
             "当前状态：持续迭代与验收中。"
