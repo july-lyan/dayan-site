@@ -103,7 +103,10 @@ function renderSectionHtml(sec, site) {
           <img src="/assets/photos/wechat-qr.jpg" alt="微信二维码" onerror="this.remove();this.parentNode.textContent='微信二维码\\n待放入'" />
         </div>
         <div>
-          <b style="font-size:15.5px">微信：${escapeHtml(site.wechat)}</b>
+          <div class="wx-head">
+            <b style="font-size:15.5px">微信：${escapeHtml(site.wechat)}</b>
+            <button type="button" class="copy-wx-btn" onclick="window.__agent.copyWechat()">复制</button>
+          </div>
           <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.65">
             请备注「公司 / 机构 + 想解决的问题」<br/>
             邮箱：${escapeHtml(site.email)}
@@ -379,6 +382,15 @@ function closeAllOverlays() {
   $("#backdrop").classList.remove("on");
 }
 
+function copyWechat() {
+  const wx = SITE_DATA?.site?.wechat || "DaYan__Liu";
+  navigator.clipboard?.writeText(wx).catch(() => {});
+  const t = $("#toast");
+  t.textContent = `已复制微信号：${wx}`;
+  t.classList.add("on");
+  setTimeout(() => t.classList.remove("on"), 1800);
+}
+
 function copyLink() {
   const full = `${location.origin}${currentSlug}`;
   navigator.clipboard?.writeText(full).catch(() => {});
@@ -472,6 +484,7 @@ window.__agent = {
   openPage,
   closeCanvas,
   copyLink,
+  copyWechat,
   toggleBrowse,
   backHome,
   talkPreset,

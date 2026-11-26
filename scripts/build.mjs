@@ -92,7 +92,10 @@ function renderSection(sec) {
           <img src="/assets/photos/wechat-qr.jpg" alt="微信二维码" onerror="this.remove();this.parentNode.textContent='微信二维码\\n待放入'" />
         </div>
         <div>
-          <b style="font-size:15.5px">微信：${esc(site.wechat)}</b>
+          <div class="wx-head">
+            <b style="font-size:15.5px">微信：${esc(site.wechat)}</b>
+            <button type="button" class="copy-wx-btn" data-copy-wx="${esc(site.wechat)}">复制</button>
+          </div>
           <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.65">
             请备注「公司 / 机构 + 想解决的问题」<br/>
             邮箱：${esc(site.email)}
@@ -130,6 +133,15 @@ function renderSection(sec) {
 }
 
 const LEAD_SCRIPT = `<script>
+document.querySelectorAll("[data-copy-wx]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const wx = btn.getAttribute("data-copy-wx");
+    navigator.clipboard?.writeText(wx).catch(() => {});
+    const old = btn.textContent;
+    btn.textContent = "已复制";
+    setTimeout(() => { btn.textContent = old; }, 1600);
+  });
+});
 const f = document.getElementById("leadForm");
 if (f) {
   const m = document.getElementById("leadMsg");
