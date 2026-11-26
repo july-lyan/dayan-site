@@ -249,18 +249,43 @@ async function talkPreset(id, customQuestion) {
   busy = false;
 }
 
-// 本地纯静态预览时的轻量检索兜底
+// 本地纯静态预览时的轻量检索兜底（与 /api/chat 对齐核心停用词与分层权重）
+const LOCAL_STOP = new Set(["怎么", "什么", "可以", "你们", "我们", "自己", "请问", "如何", "一下", "有没有", "是否", "这个", "那个", "一个", "了解", "关于", "老师", "大雁", "问题", "做过", "介绍"]);
+
 function localSearch(query) {
-  const q = query.toLowerCase();
+  const q = query.trim();
+  if (/(你是谁|介绍.*自己|自我介绍|你叫什么|你的背景|你的履历|简历)/.test(q)) {
+    return {
+      reply: "我是**刘大雁**（刘艳），杭州雁洄文化科技主理人，**15 年产品与运营实战经验**（阿里巴巴 2010–2020；小电 2021–2025 主导多 Agent 智能客服与 IoT 平台）。现在专注企业 AI 落地咨询、实战培训和 1 对 1 项目陪跑。",
+      citations: [{ id: "about", title: "关于大雁 · 15 年履历", slug: "/about" }, { id: "consulting", title: "企业 AI 前期咨询", slug: "/consulting" }],
+      source: "intent",
+    };
+  }
+  if (/(你做过什么|做过哪些|有哪些案例|代表作|项目经验)/.test(q)) {
+    return {
+      reply: "代表交付包括：跨境电商 AI 出图流程诊断、大型消费服务企业多 Agent 智能客服（一期上线外包成本降约 50%）、杭州青年夜校与 OPC 学院 AI 实战课，以及德语/表情包小程序 1 对 1 陪跑。",
+      citations: [{ id: "fde", title: "FDE 企业 AI 落地案例", slug: "/cases/fde" }, { id: "ai-enablement", title: "AI 工具赋能（培训产品）", slug: "/products/ai-enablement" }, { id: "coaching", title: "1 对 1 项目陪跑", slug: "/products/coaching" }],
+      source: "intent",
+    };
+  }
+  const ql = q.toLowerCase();
   const grams = [];
-  for (let i = 0; i < q.length - 1; i++) grams.push(q.slice(i, i + 2));
+  for (let i = 0; i < ql.length - 1; i++) {
+    const g = ql.slice(i, i + 2);
+    if (!LOCAL_STOP.has(g)) grams.push(g);
+  }
   const scored = LOCAL_CHUNKS.map((c) => {
-    const hay = `${c.title} ${c.heading} ${c.text}`.toLowerCase();
+    const th = `${c.title} ${c.heading}`.toLowerCase();
+    const bh = String(c.text || "").toLowerCase();
     let s = 0;
-    for (const g of grams) if (hay.includes(g)) s += 1;
-    return { c, s };
+    for (const g of grams) {
+      if (th.includes(g)) s += 3.5;
+      else if (bh.includes(g)) s += 1;
+    }
+    const boost = c.tier === "core" ? 1.8 : 1.0;
+    return { c, s: s * boost };
   })
-    .filter((x) => x.s > 0)
+    .filter((x) => x.s >= 2.2)
     .sort((a, b) => b.s - a.s);
 
   if (!scored.length) {
@@ -280,7 +305,7 @@ function localSearch(query) {
     }
   }
   return {
-    reply: top.text.slice(0, 220) + (top.text.length > 220 ? "…" : ""),
+    reply: top.text.slice(0, 260) + (top.text.length > 260 ? "…" : ""),
     citations: cites,
     source: "kb-local",
   };

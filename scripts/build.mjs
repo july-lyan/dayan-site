@@ -274,12 +274,13 @@ for (const id of order) {
     } else if (sec.type === "list") {
       parts.push(`${sec.heading}：` + sec.items.join("；"));
     } else if (sec.type === "case") {
-      chunks.push({
+        chunks.push({
         pageId: id,
         pageNav: p.nav,
         slug: p.slug,
         title: p.title,
         heading: sec.heading,
+        tier: "core",
         text: `${sec.heading}。` + sec.bullets.join(" "),
       });
     } else if (sec.type === "note") {
@@ -292,13 +293,17 @@ for (const id of order) {
     slug: p.slug,
     title: p.title,
     heading: p.title,
+    tier: "core",
     text: parts.join("\n"),
   });
 }
 
-// 2b. 读取 content/kb/*.md 及白名单同步的 content/kb/synced/*.md 按 ## 切块
-const kbDirs = [join(ROOT, "content/kb"), join(ROOT, "content/kb/synced")];
-for (const kbDir of kbDirs) {
+// 2b. 读取 content/kb/*.md（core）及白名单同步的 content/kb/synced/*.md（article）按 ## 切块
+const kbSources = [
+  { dir: join(ROOT, "content/kb"), tier: "core" },
+  { dir: join(ROOT, "content/kb/synced"), tier: "article" },
+];
+for (const { dir: kbDir, tier } of kbSources) {
   if (!existsSync(kbDir)) continue;
   const files = readdirSync(kbDir).filter((f) => f.endsWith(".md")).sort();
   for (const f of files) {
@@ -323,6 +328,7 @@ for (const kbDir of kbDirs) {
         slug: meta.slug || "/consulting",
         title: meta.title || firstLine,
         heading: firstLine,
+        tier,
         text: cleanText,
       });
     }
