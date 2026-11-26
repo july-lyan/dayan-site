@@ -1,5 +1,7 @@
 // liudayan.com 个人 Agent 交互引擎
-// 双轨机制：高频入口预设秒回 + 自由提问调用 /api/chat（知识库 RAG，本地自动降级）
+// 双轨机制：高频入口预设秒回 + 自由提问调用 /api/chat（与本地共享 retrieval.js 同源兜底）
+
+import { matchIntent, retrieveChunks, buildCitations } from "./retrieval.js";
 
 const $ = (s) => document.querySelector(s);
 const app = $("#app");
@@ -249,64 +251,22 @@ async function talkPreset(id, customQuestion) {
   busy = false;
 }
 
-// 本地纯静态预览时的轻量检索兜底（与 /api/chat 对齐核心停用词与分层权重）
-const LOCAL_STOP = new Set(["怎么", "什么", "可以", "你们", "我们", "自己", "请问", "如何", "一下", "有没有", "是否", "这个", "那个", "一个", "了解", "关于", "老师", "大雁", "问题", "做过", "介绍"]);
-
+// 本地纯静态预览兜底：直接复用共享 retrieval.js，与服务端 100% 一致
 function localSearch(query) {
-  const q = query.trim();
-  if (/(你是谁|介绍.*自己|自我介绍|你叫什么|你的背景|你的履历|简历)/.test(q)) {
+  const intent = matchIntent(query);
+  if (intent) return { reply: intent.reply, citations: intent.citations, source: "intent" };
+  const hits = retrieveChunks(query, LOCAL_CHUNKS, 4);
+  if (!hits.length) {
     return {
-      reply: "我是**刘大雁**（刘艳），杭州雁洄文化科技主理人，**15 年产品与运营实战经验**（阿里巴巴 2010–2020；小电 2021–2025 主导多 Agent 智能客服与 IoT 平台）。现在专注企业 AI 落地咨询、实战培训和 1 对 1 项目陪跑。",
-      citations: [{ id: "about", title: "关于大雁 · 15 年履历", slug: "/about" }, { id: "consulting", title: "企业 AI 前期咨询", slug: "/consulting" }],
-      source: "intent",
-    };
-  }
-  if (/(你做过什么|做过哪些|有哪些案例|代表作|项目经验)/.test(q)) {
-    return {
-      reply: "代表交付包括：跨境电商 AI 出图流程诊断、大型消费服务企业多 Agent 智能客服（一期上线外包成本降约 50%）、杭州青年夜校与 OPC 学院 AI 实战课，以及德语/表情包小程序 1 对 1 陪跑。",
-      citations: [{ id: "fde", title: "FDE 企业 AI 落地案例", slug: "/cases/fde" }, { id: "ai-enablement", title: "AI 工具赋能（培训产品）", slug: "/products/ai-enablement" }, { id: "coaching", title: "1 对 1 项目陪跑", slug: "/products/coaching" }],
-      source: "intent",
-    };
-  }
-  const ql = q.toLowerCase();
-  const grams = [];
-  for (let i = 0; i < ql.length - 1; i++) {
-    const g = ql.slice(i, i + 2);
-    if (!LOCAL_STOP.has(g)) grams.push(g);
-  }
-  const scored = LOCAL_CHUNKS.map((c) => {
-    const th = `${c.title} ${c.heading}`.toLowerCase();
-    const bh = String(c.text || "").toLowerCase();
-    let s = 0;
-    for (const g of grams) {
-      if (th.includes(g)) s += 3.5;
-      else if (bh.includes(g)) s += 1;
-    }
-    const boost = c.tier === "core" ? 1.8 : 1.0;
-    return { c, s: s * boost };
-  })
-    .filter((x) => x.s >= 2.2)
-    .sort((a, b) => b.s - a.s);
-
-  if (!scored.length) {
-    return {
-      reply: "这个问题我的公开知识库里还没覆盖到（为了保证准确，我不做猜测回答）。建议直接加微信 **DaYan__Liu** 或填预约表单，由我本人回复。",
+      reply: "这个问题我的公开知识库里还没有覆盖到（为了保证准确，我不做猜测回答）。建议直接加微信 **DaYan__Liu** 或填预约表单，由我本人回复。",
       citations: [{ id: "contact", title: "联系与约谈", slug: "/contact" }],
       source: "miss",
     };
   }
-  const top = scored[0].c;
-  const cites = [];
-  const seen = new Set();
-  for (const x of scored.slice(0, 3)) {
-    if (x.c.pageId && !seen.has(x.c.pageId)) {
-      seen.add(x.c.pageId);
-      cites.push({ id: x.c.pageId, title: x.c.pageNav || x.c.title, slug: x.c.slug });
-    }
-  }
+  const top = hits[0];
   return {
     reply: top.text.slice(0, 260) + (top.text.length > 260 ? "…" : ""),
-    citations: cites,
+    citations: buildCitations(hits),
     source: "kb-local",
   };
 }
