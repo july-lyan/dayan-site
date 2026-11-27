@@ -98,6 +98,25 @@ function renderSectionHtml(sec, site) {
     return `<h3 class="doc-h3">${escapeHtml(sec.heading)}</h3>
       <div class="note-box">${escapeHtml(sec.text)}</div>`;
   }
+  if (sec.type === "guestbook") {
+    return `
+      <div class="gb-bar">
+        <span>喜欢这个站点，或者觉得内容对你有帮助？</span>
+        <button type="button" class="like-pill" id="gbLikeBtn" onclick="window.__agent.likeSite()">
+          <span class="like-heart" id="gbLikeHeart">♡</span>
+          <span id="gbLikeCount">—</span>
+        </button>
+      </div>
+      <h3 class="doc-h3">留下一句话</h3>
+      <form class="lead-form" id="gbForm">
+        <div class="field"><label>你的昵称</label><input name="name" maxlength="20" placeholder="选填，不填显示「匿名访客」" /></div>
+        <div class="field"><label>留言内容 *（100 字以内）</label><textarea name="text" required maxlength="100" placeholder="打个招呼，或留下你的想法与建议…"></textarea></div>
+        <button class="submit-btn" type="submit">发布留言</button>
+        <div class="form-msg" id="gbMsg"></div>
+      </form>
+      <h3 class="doc-h3">历史留言</h3>
+      <div class="gb-list" id="gbList"><div class="gb-empty">正在加载留言…</div></div>`;
+  }
   if (sec.type === "contact") {
     return `
       <div class="wx-box">
@@ -332,6 +351,128 @@ function bindCarousels(root) {
   });
 }
 
+let GB_CACHE = { likes: null, messages: [] };
+
+function syncLikeUI() {
+  const liked = localStorage.getItem("dayan_liked") === "1";
+  const countText = GB_CACHE.likes === null ? "—" : String(GB_CACHE.likes);
+  [["#likeBtn", "#likeHeart", "#likeCount"], ["#gbLikeBtn", "#gbLikeHeart", "#gbLikeCount"]].forEach(([b, h, c]) => {
+    const btn = $(b);
+    if (!btn) return;
+    btn.classList.toggle("liked", liked);
+    const he = $(h);
+    if (he) he.textContent = liked ? "♥" : "♡";
+    const ce = $(c);
+    if (ce) ce.textContent = countText;
+  });
+}
+
+async function fetchGuestbook() {
+  try {
+    const r = await fetch("/api/guestbook");
+    if (!r.ok) return;
+    const d = await r.json();
+    if (typeof d.likes === "number") GB_CACHE.likes = d.likes;
+    if (Array.isArray(d.messages)) GB_CACHE.messages = d.messages;
+    syncLikeUI();
+    renderGuestbookList();
+  } catch {
+    // 静默降级
+  }
+}
+
+function renderGuestbookList() {
+  const list = $("#gbList");
+  if (!list) return;
+  if (!GB_CACHE.messages.length) {
+    list.innerHTML = `<div class="gb-empty">还没有公开留言，来留第一句吧。</div>`;
+    return;
+  }
+  list.innerHTML = GB_CACHE.messages
+    .map((m) => {
+      const dt = m.created_at ? new Date(m.created_at).toLocaleDateString("zh-CN") : "";
+      return `<div class="gb-item">
+        <div class="gb-meta"><b>${escapeHtml(m.name || "匿名访客")}</b><span>${escapeHtml(dt)}</span></div>
+        <p>${escapeHtml(m.message || "")}</p>
+      </div>`;
+    })
+    .join("");
+}
+
+async function likeSite() {
+  if (localStorage.getItem("dayan_liked") === "1") {
+    const t = $("#toast");
+    t.textContent = "你已经点过赞啦，谢谢喜欢";
+    t.classList.add("on");
+    setTimeout(() => t.classList.remove("on"), 1600);
+    return;
+  }
+  localStorage.setItem("dayan_liked", "1");
+  if (typeof GB_CACHE.likes === "number") GB_CACHE.likes += 1;
+  syncLikeUI();
+  try {
+    const r = await fetch("/api/guestbook", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "like" }),
+    });
+    if (r.ok) {
+      const d = await r.json();
+      if (typeof d.likes === "number") {
+        GB_CACHE.likes = d.likes;
+        syncLikeUI();
+      }
+    }
+  } catch {}
+  const t = $("#toast");
+  t.textContent = "感谢点赞 ♥";
+  t.classList.add("on");
+  setTimeout(() => t.classList.remove("on"), 1600);
+}
+
+function bindGuestbook(root) {
+  const form = root.querySelector("#gbForm");
+  if (!form) return;
+  syncLikeUI();
+  renderGuestbookList();
+  fetchGuestbook();
+  const msg = root.querySelector("#gbMsg");
+  const btn = form.querySelector("button[type=submit]");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = String(fd.get("name") || "").trim();
+    const text = String(fd.get("text") || "").trim();
+    if (!text) return;
+    btn.disabled = true;
+    btn.textContent = "发布中…";
+    msg.className = "form-msg";
+    try {
+      const r = await fetch("/api/guestbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "message", name, text }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.ok) {
+        msg.className = "form-msg ok";
+        msg.textContent = "留言已发布，谢谢来访！";
+        form.reset();
+        await fetchGuestbook();
+      } else {
+        msg.className = "form-msg err";
+        msg.textContent = d.error || "留言发布未成功，请稍后再试。";
+      }
+    } catch {
+      msg.className = "form-msg err";
+      msg.textContent = "网络波动，请稍后再试。";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "发布留言";
+    }
+  });
+}
+
 function openPage(id) {
   const p = SITE_DATA.pages[id];
   if (!p) return;
@@ -342,6 +483,7 @@ function openPage(id) {
   body.innerHTML = renderPageBody(p);
   body.scrollTop = 0;
   bindLeadForm(body, p.slug);
+  bindGuestbook(body);
   bindCarousels(body);
   $("#canvas").classList.add("open");
   $("#backdrop").classList.add("on");
@@ -458,6 +600,8 @@ async function init() {
   if (openParam && SITE_DATA.pages[openParam]) {
     openPage(openParam);
   }
+  syncLikeUI();
+  fetchGuestbook();
 }
 
 window.__agent = {
@@ -468,6 +612,7 @@ window.__agent = {
   closeCanvas,
   copyLink,
   copyWechat,
+  likeSite,
   toggleBrowse,
   backHome,
   talkPreset,

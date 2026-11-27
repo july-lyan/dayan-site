@@ -20,6 +20,7 @@
     "coaching",
     "lab",
     "about",
+    "guestbook",
     "contact"
   ],
   "quickPrompts": [
@@ -321,6 +322,23 @@
           "type": "note",
           "heading": "教育背景",
           "text": "宁波大学 · 中加合作工商管理 · 本科（2006 – 2010）"
+        }
+      ]
+    },
+    "guestbook": {
+      "id": "guestbook",
+      "group": "联系",
+      "nav": "访客留言",
+      "slug": "/guestbook",
+      "kicker": "访客留言板",
+      "title": "访客留言与点赞",
+      "summary": "来过就留句话，或点个赞打个招呼",
+      "lead": "这里保留了建站以来的全部历史点赞与访客留言。欢迎留下你的想法、建议或一句招呼；如果有明确的企业合作需求，建议直接去「联系与约谈」加微信或填预约表单。",
+      "presetReply": "这里有建站以来的历史点赞和访客留言，欢迎点开留句话或点个赞打个招呼。",
+      "sections": [
+        {
+          "type": "guestbook",
+          "heading": "留下你的足迹"
         }
       ]
     },

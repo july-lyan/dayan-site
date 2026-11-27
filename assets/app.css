@@ -112,6 +112,48 @@ a { color: inherit; text-decoration: none; }
 }
 .wx-pill:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
 
+.like-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .75);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  transition: .15s;
+}
+.like-pill:hover { border-color: var(--accent); color: var(--accent); background: #fff; }
+.like-pill.liked { border-color: var(--accent-soft); background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.like-heart { font-size: 13.5px; line-height: 1; }
+
+/* 访客留言板 */
+.gb-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--bg);
+}
+.gb-bar span { font-size: 13.5px; color: var(--ink-2); }
+.gb-list { display: flex; flex-direction: column; gap: 9px; margin-top: 12px; }
+.gb-item {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.gb-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+.gb-meta b { color: var(--ink); font-size: 13px; font-weight: 600; }
+.gb-item p { font-size: 13.5px; line-height: 1.7; color: var(--ink-2); word-break: break-word; }
+.gb-empty { font-size: 13px; color: var(--muted); padding: 14px 0; }
+
 /* ===== 第一幕：极简开屏 ===== */
 .intro {
   flex: 1;

@@ -4,6 +4,7 @@ import { readFileSync, existsSync, statSync } from "fs";
 import { join, extname } from "path";
 import chatHandler from "../api/chat.js";
 import leadHandler from "../api/lead.js";
+import guestbookHandler from "../api/guestbook.js";
 
 const ROOT = process.cwd();
 const PORT = Number(process.env.PORT || 3000);
@@ -67,9 +68,9 @@ const server = createServer(async (req, res) => {
   const urlObj = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = decodeURIComponent(urlObj.pathname);
 
-  if (pathname === "/api/chat" || pathname === "/api/lead") {
+  if (pathname === "/api/chat" || pathname === "/api/lead" || pathname === "/api/guestbook") {
     req.body = req.method === "POST" ? await readBody(req) : {};
-    const handler = pathname === "/api/chat" ? chatHandler : leadHandler;
+    const handler = pathname === "/api/chat" ? chatHandler : pathname === "/api/lead" ? leadHandler : guestbookHandler;
     await handler(req, enhanceRes(res));
     return;
   }

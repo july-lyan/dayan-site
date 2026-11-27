@@ -111,6 +111,25 @@ function renderSection(sec) {
   if (sec.type === "note") {
     return `<h3 class="doc-h3">${esc(sec.heading)}</h3><div class="note-box">${esc(sec.text)}</div>`;
   }
+  if (sec.type === "guestbook") {
+    return `
+      <div class="gb-bar">
+        <span>喜欢这个站点，或者觉得内容对你有帮助？</span>
+        <button type="button" class="like-pill" id="gbLikeBtn">
+          <span class="like-heart" id="gbLikeHeart">♡</span>
+          <span id="gbLikeCount">—</span>
+        </button>
+      </div>
+      <h3 class="doc-h3">留下一句话</h3>
+      <form class="lead-form" id="gbForm">
+        <div class="field"><label>你的昵称</label><input name="name" maxlength="20" placeholder="选填，不填显示「匿名访客」" /></div>
+        <div class="field"><label>留言内容 *（100 字以内）</label><textarea name="text" required maxlength="100" placeholder="打个招呼，或留下你的想法与建议…"></textarea></div>
+        <button class="submit-btn" type="submit">发布留言</button>
+        <div class="form-msg" id="gbMsg"></div>
+      </form>
+      <h3 class="doc-h3">历史留言</h3>
+      <div class="gb-list" id="gbList"><div class="gb-empty">正在加载留言…</div></div>`;
+  }
   if (sec.type === "contact") {
     return `
       <div class="wx-box">
@@ -210,7 +229,74 @@ document.querySelectorAll(".carousel").forEach((car) => {
 });
 </script>`;
 
-// 1. 生成 6 个独立静态 HTML 页
+const GUESTBOOK_SCRIPT = `<script>
+(function(){
+  const esc = (s) => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  let likes = null;
+  function syncLike() {
+    const liked = localStorage.getItem("dayan_liked") === "1";
+    [["topLikeBtn","topLikeHeart","topLikeCount"],["gbLikeBtn","gbLikeHeart","gbLikeCount"]].forEach(([b,h,c]) => {
+      const btn = document.getElementById(b);
+      if (!btn) return;
+      btn.classList.toggle("liked", liked);
+      const he = document.getElementById(h); if (he) he.textContent = liked ? "♥" : "♡";
+      const ce = document.getElementById(c); if (ce) ce.textContent = likes === null ? "—" : String(likes);
+    });
+  }
+  async function load() {
+    try {
+      const r = await fetch("/api/guestbook");
+      if (!r.ok) return;
+      const d = await r.json();
+      if (typeof d.likes === "number") likes = d.likes;
+      syncLike();
+      const list = document.getElementById("gbList");
+      if (list) {
+        const msgs = Array.isArray(d.messages) ? d.messages : [];
+        list.innerHTML = msgs.length ? msgs.map((m) => {
+          const dt = m.created_at ? new Date(m.created_at).toLocaleDateString("zh-CN") : "";
+          return '<div class="gb-item"><div class="gb-meta"><b>' + esc(m.name || "匿名访客") + '</b><span>' + esc(dt) + '</span></div><p>' + esc(m.message || "") + '</p></div>';
+        }).join("") : '<div class="gb-empty">还没有公开留言，来留第一句吧。</div>';
+      }
+    } catch {}
+  }
+  async function doLike() {
+    if (localStorage.getItem("dayan_liked") === "1") return;
+    localStorage.setItem("dayan_liked", "1");
+    if (typeof likes === "number") likes += 1;
+    syncLike();
+    try {
+      const r = await fetch("/api/guestbook", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ action:"like" }) });
+      if (r.ok) { const d = await r.json(); if (typeof d.likes === "number") { likes = d.likes; syncLike(); } }
+    } catch {}
+  }
+  ["topLikeBtn","gbLikeBtn"].forEach((id) => document.getElementById(id)?.addEventListener("click", doLike));
+  const f = document.getElementById("gbForm");
+  if (f) {
+    const m = document.getElementById("gbMsg");
+    const b = f.querySelector("button[type=submit]");
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(f);
+      const name = String(fd.get("name") || "").trim();
+      const text = String(fd.get("text") || "").trim();
+      if (!text) return;
+      b.disabled = true; b.textContent = "发布中…"; m.className = "form-msg";
+      try {
+        const r = await fetch("/api/guestbook", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ action:"message", name, text }) });
+        const d = await r.json().catch(() => ({}));
+        if (r.ok && d.ok) { m.className = "form-msg ok"; m.textContent = "留言已发布，谢谢来访！"; f.reset(); await load(); }
+        else { m.className = "form-msg err"; m.textContent = d.error || "留言发布未成功，请稍后再试。"; }
+      } catch { m.className = "form-msg err"; m.textContent = "网络波动，请稍后再试。"; }
+      finally { b.disabled = false; b.textContent = "发布留言"; }
+    });
+  }
+  syncLike();
+  load();
+})();
+</script>`;
+
+// 1. 生成独立静态 HTML 页
 for (const id of order) {
   const p = pages[id];
   const relPath = p.slug.replace(/^\/+/, "");
@@ -242,6 +328,10 @@ for (const id of order) {
       <span>${esc(site.name)}</span>
     </a>
     <div class="top-r">
+      <button type="button" class="like-pill" id="topLikeBtn" title="点个赞">
+        <span class="like-heart" id="topLikeHeart">♡</span>
+        <span id="topLikeCount">—</span>
+      </button>
       <a class="ghost-btn" href="/">和大雁聊聊</a>
       <a class="wx-pill" href="/contact">联系我</a>
     </div>
@@ -255,6 +345,7 @@ for (const id of order) {
   </main>
   ${hasCarousel ? CAROUSEL_SCRIPT : ""}
   ${hasContact ? LEAD_SCRIPT : ""}
+  ${GUESTBOOK_SCRIPT}
 </body>
 </html>`;
 
